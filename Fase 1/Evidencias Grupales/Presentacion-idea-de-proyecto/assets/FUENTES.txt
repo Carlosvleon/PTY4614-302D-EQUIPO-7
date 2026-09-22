@@ -1,0 +1,7 @@
+Imágenes de negocio
+  Sitio público https://almahuexport.cl/ (octubre 2025 en wp-content/uploads):
+  logo, mapa de mercados, botones de frutas, fondo productores.
+
+Capturas de evidencia
+  Recorte de Agrosoft (orden de compra) y del ERP web (usuarios multi-empresa, reglas de aprobación).
+  Se recortó la barra de Meet y el usuario del legado para no mostrar nombres de operadores.

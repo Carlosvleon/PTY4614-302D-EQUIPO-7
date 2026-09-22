@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ERP Almahue - Definición APT - Equipo 7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f7f5;
+      --surface: #ffffff;
+      --ink: #1f2937;
+      --muted: #5b655d;
+      --accent: #1a5c2e;
+      --accent-2: #0f3d1e;
+      --leaf: #5bb749;
+      --brand: #b0192b;
+      --soft: #e6f3ea;
+      --line: #e3e7dd;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      overflow: hidden;
+    }
+    .vine {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(91, 183, 73, 0.18), transparent 55%),
+        radial-gradient(900px 500px at 110% 110%, rgba(176, 25, 43, 0.12), transparent 50%),
+        repeating-linear-gradient(-18deg, transparent 0 46px, rgba(26, 92, 46, 0.035) 46px 48px);
+    }
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 4;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 28px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; background: #1a1a1a; padding: 6px 10px; border-radius: 10px; }
+    .brand img { height: 26px; width: auto; }
+    .head-right { display: flex; align-items: center; gap: 16px; }
+    .meta { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
+    #clock {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent);
+      min-width: 4.2rem;
+      text-align: right;
+    }
+    #clock.warn { color: var(--brand); }
+    #clock.idle { color: #9aa39c; font-weight: 600; }
+    .stage {
+      position: relative; z-index: 1;
+      height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      padding: 64px 20px 92px;
+    }
+    .card {
+      width: min(1120px, 95vw);
+      min-height: min(640px, 74vh);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 36px 48px;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card.on { display: flex; animation: rise 0.45s ease; }
+    .card::before {
+      content: "";
+      position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+      background: linear-gradient(180deg, var(--accent), var(--leaf), var(--brand));
+    }
+    .kicker {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--brand);
+    }
+    h1 {
+      font-family: Fraunces, serif;
+      font-size: clamp(1.7rem, 3.6vw, 2.8rem);
+      line-height: 1.12;
+      color: var(--accent-2);
+    }
+    h2 {
+      font-family: Fraunces, serif;
+      font-size: clamp(1.3rem, 2.6vw, 2rem);
+      color: var(--accent);
+    }
+    p, li { font-size: clamp(0.88rem, 1.25vw, 1.05rem); color: var(--muted); line-height: 1.5; }
+    .lead { font-size: clamp(0.98rem, 1.45vw, 1.15rem); color: var(--ink); max-width: 48rem; }
+    .people { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip {
+      background: var(--soft); color: var(--accent-2);
+      border-radius: 999px; padding: 7px 12px; font-weight: 600; font-size: 0.85rem;
+    }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .pain.wide { grid-column: 1 / -1; }
+    .pain {
+      background: #f8faf6;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .pain b { display: block; color: var(--accent); margin-bottom: 4px; }
+    .og {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 18px;
+      padding: 24px 26px;
+      font-family: Fraunces, serif;
+      font-size: clamp(1.05rem, 2vw, 1.4rem);
+      line-height: 1.35;
+    }
+    ol.oe { padding-left: 1.2rem; display: grid; gap: 8px; }
+    ol.oe li { color: var(--ink); }
+    ol.oe li::marker { color: var(--brand); font-weight: 700; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      align-items: center;
+    }
+    .frutas { display: flex; gap: 8px; flex-wrap: wrap; }
+    .frutas figure { width: 92px; text-align: center; }
+    .frutas img {
+      width: 92px; height: 92px; object-fit: cover; border-radius: 14px;
+      border: 1px solid var(--line); cursor: zoom-in;
+    }
+    .frutas figcaption { font-size: 0.68rem; margin-top: 4px; color: var(--accent-2); font-weight: 600; }
+    .map {
+      width: 100%;
+      background: #0c100d;
+      border-radius: 16px;
+      padding: 10px;
+    }
+    .map img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+    .shots { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .shots figure { margin: 0; }
+    .shots img {
+      width: 100%; height: 168px; object-fit: cover; object-position: top;
+      border-radius: 12px; border: 1px solid var(--line); background: #111;
+      cursor: zoom-in;
+    }
+    .shots figcaption { font-size: 0.7rem; margin-top: 6px; color: var(--muted); }
+    .gantt-shot img {
+      width: 100%; max-height: 280px; object-fit: cover; object-position: top;
+      border-radius: 12px; border: 1px solid var(--line); cursor: zoom-in;
+    }
+    .status { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    .status th { text-align: left; color: var(--accent); padding: 6px 8px; border-bottom: 2px solid var(--line); }
+    .status td { padding: 7px 8px; border-bottom: 1px solid var(--line); color: var(--ink); }
+    .ok { color: #047857; font-weight: 700; }
+    .go { color: #b45309; font-weight: 700; }
+    .next { color: var(--brand); font-weight: 700; }
+    .note { font-size: 0.75rem; }
+    .center { text-align: center; align-items: center; }
+    .center h1 { width: 100%; }
+    footer.nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 4;
+      padding: 14px 28px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .bar { flex: 1; height: 4px; background: #d9e0d6; border-radius: 99px; overflow: hidden; max-width: 280px; }
+    .bar > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--leaf)); transition: width 0.3s ease; }
+    .btns { display: flex; gap: 8px; }
+    button {
+      font-family: Inter, sans-serif;
+      border: 0; cursor: pointer;
+      background: var(--accent); color: #fff;
+      padding: 10px 18px; border-radius: 999px; font-weight: 600;
+    }
+    button.ghost { background: #fff; color: var(--accent); border: 1px solid var(--line); }
+    button:disabled { opacity: 0.35; cursor: not-allowed; }
+    .count { font-size: 0.8rem; color: var(--muted); min-width: 4.5rem; }
+    #lb {
+      display: none; position: fixed; inset: 0; z-index: 20;
+      background: rgba(12, 16, 13, 0.88);
+      align-items: center; justify-content: center; padding: 32px;
+      cursor: zoom-out;
+    }
+    #lb.on { display: flex; }
+    #lb img { max-width: 94vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 12px 40px rgba(0,0,0,0.45); }
+    #lb span {
+      position: absolute; top: 16px; right: 22px; color: #fff; font-size: 0.8rem;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px) scale(0.985); }
+      to { opacity: 1; transform: none; }
+    }
+    @media (max-width: 860px) {
+      .card { padding: 22px 16px; }
+      .grid3, .grid2, .hero, .shots { grid-template-columns: 1fr; }
+      .shots img { height: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="vine" aria-hidden="true"></div>
+  <header>
+    <div class="brand">
+      <img src="assets/logo-almahue-export.png" alt="Almahue Export" />
+    </div>
+    <div class="head-right">
+      <div class="meta">APT122 · Equipo 7 · Fase 1</div>
+      <div id="clock" class="idle">0:00</div>
+    </div>
+  </header>
+
+  <main class="stage">
+    <article class="card on" data-slide="0">
+      <div class="kicker">Portafolio de título · 3 minutos</div>
+      <h1>ERP Almahue</h1>
+      <p class="lead">Sistema de gestión para un exportador de fruta fresca real, con sede en Rengo: unificar operación, control de gasto y facturación electrónica.</p>
+      <div class="people">
+        <span class="chip">Felipe Cuevas</span>
+        <span class="chip">Carlos Vallejos</span>
+        <span class="chip">Ingeniería en Informática</span>
+      </div>
+    </article>
+
+    <article class="card" data-slide="1">
+      <div class="kicker">El cliente · almahuexport.cl</div>
+      <h2>Exportadora familiar, fruta a varios países</h2>
+      <div class="hero">
+        <div>
+          <p class="lead">Empresa familiar en Rosario, Rengo. Más de 30 productores, de Catemu a Mulchén. Campo, calidad y logística; seguimiento en Guangzhou.</p>
+          <div class="frutas">
+            <figure><img class="zoom" src="assets/fruta-cerezas.png" alt="Cerezas" /><figcaption>Cerezas</figcaption></figure>
+            <figure><img class="zoom" src="assets/fruta-carozos.png" alt="Carozos" /><figcaption>Carozos</figcaption></figure>
+            <figure><img class="zoom" src="assets/fruta-citricos.png" alt="Cítricos" /><figcaption>Cítricos</figcaption></figure>
+            <figure><img class="zoom" src="assets/fruta-kiwis.png" alt="Kiwis" /><figcaption>Kiwis</figcaption></figure>
+            <figure><img class="zoom" src="assets/fruta-manzanas.png" alt="Manzanas" /><figcaption>Manzanas</figcaption></figure>
+          </div>
+        </div>
+        <figure class="map">
+          <img class="zoom" src="assets/mapa-mercados.png" alt="Mapa de mercados de exportacion" />
+        </figure>
+      </div>
+    </article>
+
+    <article class="card" data-slide="2">
+      <div class="kicker">Planteamiento del problema</div>
+      <h2>Hoy no hay un solo sistema</h2>
+      <p class="lead">La operación se parte en varios lugares. El mismo dato se carga más de una vez. Y hay un problema de todos los días: Agrosoft cobra por cuenta.</p>
+      <div class="grid3">
+        <div class="pain"><b>Agrosoft</b><p>Compras, ventas, inventario y contabilidad.</p></div>
+        <div class="pain"><b>Excel</b><p>La cartola del banco vive fuera del ERP.</p></div>
+        <div class="pain"><b>Otros portales</b><p>Factura electrónica y embarques, cada uno por su lado.</p></div>
+      </div>
+      <div class="pain wide" style="margin-top:4px">
+        <b>Una cuenta, varios PCs</b>
+        <p>Como la licencia se cobra por usuario, varios operadores entran con el mismo login. Si alguien cambia de empresa y no avisa, el otro computador sigue en la sociedad anterior. Quedan contratistas, compras o facturas cargados en la empresa que no corresponde.</p>
+      </div>
+    </article>
+
+    <article class="card" data-slide="3">
+      <div class="kicker">Objetivo general</div>
+      <h2>Qué esperamos lograr</h2>
+      <div class="og">Diseñar e implementar un ERP web multi-empresa que una compras, ventas, inventario, tesorería, contabilidad y facturación electrónica, y vaya reemplazando el sistema actual.</div>
+    </article>
+
+    <article class="card" data-slide="4">
+      <div class="kicker">Objetivos específicos</div>
+      <h2>Cuatro cortes concretos</h2>
+      <ol class="oe">
+        <li>Levantar el as-is con el cliente y armar el product backlog.</li>
+        <li>Entregar el núcleo: OC con aprobación, OV con stock, libros de compra y venta.</li>
+        <li>Integrar tesorería (cartola, conciliación, pagos) y contabilizar por ítem.</li>
+        <li>Integrar DTE nacional; la factura de exportación queda para el siguiente incremento.</li>
+      </ol>
+    </article>
+
+    <article class="card" data-slide="5">
+      <div class="kicker">Evidencia</div>
+      <h2>Del legado al ERP web</h2>
+      <p class="note">Click en la imagen para ampliar. Click otra vez o Escape para cerrar.</p>
+      <div class="shots">
+        <figure>
+          <img class="zoom" src="assets/evidencia-agrosoft-oc.jpg" alt="Orden de compra en Agrosoft" />
+          <figcaption>As-is: orden de compra en Agrosoft.</figcaption>
+        </figure>
+        <figure>
+          <img class="zoom" src="assets/evidencia-erp-empresas.jpg" alt="ERP multi-empresa" />
+          <figcaption>ERP: usuario con acceso por sociedad.</figcaption>
+        </figure>
+        <figure>
+          <img class="zoom" src="assets/evidencia-erp-aprobaciones.jpg" alt="Reglas de aprobacion en el ERP" />
+          <figcaption>ERP: reglas de aprobación de compras.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="card" data-slide="6">
+      <div class="kicker">Corte 1 al 5 de septiembre 2026</div>
+      <h2>Estado según Scrum</h2>
+      <table class="status">
+        <thead>
+          <tr><th>Qué</th><th>En Scrum</th><th>Estado</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Levantamiento y visión</td><td>Product backlog</td><td class="ok">Listo</td></tr>
+          <tr><td>Multi-empresa, OC, OV, libros</td><td>Incremento (review con el cliente)</td><td class="ok">En el producto</td></tr>
+          <tr><td>Tesorería y DTE nacional</td><td>Sprint en curso</td><td class="go">En curso</td></tr>
+          <tr><td>DTE exportación / COMEX</td><td>Siguiente incremento</td><td class="next">Pendiente</td></tr>
+        </tbody>
+      </table>
+      <p class="note">No numeramos sprints 1, 2, 3: el corte real es el módulo que el cliente acepta en la review semanal. QA 02/09: 490 PASS, 0 FAIL.</p>
+    </article>
+
+    <article class="card" data-slide="7">
+      <div class="kicker">Documentos previos al APT</div>
+      <h2>El proyecto empezó antes del portafolio</h2>
+      <p class="lead">Kickoff y carta Gantt: 13 de julio de 2026. El APT Duoc entra después; acá usamos esa planificación como evidencia, no la inventamos para el ramo.</p>
+      <figure class="gantt-shot">
+        <img class="zoom" src="assets/evidencia-gantt.png" alt="Carta Gantt ERP 6 meses" />
+      </figure>
+      <p class="note">Gantt de producto: 85 tareas, 13/07/2026 a objetivo 09/01/2027. Click para ver completa. Archivo: Fase 1 / Evidencias Grupales / gantt.</p>
+    </article>
+
+    <article class="card center" data-slide="8">
+      <div class="kicker">Cierre</div>
+      <h1>Preguntas</h1>
+      <p class="lead">Dudas sobre el problema, el alcance o como estamos trabajando con Scrum.</p>
+    </article>
+
+    <article class="card center" data-slide="9">
+      <div class="kicker">Equipo 7 · APT122</div>
+      <h1>Gracias</h1>
+      <p class="lead">Felipe Cuevas y Carlos Vallejos. Ingenieria en Informatica, Duoc UC.</p>
+    </article>
+  </main>
+
+  <footer class="nav">
+    <span class="count" id="count">1 / 10</span>
+    <div class="bar"><span id="fill"></span></div>
+    <div class="btns">
+      <button class="ghost" id="prev" type="button">Atrás</button>
+      <button id="next" type="button">Siguiente</button>
+    </div>
+  </footer>
+
+  <div id="lb" aria-hidden="true">
+    <span>Click o Escape para cerrar</span>
+    <img alt="" />
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll(".card")];
+    let i = 0;
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    const count = document.getElementById("count");
+    const fill = document.getElementById("fill");
+    const clock = document.getElementById("clock");
+    const lb = document.getElementById("lb");
+    const lbImg = lb.querySelector("img");
+    let t0 = null;
+    let tick = null;
+
+    function fmt(ms) {
+      const s = Math.floor(ms / 1000);
+      const m = Math.floor(s / 60);
+      return m + ":" + String(s % 60).padStart(2, "0");
+    }
+    function startClock() {
+      if (t0) return;
+      t0 = Date.now();
+      clock.classList.remove("idle");
+      tick = setInterval(() => {
+        const ms = Date.now() - t0;
+        clock.textContent = fmt(ms);
+        clock.classList.toggle("warn", ms >= 150000);
+      }, 250);
+    }
+    function render() {
+      slides.forEach((s, n) => s.classList.toggle("on", n === i));
+      count.textContent = (i + 1) + " / " + slides.length;
+      fill.style.width = ((i + 1) / slides.length * 100) + "%";
+      prev.disabled = i === 0;
+      next.disabled = i === slides.length - 1;
+      next.textContent = i === slides.length - 1 ? "Fin" : "Siguiente";
+    }
+    function go(n) {
+      if (n < 0 || n >= slides.length) return;
+      if (i === 0 && n > 0) startClock();
+      i = n;
+      render();
+    }
+    prev.onclick = () => go(i - 1);
+    next.onclick = () => go(i + 1);
+
+    document.querySelectorAll("img.zoom").forEach((img) => {
+      img.addEventListener("click", (e) => {
+        e.stopPropagation();
+        lbImg.src = img.src;
+        lb.classList.add("on");
+      });
+    });
+    function closeLb() {
+      lb.classList.remove("on");
+      lbImg.src = "";
+    }
+    lb.addEventListener("click", closeLb);
+
+    document.addEventListener("keydown", (e) => {
+      if (lb.classList.contains("on")) {
+        if (e.key === "Escape" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
+          e.preventDefault();
+          closeLb();
+        }
+        return;
+      }
+      if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault();
+        go(i + 1);
+      }
+      if (e.key === "ArrowLeft" || e.key === "PageUp") {
+        e.preventDefault();
+        go(i - 1);
+      }
+      if (e.key === "Home") go(0);
+      if (e.key === "End") go(slides.length - 1);
+    });
+    render();
+  </script>
+</body>
+</html>
