@@ -98,9 +98,11 @@
     color: #4a3b28;
     margin: 0 0 calc(12px * var(--fit));
   }
-  h2 { font-size: calc(64px * var(--fit)); font-weight: 700; line-height: 1.05; color: #163018; margin-bottom: calc(16px * var(--fit)); }
+  h2 { font-size: calc(64px * var(--fit)); font-weight: 700; line-height: 1.05; color: #163018; margin: 0 0 calc(16px * var(--fit)); }
   h3 { font-size: calc(36px * var(--fit)); font-weight: 700; color: #1e4a28; margin: calc(14px * var(--fit)) 0 calc(6px * var(--fit)); }
   p, li { font-size: calc(34px * var(--fit)); font-weight: 700; line-height: 1.32; color: #1c1610; }
+  .card p { margin: 0 0 calc(10px * var(--fit)); }
+  .card p:last-child, .card ul:last-child { margin-bottom: 0; }
   ul { margin: calc(6px * var(--fit)) 0 0; padding-left: calc(22px * var(--fit)); }
   .muted { color: #5c5144; }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: calc(12px * var(--fit)); }
@@ -632,11 +634,12 @@ function fitCards() {
   stations.forEach(function (s) {
     const card = s.card;
     card.style.maxHeight = maxH + "px";
-    let lo = 0.22;
+    const limit = maxH - 4;
+    let lo = 0.2;
     let hi = 1;
     card.style.setProperty("--fit", "1");
     const tooBig = function () {
-      return card.scrollHeight > maxH + 1 || card.scrollWidth > card.clientWidth + 1;
+      return card.scrollHeight > limit || card.scrollWidth > card.clientWidth + 1;
     };
     if (!tooBig()) return;
     for (let i = 0; i < 12; i++) {
