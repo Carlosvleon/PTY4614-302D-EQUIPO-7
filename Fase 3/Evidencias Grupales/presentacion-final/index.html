@@ -105,6 +105,16 @@
   .card p:last-child, .card ul:last-child { margin-bottom: 0; }
   ul { margin: calc(6px * var(--fit)) 0 0; padding-left: calc(22px * var(--fit)); }
   .muted { color: #5c5144; }
+  .who {
+    margin: calc(16px * var(--fit)) calc(-34px * var(--fit)) calc(-22px * var(--fit));
+    padding: calc(10px * var(--fit)) calc(34px * var(--fit));
+    border-top: 1px solid #e0d3bc;
+    background: #efe6d4;
+    font-size: calc(22px * var(--fit));
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #24532c;
+  }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: calc(12px * var(--fit)); }
   .box { background: #f3ecdf; border-radius: 14px; padding: calc(10px * var(--fit)) calc(12px * var(--fit)); }
   .people { display: grid; grid-template-columns: 1fr 1fr; gap: calc(12px * var(--fit)); }
@@ -255,76 +265,90 @@ const slides = [
   {
     title: "ERP Almahue",
     kicker: "Presentación final Capstone",
+    who: "Presenta Felipe Cuevas",
     html: "<p>Sistema de gestión agrícola y de exportación.</p><p class='muted'>Equipo 7, Ingeniería en Informática<br>Carlos Vallejos y Felipe Cuevas</p>"
   },
   {
     title: "Integrantes del proyecto",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Felipe Cuevas",
     html: "<div class='people'><div class='person'><strong>Carlos Vallejos</strong>Requisitos con el cliente, backend, modelo de datos e integración de facturación.</div><div class='person'><strong>Felipe Cuevas</strong>Interfaz, flujos de usuario, monedas y evidencias del proceso.</div></div><p class='muted'>El equipo del APT es este. El cliente prioriza. Nosotros construimos.</p>"
   },
   {
     title: "Descripción del proyecto",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Felipe Cuevas",
     wide: true,
     html: "<div class='two'><div class='box'><h3>Problema o dolor</h3><p>Agrícola Almahue, en Rengo, opera varias sociedades. El día a día corre en Agrosoft. La cartola está en Excel. Los documentos tributarios salen por un portal aparte y los embarques en otra plataforma. El mismo hecho se digita más de una vez.</p><p>Agrosoft cobra por cuenta, así que varias personas entran con el mismo usuario. Si alguien cambia de empresa y no avisa, el otro computador sigue en la sociedad anterior.</p></div><div class='box'><h3>Propuesta de solución</h3><p>Un ERP web por empresa, con usuario propio y la sociedad a la vista. Compras, ventas, inventario, tesorería, contabilidad y la emisión de documentos tributarios en el mismo flujo.</p><p>No reemplaza todo de un día para otro. Va cubriendo el proceso que el cliente ya recorre.</p></div></div>"
   },
   {
     title: "Objetivos",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Carlos Vallejos",
     html: "<h3>Objetivo general</h3><p>Diseñar e implementar un ERP web por empresa para Agrícola Almahue que una compras, ventas, inventario, tesorería, contabilidad y emisión de documentos tributarios, y que vaya reemplazando el sistema que usan hoy.</p><h3>Objetivos específicos</h3><ul><li>Levantar cómo opera la empresa hoy y priorizar un product backlog.</li><li>Entregar orden de compra con aprobación, orden de venta con stock, y los libros.</li><li>Integrar tesorería (cartola, conciliación y pagos) y la contabilización por ítem.</li><li>Integrar el documento tributario del set nacional. La factura de exportación queda después.</li></ul>"
   },
   {
     title: "Alcances y limitaciones del proyecto",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Carlos Vallejos",
     wide: true,
     html: "<div class='two'><div class='box'><h3>Dentro del semestre</h3><ul><li>MVP: núcleo comercial, tesorería y documento tributario nacional.</li><li>Aislamiento por empresa y usuario propio.</li><li>Aprobación solo en la orden de compra.</li><li>Evidencias de Scrum por sprint.</li></ul></div><div class='box'><h3>Fuera de este corte</h3><ul><li>La puesta en marcha. La carta la deja el 09/01/2027, después del semestre.</li><li>Factura de exportación y cierre de comercio exterior.</li><li>Presupuestos de seguimiento y reportes ejecutivos.</li><li>Reemplazar por completo el sistema legado.</li></ul></div></div><p class='muted'>El plan de producto dura más que la asignatura. En Duoc se muestra el MVP, no la salida a producción.</p>"
   },
   {
     title: "Metodología de trabajo",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Felipe Cuevas",
     html: "<p>Seguimos con Scrum, como quedó declarado en la definición.</p><ul><li>El cliente prioriza el backlog. No tomamos como requisito lo que el cliente no pidió.</li><li>El sprint es la semana de trabajo. Si esa semana hubo cliente, la review es con el cliente. Si no, queda escrita como interna.</li><li>El incremento se da por hecho cuando el cliente lo acepta, no cuando la barra de la carta llega a su fecha.</li><li>Por sprint dejamos backlog, daily, impedimentos, review y retrospectiva.</li></ul><p>El objetivo general no cambió. Sí cambió el orden: la carta ponía la construcción tarde, y el sistema ya se mostraba al cliente en julio.</p>"
   },
   {
     title: "Cronograma para el desarrollo del proyecto",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Felipe Cuevas",
     wide: true,
     html: "<p class='muted'>Cronograma de inicio (18 semanas de la asignatura). La marca es la semana planificada.</p><div id='gantt'></div><p class='muted'>Al corte de esta presentación: levantamiento y definición hechos. Núcleo, tesorería y documento nacional en uso. Informe y defensa corresponden a esta fase.</p>"
   },
   {
     title: "Arquitectura del software",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Carlos Vallejos",
     wide: true,
     html: "<div class='arch'><div class='node'>React<small>pantallas</small></div><span class='join'>llama a</span><div class='node'>NestJS<small>API por empresa</small></div><span class='join'>guarda en</span><div class='node'>PostgreSQL<small>schema erp</small></div></div><div class='arch'><div class='node'>ERP<small>pide emitir</small></div><span class='join'>pasa por</span><div class='node'>billing-gateway<small>proyecto intermediario</small></div><span class='join'>habla con</span><div class='node'>Facturador<small>ambiente de prueba</small></div></div><p>Cada consulta filtra por empresa. El ERP no llama al facturador directo: el intermediario separa la emisión del resto del sistema.</p>"
   },
   {
     title: "Modelo de datos",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Carlos Vallejos",
     wide: true,
     html: "<p>Todo cuelga de la empresa. Si el dato no tiene empresa, no entra.</p><div class='groups'><div><strong>Empresa y acceso</strong>Empresa, usuario, rol y permiso por pantalla.</div><div><strong>Contraparte</strong>Cliente y proveedor en la misma ficha, con su identificador.</div><div><strong>Compras y ventas</strong>Orden de compra, orden de venta, ítems y libros.</div><div><strong>Tesorería</strong>Cartola importada, pagos y cobros, antigüedad de saldos.</div><div><strong>Contabilidad</strong>Plan de cuentas y asientos. La cuenta del ítem se asigna en el libro.</div><div><strong>Emisión</strong>Documento tributario ligado a la venta, con estado ante el facturador.</div></div>"
   },
   {
     title: "Tecnologías utilizadas",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Felipe Cuevas",
     html: "<ul><li>Frontend: React, Vite y TypeScript.</li><li>Backend: NestJS y TypeScript.</li><li>Datos: PostgreSQL y Prisma. El esquema vive en migraciones.</li><li>Facturación: proyecto aparte, billing-gateway, también en NestJS, contra el ambiente de prueba del facturador.</li><li>Evidencia de proceso: tablero por semana de la carta y los sprints escritos.</li></ul><p class='muted'>No usamos app móvil ni un motor de analítica. El foco es el sistema de gestión.</p>"
   },
   {
     title: "Exposición del sistema",
     kicker: "Demostración del resultado del proyecto",
+    who: "Felipe Cuevas abre. Carlos Vallejos acompaña",
     html: "<p>Aquí dejamos el relato y abrimos el ERP. El recorrido, en este orden:</p><ul><li>Entrar con usuario propio y elegir la empresa.</li><li>Orden de compra y su aprobación.</li><li>Orden de venta, con el stock a la vista.</li><li>Libro, para contabilizar el documento.</li><li>Cartola o pago, en tesorería.</li><li>Emisión del documento tributario nacional, que sale por el intermediario.</li></ul><p class='muted'>No es la puesta en marcha. Es el MVP que el cliente ya recorre.</p>"
   },
   {
     title: "Resultados obtenidos",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Carlos Vallejos",
     html: "<ul><li>El operador entra con su usuario y ve una sola sociedad.</li><li>La compra parte en la orden de compra y pasa por aprobación. La venta se guarda, valida stock y queda confirmada.</li><li>Tesorería toma la cartola y los pagos. El saldo se puede ver por banco y por moneda.</li><li>El set nacional se emite. La factura de exportación no.</li><li>Quedaron evidencias de sprint, el plan monitoreado y la arquitectura escrita.</li></ul><p>El objetivo general sigue en curso hasta la puesta en marcha. Lo que está listo es el corte del semestre.</p>"
   },
   {
     title: "Obstáculos presentados durante el desarrollo",
     kicker: "Proyecto ERP Almahue",
+    who: "Presenta Felipe Cuevas",
     html: "<ul><li>El facturador no respondió a tiempo. El cliente dejó abierta la opción de postergar el cambio a la temporada siguiente. No esperamos: armamos billing-gateway entre el ERP y el partner.</li><li>La carta Gantt ponía la construcción después de los bocetos. El código y las demos partieron en julio. Dejamos la carta como mapa y las evidencias cuentan lo que pasó.</li><li>Presupuestos de seguimiento y reportes ejecutivos no se cerraron. El cliente pidió dejarlos para más adelante. Siguen en el backlog, no los marcamos listos.</li><li>La aprobación quedó solo en compras. En la orden de venta no hay bandeja.</li></ul>"
   },
   {
     title: "Preguntas de la comisión",
     kicker: "Cierre",
+    who: "Presentan Felipe Cuevas y Carlos Vallejos",
     html: "<p>Quedamos atentos.</p><p class='muted'>Equipo 7, Carlos Vallejos y Felipe Cuevas<br>ERP Almahue</p>"
   }
 ];
@@ -587,7 +611,7 @@ const cards = stations.map(function (s) {
   const card = document.createElement("article");
   const slide = slides[s.i];
   card.className = "card " + (s.side > 0 ? "side-right" : "side-left");
-  card.innerHTML = "<p class='kicker'>" + slide.kicker + "</p><h2>" + slide.title + "</h2>" + slide.html;
+  card.innerHTML = "<p class='kicker'>" + slide.kicker + "</p><h2>" + slide.title + "</h2>" + slide.html + "<footer class='who'>" + slide.who + "</footer>";
   card.dataset.t = String(s.t);
   if (s.i === 6) {
     const slot = card.querySelector("#gantt");
