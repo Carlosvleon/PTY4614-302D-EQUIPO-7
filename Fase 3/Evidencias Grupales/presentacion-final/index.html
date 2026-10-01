@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP Almahue - Presentación final</title>
+<style>
+  :root {
+    --ink: #2c2416;
+    --paper: #fffaf3;
+    --line: #e0d3bc;
+    --soil: #6d4c32;
+    --leaf: #3f7d45;
+    --leaf-dark: #24532c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background:
+      radial-gradient(ellipse at 50% 0%, #fff6dc 0%, transparent 42%),
+      linear-gradient(#dfead2 0%, #f4ecdc 46%, #e7d5b8 100%);
+    color: var(--ink);
+    font-family: "Segoe UI", Calibri, sans-serif;
+  }
+  h2, h3 { font-family: Palatino, "Palatino Linotype", Georgia, serif; font-weight: 600; margin: 0; }
+
+  #spacer { width: 1px; }
+
+  #stage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  #world { position: absolute; left: 0; top: 0; }
+  svg { display: block; overflow: visible; }
+
+  #stem-wood, #stem {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  #stem-wood { stroke: #6a4a32; stroke-width: 22; }
+  #stem { stroke: #3d6b34; stroke-width: 13; }
+  .branch {
+    fill: none;
+    stroke: #4f7d3c;
+    stroke-width: 7;
+    stroke-linecap: round;
+  }
+  .tendril {
+    fill: none;
+    stroke: #5e8f4e;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .calyx { opacity: 0; transition: opacity 0.45s ease 0.2s; }
+  .calyx.on { opacity: 1; }
+  .leaf-in {
+    transform-box: fill-box;
+    transform-origin: 0px 0px;
+    transform: scale(0.08) rotate(-10deg);
+    opacity: 0;
+    transition: transform 0.55s cubic-bezier(0.22, 1.1, 0.36, 1), opacity 0.35s ease;
+  }
+  .leaf-in.on {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+
+  .card {
+    --fit: 1;
+    position: absolute;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 26px 46px 22px 38px;
+    box-shadow: 0 18px 44px rgba(74, 50, 32, 0.16);
+    padding: calc(28px * var(--fit)) calc(34px * var(--fit)) calc(22px * var(--fit));
+    overflow: hidden;
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateY(-50%) scale(0);
+    transition: transform 1.55s cubic-bezier(0.16, 0.9, 0.22, 1), opacity 0.7s ease;
+  }
+  .card.bloomed {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+    transition-delay: 0.4s;
+  }
+  .card.side-right { transform-origin: left center; border-radius: 18px 40px 32px 28px; }
+  .card.side-left { transform-origin: right center; border-radius: 40px 18px 28px 32px; }
+
+  .kicker {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: calc(22px * var(--fit));
+    font-weight: 700;
+    color: #4a3b28;
+    margin: 0 0 calc(12px * var(--fit));
+  }
+  h2 { font-size: calc(64px * var(--fit)); font-weight: 700; line-height: 1.05; color: #163018; margin-bottom: calc(16px * var(--fit)); }
+  h3 { font-size: calc(36px * var(--fit)); font-weight: 700; color: #1e4a28; margin: calc(14px * var(--fit)) 0 calc(6px * var(--fit)); }
+  p, li { font-size: calc(34px * var(--fit)); font-weight: 700; line-height: 1.32; color: #1c1610; }
+  ul { margin: calc(6px * var(--fit)) 0 0; padding-left: calc(22px * var(--fit)); }
+  .muted { color: #5c5144; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: calc(12px * var(--fit)); }
+  .box { background: #f3ecdf; border-radius: 14px; padding: calc(10px * var(--fit)) calc(12px * var(--fit)); }
+  .people { display: grid; grid-template-columns: 1fr 1fr; gap: calc(12px * var(--fit)); }
+  .person { background: #f3ecdf; border-radius: 16px; padding: calc(12px * var(--fit)) calc(14px * var(--fit)); }
+  .person strong { display: block; font-size: calc(34px * var(--fit)); font-weight: 700; margin-bottom: calc(6px * var(--fit)); }
+  .arch { display: flex; flex-wrap: wrap; align-items: center; gap: calc(8px * var(--fit)); margin-top: calc(8px * var(--fit)); }
+  .node {
+    background: #e7f0df;
+    border: 1px solid #8fbf78;
+    border-radius: 12px;
+    padding: calc(12px * var(--fit)) calc(14px * var(--fit));
+    min-width: 0;
+    text-align: center;
+    font-size: calc(26px * var(--fit));
+    font-weight: 700;
+  }
+  .node small { display: block; color: #3d3428; font-size: calc(20px * var(--fit)); font-weight: 700; }
+  .join { color: #3d3428; font-size: calc(22px * var(--fit)); font-weight: 700; }
+  .groups { display: grid; grid-template-columns: 1fr 1fr; gap: calc(12px * var(--fit)); }
+  .groups div { background: #f3ecdf; border-radius: 12px; padding: calc(12px * var(--fit)) calc(14px * var(--fit)); font-size: calc(26px * var(--fit)); font-weight: 700; }
+  .groups strong { display: block; margin-bottom: calc(2px * var(--fit)); }
+
+  table.gantt { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: calc(16px * var(--fit)); font-weight: 700; margin-top: calc(10px * var(--fit)); }
+  table.gantt th, table.gantt td { border: 1px solid #e0d3bc; padding: calc(4px * var(--fit)) calc(2px * var(--fit)); text-align: center; }
+  table.gantt th { font-weight: 700; color: #1c1610; background: #f3ecdf; }
+  table.gantt th:first-child, table.gantt td.act { width: 24%; text-align: left; padding-left: calc(6px * var(--fit)); white-space: normal; font-size: calc(15px * var(--fit)); font-weight: 700; background: #fffaf3; }
+  table.gantt td.on { background: #7da86a; }
+  table.gantt td.phase { background: #efe6d4; font-size: calc(14px * var(--fit)); }
+  .harvest { opacity: 0; transform-box: fill-box; transform-origin: center; }
+  #crown.on .harvest {
+    animation: fruit-in 0.9s cubic-bezier(0.16, 1.35, 0.32, 1) forwards;
+  }
+  #crown.on .crown-twig { stroke-dashoffset: 0; }
+  .crown-twig {
+    fill: none;
+    stroke: #3d6b34;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s ease;
+  }
+  @keyframes fruit-in {
+    0% { opacity: 0; transform: translateY(-26px) scale(0.15); }
+    65% { opacity: 1; transform: translateY(5px) scale(1.08); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .brand {
+    position: fixed;
+    top: 18px;
+    left: 22px;
+    z-index: 5;
+    pointer-events: none;
+    color: #234024;
+    font-family: Palatino, Georgia, serif;
+    font-size: 22px;
+    line-height: 1.1;
+  }
+  .brand span {
+    display: block;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6d5a3c;
+  }
+  .hint {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    color: #3d5c32;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .count {
+    position: fixed;
+    right: 22px;
+    bottom: 18px;
+    z-index: 5;
+    font-size: 13px;
+    color: #4a3b28;
+  }
+  .dots {
+    position: fixed;
+    left: 22px;
+    bottom: 16px;
+    z-index: 6;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    max-width: 280px;
+    pointer-events: auto;
+  }
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 0;
+    padding: 0;
+    background: #c9b89a;
+    cursor: pointer;
+  }
+  .dot.on { background: #3f7d45; transform: scale(1.25); }
+</style>
+</head>
+<body>
+<div id="spacer"></div>
+<div id="stage">
+  <div id="world">
+    <svg id="svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="soilGrad" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#8a6244"/>
+          <stop offset="100%" stop-color="#4a3220"/>
+        </radialGradient>
+      </defs>
+      <g id="ground"></g>
+      <g id="tendrils"></g>
+      <path id="stem-wood"/>
+      <path id="stem"/>
+      <g id="branches"></g>
+      <g id="leaves"></g>
+      <g id="fruit"></g>
+      <g id="bud">
+        <ellipse rx="8" ry="18" fill="#2f6a36" transform="rotate(-24) translate(0 -6)"/>
+        <ellipse rx="8" ry="18" fill="#3f7d45" transform="rotate(24) translate(0 -6)"/>
+        <ellipse rx="7" ry="16" fill="#8fbf78" transform="translate(0 -10)"/>
+        <circle r="5.5" cy="-1" fill="#f6ddd6" stroke="#6d4c32" stroke-width="1.2"/>
+      </g>
+    </svg>
+  </div>
+</div>
+<div class="brand">ERP Almahue<span>Presentación final</span></div>
+<div class="hint" id="hint">Scroll o flecha. El brote abre la lámina.</div>
+<div class="count" id="count"></div>
+<div class="dots" id="dots"></div>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const VB_W = 1200;
+const N = 14;
+const GAP = 900;
+
+const slides = [
+  {
+    title: "ERP Almahue",
+    kicker: "Presentación final Capstone",
+    html: "<p>Sistema de gestión agrícola y de exportación.</p><p class='muted'>Equipo 7, Ingeniería en Informática<br>Carlos Vallejos y Felipe Cuevas</p>"
+  },
+  {
+    title: "Integrantes del proyecto",
+    kicker: "Proyecto ERP Almahue",
+    html: "<div class='people'><div class='person'><strong>Carlos Vallejos</strong>Requisitos con el cliente, backend, modelo de datos e integración de facturación.</div><div class='person'><strong>Felipe Cuevas</strong>Interfaz, flujos de usuario, monedas y evidencias del proceso.</div></div><p class='muted'>El equipo del APT es este. El cliente prioriza. Nosotros construimos.</p>"
+  },
+  {
+    title: "Descripción del proyecto",
+    kicker: "Proyecto ERP Almahue",
+    wide: true,
+    html: "<div class='two'><div class='box'><h3>Problema o dolor</h3><p>Agrícola Almahue, en Rengo, opera varias sociedades. El día a día corre en Agrosoft. La cartola está en Excel. Los documentos tributarios salen por un portal aparte y los embarques en otra plataforma. El mismo hecho se digita más de una vez.</p><p>Agrosoft cobra por cuenta, así que varias personas entran con el mismo usuario. Si alguien cambia de empresa y no avisa, el otro computador sigue en la sociedad anterior.</p></div><div class='box'><h3>Propuesta de solución</h3><p>Un ERP web por empresa, con usuario propio y la sociedad a la vista. Compras, ventas, inventario, tesorería, contabilidad y la emisión de documentos tributarios en el mismo flujo.</p><p>No reemplaza todo de un día para otro. Va cubriendo el proceso que el cliente ya recorre.</p></div></div>"
+  },
+  {
+    title: "Objetivos",
+    kicker: "Proyecto ERP Almahue",
+    html: "<h3>Objetivo general</h3><p>Diseñar e implementar un ERP web por empresa para Agrícola Almahue que una compras, ventas, inventario, tesorería, contabilidad y emisión de documentos tributarios, y que vaya reemplazando el sistema que usan hoy.</p><h3>Objetivos específicos</h3><ul><li>Levantar cómo opera la empresa hoy y priorizar un product backlog.</li><li>Entregar orden de compra con aprobación, orden de venta con stock, y los libros.</li><li>Integrar tesorería (cartola, conciliación y pagos) y la contabilización por ítem.</li><li>Integrar el documento tributario del set nacional. La factura de exportación queda después.</li></ul>"
+  },
+  {
+    title: "Alcances y limitaciones del proyecto",
+    kicker: "Proyecto ERP Almahue",
+    wide: true,
+    html: "<div class='two'><div class='box'><h3>Dentro del semestre</h3><ul><li>MVP: núcleo comercial, tesorería y documento tributario nacional.</li><li>Aislamiento por empresa y usuario propio.</li><li>Aprobación solo en la orden de compra.</li><li>Evidencias de Scrum por sprint.</li></ul></div><div class='box'><h3>Fuera de este corte</h3><ul><li>La puesta en marcha. La carta la deja el 09/01/2027, después del semestre.</li><li>Factura de exportación y cierre de comercio exterior.</li><li>Presupuestos de seguimiento y reportes ejecutivos.</li><li>Reemplazar por completo el sistema legado.</li></ul></div></div><p class='muted'>El plan de producto dura más que la asignatura. En Duoc se muestra el MVP, no la salida a producción.</p>"
+  },
+  {
+    title: "Metodología de trabajo",
+    kicker: "Proyecto ERP Almahue",
+    html: "<p>Seguimos con Scrum, como quedó declarado en la definición.</p><ul><li>El cliente prioriza el backlog. No tomamos como requisito lo que el cliente no pidió.</li><li>El sprint es la semana de trabajo. Si esa semana hubo cliente, la review es con el cliente. Si no, queda escrita como interna.</li><li>El incremento se da por hecho cuando el cliente lo acepta, no cuando la barra de la carta llega a su fecha.</li><li>Por sprint dejamos backlog, daily, impedimentos, review y retrospectiva.</li></ul><p>El objetivo general no cambió. Sí cambió el orden: la carta ponía la construcción tarde, y el sistema ya se mostraba al cliente en julio.</p>"
+  },
+  {
+    title: "Cronograma para el desarrollo del proyecto",
+    kicker: "Proyecto ERP Almahue",
+    wide: true,
+    html: "<p class='muted'>Cronograma de inicio (18 semanas de la asignatura). La marca es la semana planificada.</p><div id='gantt'></div><p class='muted'>Al corte de esta presentación: levantamiento y definición hechos. Núcleo, tesorería y documento nacional en uso. Informe y defensa corresponden a esta fase.</p>"
+  },
+  {
+    title: "Arquitectura del software",
+    kicker: "Proyecto ERP Almahue",
+    wide: true,
+    html: "<div class='arch'><div class='node'>React<small>pantallas</small></div><span class='join'>llama a</span><div class='node'>NestJS<small>API por empresa</small></div><span class='join'>guarda en</span><div class='node'>PostgreSQL<small>schema erp</small></div></div><div class='arch'><div class='node'>ERP<small>pide emitir</small></div><span class='join'>pasa por</span><div class='node'>billing-gateway<small>proyecto intermediario</small></div><span class='join'>habla con</span><div class='node'>Facturador<small>ambiente de prueba</small></div></div><p>Cada consulta filtra por empresa. El ERP no llama al facturador directo: el intermediario separa la emisión del resto del sistema.</p>"
+  },
+  {
+    title: "Modelo de datos",
+    kicker: "Proyecto ERP Almahue",
+    wide: true,
+    html: "<p>Todo cuelga de la empresa. Si el dato no tiene empresa, no entra.</p><div class='groups'><div><strong>Empresa y acceso</strong>Empresa, usuario, rol y permiso por pantalla.</div><div><strong>Contraparte</strong>Cliente y proveedor en la misma ficha, con su identificador.</div><div><strong>Compras y ventas</strong>Orden de compra, orden de venta, ítems y libros.</div><div><strong>Tesorería</strong>Cartola importada, pagos y cobros, antigüedad de saldos.</div><div><strong>Contabilidad</strong>Plan de cuentas y asientos. La cuenta del ítem se asigna en el libro.</div><div><strong>Emisión</strong>Documento tributario ligado a la venta, con estado ante el facturador.</div></div>"
+  },
+  {
+    title: "Tecnologías utilizadas",
+    kicker: "Proyecto ERP Almahue",
+    html: "<ul><li>Frontend: React, Vite y TypeScript.</li><li>Backend: NestJS y TypeScript.</li><li>Datos: PostgreSQL y Prisma. El esquema vive en migraciones.</li><li>Facturación: proyecto aparte, billing-gateway, también en NestJS, contra el ambiente de prueba del facturador.</li><li>Evidencia de proceso: tablero por semana de la carta y los sprints escritos.</li></ul><p class='muted'>No usamos app móvil ni un motor de analítica. El foco es el sistema de gestión.</p>"
+  },
+  {
+    title: "Exposición del sistema",
+    kicker: "Demostración del resultado del proyecto",
+    html: "<p>Aquí dejamos el relato y abrimos el ERP. El recorrido, en este orden:</p><ul><li>Entrar con usuario propio y elegir la empresa.</li><li>Orden de compra y su aprobación.</li><li>Orden de venta, con el stock a la vista.</li><li>Libro, para contabilizar el documento.</li><li>Cartola o pago, en tesorería.</li><li>Emisión del documento tributario nacional, que sale por el intermediario.</li></ul><p class='muted'>No es la puesta en marcha. Es el MVP que el cliente ya recorre.</p>"
+  },
+  {
+    title: "Resultados obtenidos",
+    kicker: "Proyecto ERP Almahue",
+    html: "<ul><li>El operador entra con su usuario y ve una sola sociedad.</li><li>La compra parte en la orden de compra y pasa por aprobación. La venta se guarda, valida stock y queda confirmada.</li><li>Tesorería toma la cartola y los pagos. El saldo se puede ver por banco y por moneda.</li><li>El set nacional se emite. La factura de exportación no.</li><li>Quedaron evidencias de sprint, el plan monitoreado y la arquitectura escrita.</li></ul><p>El objetivo general sigue en curso hasta la puesta en marcha. Lo que está listo es el corte del semestre.</p>"
+  },
+  {
+    title: "Obstáculos presentados durante el desarrollo",
+    kicker: "Proyecto ERP Almahue",
+    html: "<ul><li>El facturador no respondió a tiempo. El cliente dejó abierta la opción de postergar el cambio a la temporada siguiente. No esperamos: armamos billing-gateway entre el ERP y el partner.</li><li>La carta Gantt ponía la construcción después de los bocetos. El código y las demos partieron en julio. Dejamos la carta como mapa y las evidencias cuentan lo que pasó.</li><li>Presupuestos de seguimiento y reportes ejecutivos no se cerraron. El cliente pidió dejarlos para más adelante. Siguen en el backlog, no los marcamos listos.</li><li>La aprobación quedó solo en compras. En la orden de venta no hay bandeja.</li></ul>"
+  },
+  {
+    title: "Preguntas de la comisión",
+    kicker: "Cierre",
+    html: "<p>Quedamos atentos.</p><p class='muted'>Equipo 7, Carlos Vallejos y Felipe Cuevas<br>ERP Almahue</p>"
+  }
+];
+
+const ganttRows = [
+  ["Levantamiento", [1,2,3,4]],
+  ["Backlog y definición", [3,4,5,6]],
+  ["Presentación de definición", [6]],
+  ["Núcleo comercial", [7,8,9,10]],
+  ["Tesorería", [9,10,11,12]],
+  ["Documento nacional", [11,12,13,14]],
+  ["Pruebas con el cliente", [8,10,12,14,15]],
+  ["Informe y defensa", [15,16,17,18]]
+];
+
+function ganttHtml() {
+  let head = "<table class='gantt'><tr><th>Actividad</th>";
+  for (let w = 1; w <= 18; w++) head += "<th>S" + w + "</th>";
+  head += "</tr>";
+  const phase = "<tr><td class='act phase'>Fase</td><td class='phase' colspan='6'>Fase 1</td><td class='phase' colspan='8'>Fase 2</td><td class='phase' colspan='4'>Fase 3</td></tr>";
+  let body = "";
+  ganttRows.forEach(function (row) {
+    body += "<tr><td class='act'>" + row[0] + "</td>";
+    for (let w = 1; w <= 18; w++) body += "<td" + (row[1].indexOf(w) >= 0 ? " class='on'" : "") + "></td>";
+    body += "</tr>";
+  });
+  return head + phase + body + "</table>";
+}
+
+function el(name, attrs) {
+  const node = document.createElementNS(NS, name);
+  if (attrs) Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+  return node;
+}
+
+const swing = [0, -150, 170, -130, 160, -180, 120, -155, 165, -140, 150, -160, 110, -50];
+const soilY = 520 + (N + 1) * GAP;
+const knots = [{ x: 600, y: soilY }];
+const stations = [];
+
+for (let i = 0; i < N; i++) {
+  const y = soilY - (i + 1) * GAP;
+  const prevY = i === 0 ? soilY : soilY - i * GAP;
+  const midY = (prevY + y) / 2;
+  const midX = 600 + (i % 2 === 0 ? 240 : -240);
+  knots.push({ x: midX, y: midY });
+  const sx = 600 + swing[i];
+  const side = sx >= 600 ? 1 : -1;
+  const endX = sx + side * 210;
+  const endY = y - 16;
+  const station = { i: i, x: sx, y: y, side: side, endX: endX, endY: endY, wide: !!slides[i].wide };
+  knots.push({ x: sx, y: y, station: station });
+  stations.push(station);
+}
+const crown = { x: 600, y: stations[N - 1].y - 620 };
+knots.push({ x: stations[N - 1].x * 0.4 + 360, y: stations[N - 1].y - 260 });
+knots.push(crown);
+
+let d = "M " + knots[0].x + " " + knots[0].y;
+for (let i = 0; i < knots.length - 1; i++) {
+  const p0 = knots[Math.max(0, i - 1)];
+  const p1 = knots[i];
+  const p2 = knots[i + 1];
+  const p3 = knots[Math.min(knots.length - 1, i + 2)];
+  const c1x = p1.x + (p2.x - p0.x) / 6;
+  const c1y = p1.y + (p2.y - p0.y) / 6;
+  const c2x = p2.x - (p3.x - p1.x) / 6;
+  const c2y = p2.y - (p3.y - p1.y) / 6;
+  d += " C " + c1x + " " + c1y + ", " + c2x + " " + c2y + ", " + p2.x + " " + p2.y;
+}
+
+const VB_H = soilY + 220;
+const svg = document.getElementById("svg");
+svg.setAttribute("viewBox", "0 0 " + VB_W + " " + VB_H);
+document.getElementById("stem-wood").setAttribute("d", d);
+document.getElementById("stem").setAttribute("d", d);
+
+const ground = document.getElementById("ground");
+ground.appendChild(el("ellipse", { cx: 600, cy: soilY + 18, rx: 250, ry: 42, fill: "#c4b48e" }));
+ground.appendChild(el("ellipse", { cx: 600, cy: soilY + 8, rx: 190, ry: 28, fill: "url(#soilGrad)" }));
+[
+  "M 600 " + soilY + " C 540 " + (soilY + 50) + ", 470 " + (soilY + 80) + ", 430 " + (soilY + 110),
+  "M 600 " + soilY + " C 660 " + (soilY + 46) + ", 730 " + (soilY + 70) + ", 790 " + (soilY + 108),
+  "M 590 " + (soilY + 6) + " C 560 " + (soilY + 40) + ", 540 " + (soilY + 60) + ", 520 " + (soilY + 78)
+].forEach(function (pd) {
+  ground.appendChild(el("path", { d: pd, fill: "none", stroke: "#5a3d28", "stroke-width": 4, "stroke-linecap": "round" }));
+});
+
+const stem = document.getElementById("stem");
+const pathLength = stem.getTotalLength();
+stem.style.strokeDasharray = pathLength;
+document.getElementById("stem-wood").style.strokeDasharray = pathLength;
+
+function dist2(p, x, y) { return (p.x - x) * (p.x - x) + (p.y - y) * (p.y - y); }
+function lengthNear(x, y) {
+  const steps = 900;
+  let best = 0;
+  let bestD = Infinity;
+  for (let i = 0; i <= steps; i++) {
+    const l = (i / steps) * pathLength;
+    const p = stem.getPointAtLength(l);
+    const dd = dist2(p, x, y);
+    if (dd < bestD) { bestD = dd; best = l; }
+  }
+  let lo = Math.max(0, best - pathLength / steps);
+  let hi = Math.min(pathLength, best + pathLength / steps);
+  for (let k = 0; k < 14; k++) {
+    const m1 = lo + (hi - lo) / 3;
+    const m2 = hi - (hi - lo) / 3;
+    if (dist2(stem.getPointAtLength(m1), x, y) < dist2(stem.getPointAtLength(m2), x, y)) hi = m2;
+    else lo = m1;
+  }
+  return (lo + hi) / 2;
+}
+
+stations.forEach(function (s) {
+  s.len = lengthNear(s.x, s.y);
+  s.t = s.len / pathLength;
+  const br = el("path", {
+    d: "M " + s.x + " " + s.y + " Q " + (s.x + s.side * 90) + " " + (s.y - 80) + ", " + s.endX + " " + s.endY,
+    class: "branch"
+  });
+  document.getElementById("branches").appendChild(br);
+  const blen = br.getTotalLength();
+  br.style.strokeDasharray = blen;
+  br.style.strokeDashoffset = blen;
+  br.style.transition = "stroke-dashoffset 1.15s ease";
+  s.branch = br;
+  s.blen = blen;
+  const flower = el("g", {
+    class: "calyx",
+    transform: "translate(" + (s.endX - s.side * 8) + " " + s.endY + ")"
+  });
+  flower.appendChild(el("ellipse", { rx: "7", ry: "12", fill: "#2f6a36", transform: "rotate(-28) translate(0 -3)" }));
+  flower.appendChild(el("ellipse", { rx: "7", ry: "12", fill: "#8fbf78", transform: "rotate(26) translate(0 -3)" }));
+  flower.appendChild(el("circle", { r: "4.5", cy: "1", fill: "#f6ddd6" }));
+  document.getElementById("branches").appendChild(flower);
+  s.flower = flower;
+});
+
+const leafColors = ["#8fbf78", "#5e9a55", "#3f7d45", "#6aaa5c", "#2f6a36", "#7dae68"];
+const leafMarks = [];
+for (let l = 120; l < pathLength - 160; l += 170) {
+  const p = stem.getPointAtLength(l);
+  if (stations.some(function (s) { return Math.hypot(s.x - p.x, s.y - p.y) < 90; })) continue;
+  const n = stem.getPointAtLength(Math.min(pathLength, l + 12));
+  const ang = Math.atan2(n.y - p.y, n.x - p.x) * 180 / Math.PI;
+  const flip = leafMarks.length % 2 === 0 ? -1 : 1;
+  const outer = el("g", { transform: "translate(" + p.x + " " + p.y + ") rotate(" + (ang + flip * 58) + ")" });
+  const inner = el("g", { class: "leaf-in" });
+  const shade = leafColors[leafMarks.length % leafColors.length];
+  inner.appendChild(el("path", { d: "M0 0 C 22 -14, 58 -36, 74 -8 C 52 12, 20 14, 0 0 Z", fill: shade }));
+  inner.appendChild(el("path", { d: "M2 -1 C 24 -10, 48 -16, 66 -8", fill: "none", stroke: "#24532c", "stroke-width": 1.2 }));
+  outer.appendChild(inner);
+  document.getElementById("leaves").appendChild(outer);
+  leafMarks.push({ el: inner, len: l });
+}
+
+knots.forEach(function (k, idx) {
+  if (k.station || idx === 0 || idx === knots.length - 1) return;
+  const dir = k.x > 600 ? 1 : -1;
+  const td = "M " + k.x + " " + k.y + " C " + (k.x + dir * 36) + " " + (k.y + 50) + ", " + (k.x + dir * 78) + " " + (k.y + 10) + ", " + (k.x + dir * 48) + " " + (k.y - 36);
+  const tendril = el("path", { d: td, class: "tendril" });
+  document.getElementById("tendrils").appendChild(tendril);
+  const tl = tendril.getTotalLength();
+  tendril.style.strokeDasharray = tl;
+  tendril.style.strokeDashoffset = tl;
+  tendril.style.transition = "stroke-dashoffset 0.6s ease";
+  tendril._len = lengthNear(k.x, k.y);
+  tendril._total = tl;
+  leafMarks.push({ tendril: tendril, len: tendril._len });
+});
+
+const crownT = lengthNear(crown.x, crown.y) / pathLength;
+const crownGate = stations[N - 1].t + Math.max(0.03, (crownT - stations[N - 1].t) * 0.55);
+const crownGroup = el("g", { id: "crown" });
+document.getElementById("fruit").appendChild(crownGroup);
+crownGroup.setAttribute(
+  "transform",
+  "translate(" + crown.x + " " + crown.y + ") scale(2.6) translate(" + (-crown.x) + " " + (-crown.y) + ")"
+);
+
+function addFruit(kind) {
+  const g = el("g", { class: "harvest" });
+  if (kind === "cereza") {
+    g.appendChild(el("path", { d: "M -2 -8 C 2 -20, 12 -22, 16 -10", fill: "none", stroke: "#24532c", "stroke-width": "1.8" }));
+    g.appendChild(el("circle", { cx: "-8", cy: "2", r: "11", fill: "#c0272e" }));
+    g.appendChild(el("circle", { cx: "8", cy: "0", r: "10", fill: "#9d1d24" }));
+    g.appendChild(el("circle", { cx: "-11", cy: "-1", r: "3", fill: "#f3b4ae", opacity: "0.75" }));
+  } else if (kind === "manzana") {
+    g.appendChild(el("circle", { r: "14", cy: "2", fill: "#d23b32" }));
+    g.appendChild(el("circle", { cx: "-5", cy: "-2", r: "4", fill: "#f0a29a", opacity: "0.55" }));
+    g.appendChild(el("path", { d: "M 0 -12 C 2 -20, 8 -22, 12 -16", fill: "none", stroke: "#5a3d28", "stroke-width": "1.8" }));
+    g.appendChild(el("path", { d: "M 2 -16 C 10 -18, 16 -10, 8 -8 C 4 -12, 2 -14, 2 -16 Z", fill: "#3f7d45" }));
+  } else if (kind === "manzana-verde") {
+    g.appendChild(el("circle", { r: "13", cy: "2", fill: "#c6b23a" }));
+    g.appendChild(el("path", { d: "M 0 -10 C 1 -18, 7 -20, 10 -14", fill: "none", stroke: "#5a3d28", "stroke-width": "1.6" }));
+    g.appendChild(el("path", { d: "M 1 -14 C 8 -16, 14 -8, 7 -7 Z", fill: "#3f7d45" }));
+  } else if (kind === "carozo") {
+    g.appendChild(el("circle", { r: "14", cy: "2", fill: "#f0a05a" }));
+    g.appendChild(el("path", { d: "M 0 -8 C 2 0, 0 10, 0 14", fill: "none", stroke: "#c4783a", "stroke-width": "1.4" }));
+    g.appendChild(el("path", { d: "M 0 -12 C 6 -20, 14 -12, 6 -8 Z", fill: "#3f7d45" }));
+  } else if (kind === "ciruela") {
+    g.appendChild(el("circle", { r: "12", cy: "2", fill: "#6d2f78" }));
+    g.appendChild(el("circle", { cx: "-4", cy: "-2", r: "3", fill: "#c9a0d4", opacity: "0.45" }));
+    g.appendChild(el("path", { d: "M 0 -10 C 2 -16, 6 -18, 8 -12", fill: "none", stroke: "#24532c", "stroke-width": "1.5" }));
+  } else if (kind === "citrico") {
+    g.appendChild(el("circle", { r: "14", cy: "3", fill: "#f08a1a" }));
+    g.appendChild(el("ellipse", { cx: "0", cy: "-10", rx: "4", ry: "5", fill: "#3f7d45" }));
+    g.appendChild(el("circle", { cx: "-4", cy: "0", r: "3.5", fill: "#ffd19a", opacity: "0.45" }));
+  } else if (kind === "limon") {
+    g.appendChild(el("ellipse", { rx: "10", ry: "14", cy: "2", fill: "#f2d34a" }));
+    g.appendChild(el("ellipse", { cx: "0", cy: "-12", rx: "3", ry: "4", fill: "#6aaa5c" }));
+  } else if (kind === "kiwi") {
+    g.appendChild(el("circle", { r: "13", cy: "2", fill: "#8a6238" }));
+    g.appendChild(el("circle", { r: "9", cy: "2", fill: "#c4d96a" }));
+    g.appendChild(el("circle", { r: "3", cy: "2", fill: "#f4f0d8" }));
+    [[-4, -1], [3, -2], [0, 4], [4, 3], [-3, 3]].forEach(function (s) {
+      g.appendChild(el("circle", { cx: String(s[0]), cy: String(2 + s[1]), r: "1.1", fill: "#2c2416" }));
+    });
+  }
+  return g;
+}
+
+[
+  ["cereza", -90, 30],
+  ["cereza", -40, -20],
+  ["carozo", 20, -36],
+  ["ciruela", 78, 8],
+  ["citrico", 128, 56],
+  ["kiwi", -138, 78],
+  ["manzana", 36, 48],
+  ["manzana-verde", -18, 78],
+  ["limon", 96, 96],
+  ["cereza", 150, 18],
+  ["carozo", -70, 100],
+  ["manzana", -120, 24]
+].forEach(function (item, i) {
+  const dx = item[1];
+  const dy = item[2];
+  const fx = crown.x + dx;
+  const fy = crown.y + dy;
+  const twig = el("path", {
+    class: "crown-twig",
+    d: "M " + crown.x + " " + crown.y + " Q " + (crown.x + dx * 0.45) + " " + (crown.y + dy * 0.2 - 18) + ", " + fx + " " + fy
+  });
+  crownGroup.appendChild(twig);
+  const len = twig.getTotalLength();
+  twig.style.strokeDasharray = String(len);
+  twig.style.strokeDashoffset = String(len);
+  const holder = el("g", { transform: "translate(" + fx + " " + fy + ")" });
+  const fruit = addFruit(item[0]);
+  fruit.style.animationDelay = (0.15 + i * 0.11) + "s";
+  holder.appendChild(fruit);
+  crownGroup.appendChild(holder);
+});
+
+const world = document.getElementById("world");
+const cards = stations.map(function (s) {
+  const card = document.createElement("article");
+  const slide = slides[s.i];
+  card.className = "card " + (s.side > 0 ? "side-right" : "side-left");
+  card.innerHTML = "<p class='kicker'>" + slide.kicker + "</p><h2>" + slide.title + "</h2>" + slide.html;
+  card.dataset.t = String(s.t);
+  if (s.i === 6) {
+    const slot = card.querySelector("#gantt");
+    if (slot) slot.innerHTML = ganttHtml();
+  }
+  world.appendChild(card);
+  s.card = card;
+  return card;
+});
+
+const dots = document.getElementById("dots");
+stations.forEach(function (s) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = "dot";
+  b.setAttribute("aria-label", "Lámina " + (s.i + 1));
+  b.addEventListener("click", function () { goTo(s.i); });
+  dots.appendChild(b);
+  s.dot = b;
+});
+
+let scale = 1;
+function layout() {
+  const svgWidth = Math.min(window.innerWidth * 0.92, 1500);
+  scale = svgWidth / VB_W;
+  svg.setAttribute("width", svgWidth);
+  svg.setAttribute("height", VB_H * scale);
+  document.getElementById("spacer").style.height = ((N + 0.65) * window.innerHeight) + "px";
+  stations.forEach(function (s) {
+    const maxW = window.innerWidth - 64;
+    const want = window.innerWidth * (s.wide ? 0.78 : 0.7);
+    const w = Math.min(maxW, want);
+    s.cardW = w;
+    s.card.style.width = w + "px";
+    if (s.side > 0) s.card.style.left = (s.endX * scale) + "px";
+    else s.card.style.left = (s.endX * scale - w) + "px";
+    s.card.style.top = (s.endY * scale) + "px";
+  });
+  fitCards();
+}
+
+function fitCards() {
+  const maxH = Math.max(140, window.innerHeight - 40);
+  stations.forEach(function (s) {
+    const card = s.card;
+    card.style.maxHeight = maxH + "px";
+    let lo = 0.22;
+    let hi = 1;
+    card.style.setProperty("--fit", "1");
+    const tooBig = function () {
+      return card.scrollHeight > maxH + 1 || card.scrollWidth > card.clientWidth + 1;
+    };
+    if (!tooBig()) return;
+    for (let i = 0; i < 12; i++) {
+      const mid = (lo + hi) / 2;
+      card.style.setProperty("--fit", String(mid));
+      if (tooBig()) hi = mid;
+      else lo = mid;
+    }
+    card.style.setProperty("--fit", String(lo));
+  });
+}
+
+function maxScroll() {
+  return Math.max(1, document.getElementById("spacer").offsetHeight - window.innerHeight);
+}
+function progress() {
+  const p = window.scrollY / maxScroll();
+  if (!isFinite(p)) return 0;
+  return Math.max(0, Math.min(1, p));
+}
+
+const bud = document.getElementById("bud");
+const hint = document.getElementById("hint");
+const count = document.getElementById("count");
+
+function frame() {
+  const prog = progress();
+  let draw = prog * pathLength;
+  if (!isFinite(draw)) draw = 0;
+  draw = Math.max(0, Math.min(pathLength, draw));
+  const offset = String(pathLength - draw);
+  stem.style.strokeDashoffset = offset;
+  document.getElementById("stem-wood").style.strokeDashoffset = offset;
+
+  const pt = stem.getPointAtLength(draw);
+  const nxt = stem.getPointAtLength(Math.min(pathLength, draw + 6));
+  let angle = -90;
+  if (nxt.x !== pt.x || nxt.y !== pt.y) {
+    angle = Math.atan2(nxt.y - pt.y, nxt.x - pt.x) * (180 / Math.PI);
+  }
+  if (isFinite(pt.x) && isFinite(pt.y)) {
+    bud.setAttribute("transform", "translate(" + pt.x + " " + pt.y + ") rotate(" + (angle + 90) + ")");
+  }
+
+  let focus = null;
+  stations.forEach(function (s) {
+    const on = prog >= s.t - 0.004;
+    s.card.classList.toggle("bloomed", on);
+    s.branch.style.strokeDashoffset = on ? "0" : String(s.blen);
+    s.flower.classList.toggle("on", on);
+    s.dot.classList.toggle("on", on && (focus === null || s.i >= focus.i) && prog < (stations[s.i + 1] ? stations[s.i + 1].t - 0.004 : 1.1));
+    if (prog >= s.t - 0.045) focus = s;
+  });
+  let shown = 0;
+  stations.forEach(function (s) { if (prog >= s.t - 0.004) shown = s.i + 1; });
+  const inCrown = prog >= crownGate;
+  count.textContent = inCrown ? "copa" : (shown === 0 ? "semilla" : (shown + " / " + N));
+  hint.style.opacity = prog > 0.02 ? "0" : "1";
+
+  leafMarks.forEach(function (mark) {
+    const on = draw >= mark.len;
+    if (mark.el) mark.el.classList.toggle("on", on);
+    if (mark.tendril) mark.tendril.style.strokeDashoffset = on ? "0" : String(mark.tendril._total);
+  });
+
+  let anchorX = pt.x;
+  let anchorY = pt.y;
+  let lock = 0;
+  if (!inCrown && focus) {
+    if (focus.i === N - 1) {
+      lock = 1;
+    } else {
+      const nextT = stations[focus.i + 1].t;
+      const span = Math.max(0.0001, nextT - focus.t);
+      const u = (prog - (focus.t - 0.02)) / span;
+      if (u <= 0.4) lock = 1;
+      else if (u < 0.72) lock = 1 - (u - 0.4) / 0.32;
+    }
+    anchorX = focus.x * lock + pt.x * (1 - lock);
+    anchorY = focus.y * lock + pt.y * (1 - lock);
+  }
+  const crownEl = document.getElementById("crown");
+  if (crownEl.classList.contains("on") !== inCrown) {
+    crownEl.classList.toggle("on", inCrown);
+    crownEl.querySelectorAll(".crown-twig").forEach(function (twig) {
+      twig.style.strokeDashoffset = inCrown ? "0" : twig.style.strokeDasharray;
+    });
+  }
+
+  let budX = window.innerWidth / 2;
+  let budY = window.innerHeight * 0.46;
+  if (inCrown) {
+    anchorX = crown.x;
+    anchorY = crown.y;
+    budX = window.innerWidth / 2;
+    budY = window.innerHeight * 0.52;
+  } else if (focus && lock > 0) {
+    const cardCenter = window.innerWidth / 2 + focus.side * 28;
+    const originScreen = cardCenter - focus.side * (focus.cardW / 2);
+    const lockedX = originScreen - (focus.endX - focus.x) * scale;
+    const lockedY = window.innerHeight / 2 - (focus.endY - focus.y) * scale;
+    budX = lockedX * lock + (window.innerWidth / 2) * (1 - lock);
+    budY = lockedY * lock + (window.innerHeight * 0.46) * (1 - lock);
+    const origin = budX + (focus.endX - anchorX) * scale;
+    let left = focus.side > 0 ? origin : origin - focus.cardW;
+    let right = left + focus.cardW;
+    if (left < 32) budX += 32 - left;
+    if (right > window.innerWidth - 32) budX -= right - (window.innerWidth - 32);
+  }
+  world.style.transform = "translate(" + (budX - anchorX * scale) + "px, " + (budY - anchorY * scale) + "px)";
+}
+
+let ticking = false;
+function requestFrame() {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(function () { ticking = false; frame(); });
+}
+
+let keyed = -1;
+let scrollAnim = 0;
+function scrollToSlow(top) {
+  const from = window.scrollY;
+  const dist = top - from;
+  cancelAnimationFrame(scrollAnim);
+  if (Math.abs(dist) < 1) {
+    window.scrollTo(0, top);
+    return;
+  }
+  const duration = 2800;
+  const t0 = performance.now();
+  function tick(now) {
+    const u = Math.min(1, (now - t0) / duration);
+    const e = 1 - Math.pow(1 - u, 3);
+    window.scrollTo(0, from + dist * e);
+    if (u < 1) scrollAnim = requestAnimationFrame(tick);
+  }
+  scrollAnim = requestAnimationFrame(tick);
+}
+function goTo(i) {
+  i = Math.max(0, Math.min(N - 1, i));
+  keyed = i;
+  scrollToSlow(stations[i].t * maxScroll());
+}
+function step(dir) {
+  const prog = progress();
+  let idx = -1;
+  stations.forEach(function (s) { if (prog >= s.t - 0.008) idx = s.i; });
+  if (prog >= crownGate) idx = N;
+  if (keyed < 0 || Math.abs(keyed - idx) > 1) keyed = idx;
+  keyed += dir;
+  if (keyed < 0) {
+    keyed = -1;
+    scrollToSlow(0);
+    return;
+  }
+  if (keyed >= N) {
+    keyed = N;
+    scrollToSlow(crownT * maxScroll());
+    return;
+  }
+  goTo(keyed);
+}
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+    e.preventDefault();
+    step(1);
+  }
+  if (e.key === "ArrowUp" || e.key === "ArrowLeft" || e.key === "PageUp") {
+    e.preventDefault();
+    step(-1);
+  }
+  if (e.key === "Home") { e.preventDefault(); keyed = -1; scrollToSlow(0); }
+  if (e.key === "End") { e.preventDefault(); goTo(N - 1); }
+});
+window.addEventListener("scroll", requestFrame, { passive: true });
+window.addEventListener("wheel", function () {
+  keyed = -1;
+  cancelAnimationFrame(scrollAnim);
+}, { passive: true });
+window.addEventListener("resize", function () { layout(); frame(); });
+
+layout();
+frame();
+</script>
+</body>
+</html>

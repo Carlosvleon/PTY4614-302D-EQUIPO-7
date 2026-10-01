@@ -1,0 +1,1 @@
+ALTER TYPE "erp"."CatalogoImportacionTipo" ADD VALUE IF NOT EXISTS 'CODIGOS_FINANCIEROS';

@@ -1,0 +1,49 @@
+# Intermediario de facturación. Misma red que el ERP: almahue_erp_net (externa).
+# Host: /opt/billing_gateway
+#   docker compose -f docker-compose.prod.yml --env-file .env up -d --build
+#
+# No publicar 3040 a Internet. El API del ERP llama http://almahue_billing_gateway:3040
+
+name: almahue_billing
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${BILLING_GATEWAY_IMAGE:-almahue-billing-gateway:prod}
+    container_name: almahue_billing_gateway
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      PORT: ${PORT:-3040}
+      BILLING_BIND_HOST: 0.0.0.0
+      BILLING_STORE_PATH: /app/data/emissions.sqlite
+      BILLING_CORS_ORIGINS: ${BILLING_CORS_ORIGINS:-}
+    volumes:
+      - billing_emissions:/app/data
+      - ./src/registry/tenants.local.json:/app/dist/registry/tenants.local.json:ro
+    ports:
+      - "127.0.0.1:${BILLING_HOST_PORT:-3040}:3040"
+    networks:
+      - almahue_erp_net
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:'+(process.env.PORT||3040)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\"",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+networks:
+  almahue_erp_net:
+    external: true
+    name: almahue_erp_net
+
+volumes:
+  billing_emissions:
+    name: almahue_billing_emissions

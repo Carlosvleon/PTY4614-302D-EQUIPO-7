@@ -1,0 +1,2410 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["erp"]
+}
+
+model Empresa {
+  id                        String                      @id
+  rut                       String                      @unique
+  razonSocial               String
+  giro                      String?
+  activa                    Boolean                     @default(true)
+  /// Dirección / contacto para plantillas de documento (cotización, OC).
+  direccion                 String?
+  comuna                    String?
+  ciudad                    String?
+  telefono                  String?
+  emailContacto             String?
+  /// Nombre del representante legal. Opcional; no reemplaza la razón social.
+  representanteLegalNombre  String?
+  /// RUT del representante legal. Opcional.
+  representanteLegalRut     String?
+  /// Mail de contacto del representante legal. No es el mail de la empresa (emailContacto).
+  representanteLegalEmail   String?
+  /// Teléfono de contacto del representante legal. Opcional.
+  representanteLegalTelefono String?
+  /// Logo (URL pública o data-URL). Sin object storage en v1.
+  logoUrl                   String?                     @db.Text
+  /// Sello / marca de agua imagen (URL o data-URL), opcional.
+  selloUrl                  String?                     @db.Text
+  /// Opciones de plantilla: logo, pie, dirección, columnas, watermark texto.
+  plantillaDoc              Json?
+  /// Días sin reclamo para marcar factura de compra como aceptada (plazo). No aprueba la OC.
+  aceptacionCompraPlazoDias Int                         @default(8)
+  /// UUID BillerID de GoSocket (portal). Obligatorio al emitir DTE vía billing-gateway.
+  gosocketBillerId          String?
+  /// N° resolución SII/QA que autoriza DTE (CAE). Distinto por sociedad; cambia en productivo.
+  gosocketNroResolucion     String?
+  /// Fecha resolución SII/QA (YYYY-MM-DD) para CAE.
+  gosocketFechaResolucion   String?
+  /// Código de actividad SII (Acteco, 6 dígitos). Obligatorio en DTE 33.
+  gosocketActeco String?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  sucursales        Sucursal[]
+  usuarios          Usuario[]
+  usuariosAcceso    UsuarioEmpresa[]
+  centrosCosto      CentroCosto[]
+  areasNegocio      AreaNegocio[]
+  contratistas      Contratista[]
+  tarifas           TarifaContratista[]
+  labores           Labor[]
+  actividades       Actividad[]
+  proformas         ProformaContratista[]
+  indicadoresBc     IndicadorBc[]
+  syncBcMeta        SyncBcMeta[]
+  ingresosLabor     IngresoLaborDiario[]
+  periodosCierre    PeriodoCierreContratista[]
+  ordenesCompra     OrdenCompra[]
+  aprobacionesOc    AprobacionOc[]
+  recepcionesOc     RecepcionOc[]
+  registrosCompra   RegistroCompra[]
+  insumos           Insumo[]
+  bodegas           Bodega[]
+  movimientosBodega MovimientoBodega[]
+  stocksInsumoBodega StockInsumoBodega[]
+  reservasStock     ReservaStock[]
+  cuentasContables  CuentaContable[]
+  elementosCosto    ElementoCosto[]
+  factoresHonorario FactorHonorario[]
+  asientos          Asiento[]
+  periodosContables PeriodoContable[]
+  configsContableSii ConfigContableSii[]
+  movimientosCaja   MovimientoCaja[]
+  pagos             Pago[]
+  pagoTcEventos     PagoTcEvento[]
+  aperturaCorrecciones AperturaCorreccion[]
+  cartolas          CartolaBancaria[]
+  conciliaciones    Conciliacion[]
+  anticipos         AnticipoProductor[]
+  documentosAging   DocumentoAging[]
+  presupuestos      Presupuesto[]
+  clientes          Cliente[]
+  proveedores       Proveedor[]
+  prospectos        Prospecto[]
+  documentosCom     DocumentoComercial[]
+  workflows         WorkflowConfig[]
+  delegacionesAprobacion DelegacionAprobacion[]
+  gruposAprobacion  GrupoAprobacion[]
+  nodosEscalaAprobacion NodoEscalaAprobacion[]
+  cuentasCorrientes CuentaCorrienteMovimiento[]
+  guiasDespacho     GuiaDespacho[]
+  adminConceptos    AdminConcepto[]
+  catalogoImportaciones CatalogoImportacion[]
+  codigosFinancieros CodigoFinanciero[]
+  conceptosFlujo     ConceptoFlujo[]
+  contratistaVigenciaHist   ContratistaVigenciaHistorial[]
+  eventosCierreContratista  PeriodoCierreContratistaEvento[]
+  tiposContratoContratista  TipoContratoContratista[]
+  auditoriasContratista     AuditoriaContratista[]
+
+  @@schema("erp")
+}
+
+model Sucursal {
+  id        String   @id @default(cuid())
+  codigo    String
+  nombre    String
+  empresaId String
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+model Rol {
+  id               String    @id
+  codigo           String    @unique
+  nombre           String
+  permisos         String[]
+  /// Matriz por pantalla [{ pantalla, lectura, escritura }] — persistida (Reu 3).
+  permisosPantalla Json?
+  /// Si true, aprobar/rechazar solicita PIN de 4 dígitos (Sergio).
+  aprobarConPin    Boolean   @default(false)
+  usuarios         Usuario[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@schema("erp")
+}
+
+model Usuario {
+  id                      String                   @id
+  email                   String                   @unique
+  /// Nombre de usuario / login corto (ej. MRODRIGUEZ). Distinto del nombre completo.
+  username                String?                  @unique
+  passwordHash            String
+  /// Clave personal de reversa/rechazo post-aprobación (D3 Reu4). Distinta del password de login.
+  claveReversaHash        String?
+  /// PIN de 4 dígitos para aprobar/rechazar (solo si el rol tiene aprobarConPin).
+  pinAprobacionHash       String?
+  /// Object ID (oid) de Microsoft Entra ID — login SSO opcional.
+  microsoftOid            String?                  @unique
+  microsoftLinkedAt       DateTime?
+  nombre                  String
+  activo                  Boolean                  @default(true)
+  /// Rol temporal (opcional): fuera de rango el usuario queda inactivo para RBAC.
+  rolVigenciaDesde        DateTime?
+  rolVigenciaHasta        DateTime?
+  /// Jefe directo (línea de mando para aprobaciones Reu6).
+  jefeId                  String?
+  jefe                    Usuario?                 @relation("UsuarioJefe", fields: [jefeId], references: [id], onDelete: SetNull)
+  subordinados            Usuario[]                @relation("UsuarioJefe")
+  /// Tope individual de aprobación (null = sin límite configurado).
+  montoMaxAprobacion      Decimal?                 @db.Decimal(18, 2)
+  /// Empresa primaria / por defecto (también incluida en empresasAcceso).
+  empresaId               String
+  rolId                   String
+  empresa                 Empresa                  @relation(fields: [empresaId], references: [id])
+  rol                     Rol                      @relation(fields: [rolId], references: [id])
+  empresasAcceso          UsuarioEmpresa[]
+  refreshTokens           RefreshToken[]
+  passwordResetTokens     PasswordResetToken[]
+  tablePreferences        UiTablePreference[]
+  notificaciones          Notificacion[]
+  delegacionesTitular     DelegacionAprobacion[]   @relation("DelegacionTitular")
+  delegacionesSuplente    DelegacionAprobacion[]   @relation("DelegacionSuplente")
+  gruposAprobacion        UsuarioGrupoAprobacion[]
+  gruposAprobacionEntrada GrupoAprobacion[]        @relation("GrupoAprobacionEntrada")
+  nodosEscala             NodoEscalaAprobacion[]   @relation("NodoEscalaUsuario")
+  nodosEscalaSiguiente    NodoEscalaAprobacion[]   @relation("NodoEscalaSiguiente")
+  nodosAprobador          NodoAprobador[]          @relation("NodoAprobadorUsuario")
+  adminConceptos          AdminConcepto[]          @relation("AdminConceptoUsuario")
+  catalogoImportaciones   CatalogoImportacion[]
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+
+  @@schema("erp")
+}
+
+/// N:M usuario ↔ empresas permitidas (Reu 3 / D4).
+model UsuarioEmpresa {
+  usuarioId String
+  empresaId String
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([usuarioId, empresaId])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+enum CatalogoImportacionTipo {
+  PLAN_CUENTAS
+  CENTROS_COSTO
+  ELEMENTOS_COSTO
+  AREAS_NEGOCIO
+  CODIGOS_FINANCIEROS
+
+  @@schema("erp")
+}
+
+/// Auditoría de imports Excel de catálogos (quién, cuándo, qué se pisó).
+model CatalogoImportacion {
+  id            String                  @id @default(cuid())
+  tipo          CatalogoImportacionTipo
+  archivoNombre String?
+  created       Int                     @default(0)
+  updated       Int                     @default(0)
+  unchanged     Int                     @default(0)
+  politicas     Json?
+  /// Códigos actualizados + campos pisados (acotado).
+  resumen       Json?
+  usuarioId     String?
+  usuarioEmail  String?
+  usuarioNombre String?
+  usuario       Usuario?                @relation(fields: [usuarioId], references: [id], onDelete: SetNull)
+  empresaId     String
+  empresa       Empresa                 @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt     DateTime                @default(now())
+
+  @@index([empresaId, tipo, createdAt])
+  @@schema("erp")
+}
+
+/// Preferencias de columnas por usuario y pantalla/lista (show/hide + orden).
+model UiTablePreference {
+  id             String   @id @default(cuid())
+  userId         String
+  usuario        Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Clave estable de lista, ej. `admin.usuarios`, `catalogos.monedas`
+  tableKey       String
+  visibleColumns Json
+  columnOrder    Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([userId, tableKey])
+  @@index([userId])
+  @@schema("erp")
+}
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  usuario   Usuario   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  @@schema("erp")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  usuario   Usuario   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@schema("erp")
+}
+
+/// Centros de costo por empresa (DEC-03: sin selección cross-empresa)
+model CentroCosto {
+  id                String               @id
+  codigo            String
+  nombre            String
+  activa            Boolean              @default(true)
+  contactoEncargado String?
+  empresaId         String
+  empresa           Empresa              @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  vigenciaDesde     DateTime?
+  vigenciaHasta     DateTime?
+  tarifas           TarifaContratista[]
+  ingresosLabor     IngresoLaborDiario[]
+  cuentasVinculo    CuentaCentroCosto[]
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+/// Área de negocio (dimensión por empresa; Reu6 D9).
+model AreaNegocio {
+  id             String              @id @default(cuid())
+  codigo         String
+  nombre         String
+  activa         Boolean             @default(true)
+  empresaId      String
+  empresa        Empresa             @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  cuentasVinculo CuentaAreaNegocio[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+/// Agrupador del flujo de caja (ítem del Excel de Mario). UI: Concepto.
+model ConceptoFlujo {
+  id                 String             @id @default(cuid())
+  codigo             String
+  nombre             String
+  orden              Int                @default(0)
+  activo             Boolean            @default(true)
+  empresaId          String
+  empresa            Empresa            @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  codigosFinancieros CodigoFinanciero[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@index([empresaId, activo, orden])
+  @@schema("erp")
+}
+
+/// Maestro de códigos financieros (Parametrización). Catálogo Agrosoft (R4-25) lo carga Almahue; seed local solo trae ejemplos Reu1–3.
+model CodigoFinanciero {
+  id         String         @id @default(cuid())
+  codigo     String
+  nombre     String
+  activa     Boolean        @default(true)
+  conceptoId String?
+  concepto   ConceptoFlujo? @relation(fields: [conceptoId], references: [id], onDelete: SetNull)
+  empresaId  String
+  empresa    Empresa        @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  movimientosCartola MovimientoCartola[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@index([empresaId, activa])
+  @@index([conceptoId])
+  @@schema("erp")
+}
+
+model Moneda {
+  id             String   @id @default(cuid())
+  codigo         String   @unique
+  nombre         String
+  simbolo        String
+  activa         Boolean  @default(true)
+  focoReporteria Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@schema("erp")
+}
+
+model UnidadMedida {
+  id        String   @id @default(cuid())
+  codigo    String   @unique
+  nombre    String
+  activa    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@schema("erp")
+}
+
+model TipoDocumento {
+  id        String   @id @default(cuid())
+  codigo    String
+  nombre    String
+  modulo    String
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([codigo, modulo])
+  @@schema("erp")
+}
+
+/// Indicadores diarios Banco Central (USD/EUR/CNY). empresaId opcional (global si null).
+model IndicadorBc {
+  id                String   @id @default(cuid())
+  fecha             DateTime
+  usd               Decimal  @db.Decimal(18, 4)
+  eur               Decimal  @db.Decimal(18, 4)
+  cny               Decimal  @db.Decimal(18, 4)
+  fuente            String   @default("BCCh")
+  completadoFeriado Boolean  @default(false)
+  /// manual | auto
+  origenSync        String?
+  empresaId         String?
+  empresa           Empresa? @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([fecha])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+/// Meta de sync BC — singleton global (id=default) o por empresa.
+model SyncBcMeta {
+  id                String    @id @default(cuid())
+  lastSync          DateTime?
+  autoSync          Boolean   @default(false)
+  horaProgramada    String    @default("09:00")
+  /// Horas HH:mm separadas por coma (modo «horarios»).
+  horarios          String    @default("09:00")
+  /// Si se informa, consulta cada N minutos dentro de la ventana (modo intervalo).
+  frecuenciaMinutos Int?
+  ventanaInicio     String    @default("09:00")
+  ventanaFin        String    @default("18:00")
+  /// Solo lunes a viernes.
+  diasHabiles       Boolean   @default(true)
+  /// Último slot ejecutado (YYYY-MM-DDTHH:mm) para no duplicar.
+  lastCronSlot      String?
+  /// OK | ERROR | SKIPPED
+  lastStatus        String?
+  lastError         String?   @db.Text
+  /// Fallos consecutivos del cron (alerta si ≥ 2).
+  failStreak        Int       @default(0)
+  empresaId         String?
+  empresa           Empresa?  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([empresaId])
+  @@schema("erp")
+}
+
+model Contratista {
+  id            String                @id
+  rut           String
+  razonSocial   String
+  especialidad  String
+  activo        Boolean               @default(true)
+  vigenciaHasta DateTime?
+  empresaId     String
+  empresa       Empresa               @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  tarifas       TarifaContratista[]
+  proformas     ProformaContratista[]
+  ingresosLabor IngresoLaborDiario[]
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  direccion          String?
+  ciudad             String?
+  comuna             String?
+  email              String?
+  telefono1          String?
+  telefono2          String?
+  representanteLegal String?
+  rutRepresentante   String?
+  tipoPago           String?
+  observaciones      Json?
+  proveedorId        String?
+  proveedor          Proveedor?            @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  vigenciaHistorial  ContratistaVigenciaHistorial[]
+
+  @@unique([empresaId, rut])
+  @@index([proveedorId])
+  @@schema("erp")
+}
+
+/// Snapshot de cambios de vigencia del contratista (Reu1).
+model ContratistaVigenciaHistorial {
+  id              String      @id @default(cuid())
+  contratistaId   String
+  contratista     Contratista @relation(fields: [contratistaId], references: [id], onDelete: Cascade)
+  empresaId       String
+  empresa         Empresa     @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  activo          Boolean
+  vigenciaHasta   DateTime?
+  registradoAt    DateTime    @default(now())
+  usuarioId       String
+  usuarioNombre   String
+
+  @@index([contratistaId, registradoAt])
+  @@schema("erp")
+}
+
+/// Tipo operacional/contable del trabajo externo (p. ej. Mano de Obra, Transporte).
+model TipoContratoContratista {
+  id                     String                @id @default(cuid())
+  codigo                 String
+  nombre                 String
+  cuentaDebeId           String
+  cuentaDebe             CuentaContable        @relation("TipoContratoDebe", fields: [cuentaDebeId], references: [id], onDelete: Restrict)
+  cuentaHaberId          String
+  cuentaHaber            CuentaContable        @relation("TipoContratoHaber", fields: [cuentaHaberId], references: [id], onDelete: Restrict)
+  cuentaAdministracionId String
+  cuentaAdministracion   CuentaContable        @relation("TipoContratoAdministracion", fields: [cuentaAdministracionId], references: [id], onDelete: Restrict)
+  activa                 Boolean               @default(true)
+  empresaId              String
+  empresa                Empresa               @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  tarifas                TarifaContratista[]
+  ingresos               IngresoLaborDiario[]
+  proformas              ProformaContratista[]
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+/// Catálogo Labor (parametrización en Contratistas, DEC-01)
+model Labor {
+  id            String               @id
+  codigo        String
+  nombre        String
+  activa        Boolean              @default(true)
+  empresaId     String
+  empresa       Empresa              @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  actividades   LaborActividad[]
+  tarifas       TarifaContratista[]
+  ingresosLabor IngresoLaborDiario[]
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+/// Catálogo Actividad
+model Actividad {
+  id            String               @id
+  codigo        String
+  nombre        String
+  activa        Boolean              @default(true)
+  empresaId     String
+  empresa       Empresa              @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  labores       LaborActividad[]
+  tarifas       TarifaContratista[]
+  ingresosLabor IngresoLaborDiario[]
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+/// N:N Labor ↔ Actividad (generalmente 1:1; N:N permitido)
+model LaborActividad {
+  laborId     String
+  actividadId String
+  labor       Labor     @relation(fields: [laborId], references: [id], onDelete: Cascade)
+  actividad   Actividad @relation(fields: [actividadId], references: [id], onDelete: Cascade)
+
+  @@id([laborId, actividadId])
+  @@schema("erp")
+}
+
+/// Líneas de tarifa persistentes (C-03). CC debe ser de la misma empresa.
+model TarifaContratista {
+  id             String                   @id @default(cuid())
+  contratistaId  String
+  contratista    Contratista              @relation(fields: [contratistaId], references: [id], onDelete: Cascade)
+  laborId        String
+  laborRef       Labor                    @relation(fields: [laborId], references: [id])
+  actividadId    String
+  actividadRef   Actividad                @relation(fields: [actividadId], references: [id])
+  tipoContratoId String?
+  tipoContrato   TipoContratoContratista? @relation(fields: [tipoContratoId], references: [id])
+  tarifa         Decimal                  @db.Decimal(18, 2)
+  unidad         String
+  centroCostoId  String
+  centroCosto    CentroCosto              @relation(fields: [centroCostoId], references: [id])
+  empresaId      String
+  empresa        Empresa                  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  ingresos       IngresoLaborDiario[]
+  vigenciaDesde  DateTime
+  vigenciaHasta  DateTime?
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+
+  @@index([empresaId])
+  @@index([contratistaId])
+  @@index([tipoContratoId])
+  @@schema("erp")
+}
+
+enum EstadoProforma {
+  BORRADOR
+  PENDIENTE_APROBACION
+  DEFINITIVA
+  FACTURADA
+  RECHAZADA
+
+  @@schema("erp")
+}
+
+/// Proforma contratista (C-06). Flujo Borrador → Pendiente aprobación → Definitiva → Facturada.
+/// N:1 factura: la FK 1:1 queda en la proforma “principal”; las demás usan facturaNumeroRef.
+model ProformaContratista {
+  id                   String               @id @default(cuid())
+  numero               String
+  contratistaId        String
+  contratista          Contratista          @relation(fields: [contratistaId], references: [id], onDelete: Cascade)
+  empresaId            String
+  empresa              Empresa              @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  periodo              String
+  montoNeto            Decimal              @db.Decimal(18, 2)
+  moneda               String               @default("CLP")
+  estado               EstadoProforma       @default(BORRADOR)
+  tipoContratoId       String?
+  tipoContrato         TipoContratoContratista? @relation(fields: [tipoContratoId], references: [id])
+  /// Supervisor a quien se solicitó la aprobación (no se sobrescribe al resolver).
+  aprobadorId          String?
+  aprobadorNombre      String?
+  /// Cadena calculada al solicitar (ids en orden). Reu6 escalamiento.
+  aprobacionCadenaIds  String[]             @default([])
+  aprobacionPasoActual Int                  @default(1)
+  aprobacionPasosTotal Int                  @default(1)
+  /// Quien efectivamente aprobó / rechazó (puede ser otro jefe de la regla).
+  aprobadoPorId        String?
+  aprobadoPorNombre    String?
+  aprobadaAt           DateTime?
+  /// Usuario que creó la proforma (para notificar resultado).
+  creadoPorId          String?
+  creadoPorNombre      String?
+  /// Nº factura compartida cuando esta proforma no es la dueña del registro FacturaContratista (N:1).
+  facturaNumeroRef     String?
+  factura              FacturaContratista?
+  ingresosLabor        IngresoLaborDiario[]
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  registroCompraId     String?
+  registroCompra       RegistroCompra?          @relation(fields: [registroCompraId], references: [id], onDelete: SetNull)
+  ordenCompraId        String?
+  ordenCompra          OrdenCompra?             @relation(fields: [ordenCompraId], references: [id], onDelete: SetNull)
+
+  @@unique([empresaId, numero])
+  @@index([empresaId, periodo])
+  @@index([tipoContratoId])
+  @@index([registroCompraId])
+  @@index([ordenCompraId])
+  @@schema("erp")
+}
+
+/// Factura asociada a una o más proformas (N:1). La FK proformaId apunta a la proforma principal.
+model FacturaContratista {
+  id                String              @id @default(cuid())
+  numero            String
+  proformaId        String              @unique
+  proforma          ProformaContratista @relation(fields: [proformaId], references: [id], onDelete: Cascade)
+  fecha             DateTime
+  montoNeto         Decimal             @db.Decimal(18, 2)
+  empresaId         String
+  /// IDs de todas las proformas cubiertas por esta factura (incluye la principal).
+  proformasGrupoIds String[]            @default([])
+  createdAt         DateTime            @default(now())
+
+  @@unique([empresaId, numero])
+  @@schema("erp")
+}
+
+enum TipoJornadaLabor {
+  JORNADA
+  TRATO
+
+  @@schema("erp")
+}
+
+enum EstadoIngresoLabor {
+  PENDIENTE
+  PENDIENTE_APROBACION
+  ASOCIADO
+  FACTURADO
+
+  @@schema("erp")
+}
+
+enum EstadoDocumentoErp {
+  BORRADOR
+  PENDIENTE_APROBACION
+  AUTORIZADA
+  EMITIDO
+  APROBADO
+  /// OV: stock confirmado. Distinto de APROBADO (OC / PIN).
+  CONFIRMADA
+  FACTURADO
+  ANULADO
+  VENCIDO
+  RECHAZADO
+  CONTABILIZADA
+  RECEPCIONADA
+
+  @@schema("erp")
+}
+
+enum AfactoOc {
+  AFECTO
+  EXENTO
+  MIXTO
+
+  @@schema("erp")
+}
+
+enum AceptacionCompraEstado {
+  PENDIENTE
+  ACEPTADA_PLAZO
+  RECLAMADA
+
+  @@schema("erp")
+}
+
+enum AceptacionCompraOrigen {
+  MANUAL
+  PLAZO_AUTO
+  GOSOCKET
+
+  @@schema("erp")
+}
+
+/// Estado de aceptación/rechazo comercial del documento en GoSocket (espejo del ACD SII).
+enum GoSocketAceptacionEstado {
+  ACEPTADO
+  PENDIENTE
+  RECHAZADO
+
+  @@schema("erp")
+}
+
+/// Distingue rechazo técnico del SII (AuthorityStatus=03) de un reclamo comercial (ACD) del receptor.
+enum GoSocketRechazoOrigen {
+  SII
+  COMERCIAL
+
+  @@schema("erp")
+}
+
+enum EstadoAprobacionOc {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+  /// OC anulada mientras la bandeja seguía pendiente.
+  ANULADA
+  /// OR/AND: no firmó porque el paso ya se resolvió (otro aprobó, o rechazo de hermano).
+  OMITIDA
+
+  @@schema("erp")
+}
+
+enum EstadoRecepcionOc {
+  BORRADOR
+  CONFIRMADA
+
+  @@schema("erp")
+}
+
+enum TipoMovimientoBodega {
+  ENTRADA_PROVEEDOR
+  TRASLADO
+  DEVOLUCION_NC
+  /// Salida a proveedor (genera par con DEVOLUCION o entrada inversa).
+  SALIDA_PROVEEDOR
+  DEVOLUCION
+  SALIDA_VENTA
+  ENTRADA_VENTA_ANULACION
+
+  @@schema("erp")
+}
+
+enum EstadoMovimientoBodega {
+  BORRADOR
+  CONFIRMADO
+  ANULADO
+
+  @@schema("erp")
+}
+
+/// Reserva de stock al autorizar OV (disponible = físico − ACTIVA no vencida).
+enum EstadoReservaStock {
+  ACTIVA
+  CONSUMIDA
+  LIBERADA
+  VENCIDA
+
+  @@schema("erp")
+}
+
+enum TipoCuentaContable {
+  ACTIVO
+  PASIVO
+  PATRIMONIO
+  INGRESO
+  GASTO
+
+  @@schema("erp")
+}
+
+enum EstadoAsiento {
+  BORRADOR
+  CONTABILIZADO
+  ANULADO
+
+  @@schema("erp")
+}
+
+enum EstadoPeriodoContable {
+  ABIERTO
+  CERRADO
+
+  @@schema("erp")
+}
+
+enum EstadoElementoCosto {
+  VIGENTE
+  ANULADO
+
+  @@schema("erp")
+}
+
+enum EstadoCartola {
+  CARGADA
+  EN_CONCILIACION
+  CERRADA
+
+  @@schema("erp")
+}
+
+enum TipoMovimientoFin {
+  INGRESO
+  EGRESO
+
+  @@schema("erp")
+}
+
+enum EstadoContableMov {
+  PENDIENTE
+  CONTABILIZADO
+
+  @@schema("erp")
+}
+
+enum OrigenConciliacion {
+  MANUAL
+  AUTOMATICO
+
+  @@schema("erp")
+}
+
+enum EstadoMovConciliacion {
+  CONCILIADO
+  PENDIENTE
+
+  @@schema("erp")
+}
+
+enum EstadoAnticipo {
+  ABIERTO
+  PARCIAL
+  CERRADO
+
+  @@schema("erp")
+}
+
+enum TipoAging {
+  POR_COBRAR
+  POR_PAGAR
+
+  @@schema("erp")
+}
+
+enum EstadoAging {
+  AL_DIA
+  ATRASADO
+  CRITICO
+
+  @@schema("erp")
+}
+
+enum TipoDocumentoComercial {
+  COTIZACION
+  NP
+  OC
+  FACTURA
+  NC
+  ND
+  GUIA
+  ORDEN_VENTA
+
+  @@schema("erp")
+}
+
+enum EstadoProspecto {
+  NUEVO
+  CONTACTADO
+  CALIFICADO
+  CONVERTIDO
+
+  @@schema("erp")
+}
+
+enum TerceroCuentaCorriente {
+  CLIENTE
+  PROVEEDOR
+  PRODUCTOR
+
+  @@schema("erp")
+}
+
+enum OrigenCuentaCorriente {
+  VENTA
+  COMPRA
+  PAGO
+  ANTICIPO
+  AJUSTE
+
+  @@schema("erp")
+}
+
+enum EstadoGuiaDespacho {
+  BORRADOR
+  EMITIDA
+  FACTURADA
+  ANULADA
+
+  @@schema("erp")
+}
+
+enum EstadoGenericoErp {
+  ACTIVO
+  INACTIVO
+  PENDIENTE
+  BORRADOR
+
+  @@schema("erp")
+}
+
+/// R2-C01 Ingreso diario labores
+model IngresoLaborDiario {
+  id             String               @id @default(cuid())
+  fecha          DateTime
+  contratistaId  String
+  contratista    Contratista          @relation(fields: [contratistaId], references: [id], onDelete: Cascade)
+  centroCostoId  String
+  centroCosto    CentroCosto          @relation(fields: [centroCostoId], references: [id])
+  laborId        String
+  labor          Labor                @relation(fields: [laborId], references: [id])
+  actividadId    String
+  actividad      Actividad            @relation(fields: [actividadId], references: [id])
+  tipoJornada    TipoJornadaLabor
+  cantidad       Decimal              @db.Decimal(18, 4)
+  precioUnitario Decimal              @db.Decimal(18, 2)
+  monto          Decimal              @db.Decimal(18, 2)
+  estado         EstadoIngresoLabor   @default(PENDIENTE)
+  proformaId     String?
+  proforma       ProformaContratista? @relation(fields: [proformaId], references: [id], onDelete: SetNull)
+  facturaNumero  String?
+  empresaId      String
+  empresa        Empresa              @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+  tipoContratoId String?
+  tipoContrato   TipoContratoContratista? @relation(fields: [tipoContratoId], references: [id])
+  tarifaId       String?
+  tarifaRef      TarifaContratista?       @relation(fields: [tarifaId], references: [id], onDelete: SetNull)
+  tarifaAplicada Decimal                  @default(0) @db.Decimal(18, 2)
+  unidad         String                   @default("")
+  precioOverride Boolean                  @default(false)
+  motivoOverride String?
+  aprobadorId       String?
+  aprobadorNombre   String?
+  aprobadoPorId     String?
+  aprobadoPorNombre String?
+  aprobadaAt        DateTime?
+
+  @@index([empresaId, fecha])
+  @@index([proformaId])
+  @@index([tipoContratoId])
+  @@index([tarifaId])
+  @@schema("erp")
+}
+
+model PeriodoCierreContratista {
+  id            String   @id @default(cuid())
+  empresaId     String
+  empresa       Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  periodo       String
+  cerrado       Boolean  @default(true)
+  asientoId     String?
+  asientoNumero String?
+  glosa         String?
+  montoTotal    Decimal  @default(0) @db.Decimal(18, 2)
+  /// Tipo de cambio centralizado del periodo (no por contratista) — D9.
+  tipoCambio       Decimal?                         @db.Decimal(18, 6)
+  monedaTc         String?                          @default("USD")
+  tiposCambio      Json?
+  /// Proformas incluidas en el asiento de traspaso (auditoría / UI).
+  proformaIds      String[]                         @default([])
+  cerradoAt        DateTime?
+  cerradoPorId     String?
+  cerradoPorNombre String?
+  eventos          PeriodoCierreContratistaEvento[]
+  createdAt        DateTime                         @default(now())
+  updatedAt        DateTime                         @updatedAt
+
+  @@unique([empresaId, periodo])
+  @@schema("erp")
+}
+
+model PeriodoCierreContratistaEvento {
+  id            String                   @id @default(cuid())
+  cierreId      String
+  cierre        PeriodoCierreContratista @relation(fields: [cierreId], references: [id], onDelete: Cascade)
+  empresaId     String
+  empresa       Empresa                  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  accion        String
+  motivo        String?
+  usuarioId     String
+  usuarioNombre String
+  createdAt     DateTime                 @default(now())
+
+  @@index([cierreId, createdAt])
+  @@index([empresaId, createdAt])
+  @@schema("erp")
+}
+
+model AuditoriaContratista {
+  id            String   @id @default(cuid())
+  empresaId     String
+  empresa       Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  entidad       String
+  entidadId     String
+  accion        String
+  usuarioId     String
+  usuarioNombre String
+  antes         Json?
+  despues       Json?
+  metadata      Json?
+  createdAt     DateTime @default(now())
+
+  @@index([empresaId, createdAt])
+  @@index([entidad, entidadId])
+  @@schema("erp")
+}
+
+model OrdenCompra {
+  id                   String             @id @default(cuid())
+  numero               String
+  fecha                DateTime
+  /// Denormalizado para listados; preferir proveedorId.
+  proveedor            String
+  proveedorId          String?
+  proveedorRef         Proveedor?         @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  solicitante          String
+  /// Usuario sesión que grabó la OC (distinto del solicitante de negocio).
+  creadoPorId          String?
+  creadoPorNombre      String?
+  /// Jefe / aprobador asignado (usuario del ERP). María Jesús Reu1.
+  aprobadorId          String?
+  aprobadorNombre      String?
+  /// Cadena calculada al solicitar (ids del principal de cada paso). Reu6 / compat.
+  aprobacionCadenaIds  String[]           @default([])
+  /// Snapshot AND/OR: [{ logica, aprobadores: [{ id, nombre, estado }] }].
+  aprobacionCadena     Json?
+  aprobacionPasoActual Int                @default(1)
+  aprobacionPasosTotal Int                @default(1)
+  moneda               String             @default("CLP")
+  neto                 Decimal            @db.Decimal(18, 2)
+  afacto               AfactoOc           @default(AFECTO)
+  estado               EstadoDocumentoErp @default(BORRADOR)
+  departamento         String
+  /// Cabecera contable (Reu 3 R3-04).
+  cuentaContableId     String?
+  centroCostoId        String?
+  elementoCostoId      String?
+  distribucionCc       Json?
+  /// Ítems: [{ descripcion, cantidad, precioUnitario, total }]
+  lineas               Json?
+  /// Referencia informativa cotización recibida, no obligatorio.
+  referenciaTipo       String?
+  referenciaFolio      String?
+  referenciaFecha      DateTime?
+  /// Plazo de pago editable en la OC (30, 60 o 90). La factura asociada hereda el vencimiento.
+  condicionPagoDias    Int?
+  /// Motivo al rechazar (obligatorio en bandeja; se limpia al reenviar).
+  motivoRechazo        String?
+  empresaId            String
+  empresa              Empresa            @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  aprobaciones         AprobacionOc[]
+  recepciones          RecepcionOc[]
+  registros            RegistroCompra[]
+  proformasContratista ProformaContratista[]
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@unique([empresaId, numero])
+  @@index([empresaId])
+  @@index([proveedorId])
+  @@index([aprobadorId])
+  @@index([creadoPorId])
+  @@schema("erp")
+}
+
+model AprobacionOc {
+  id                String             @id @default(cuid())
+  ocId              String
+  ordenCompra       OrdenCompra        @relation(fields: [ocId], references: [id], onDelete: Cascade)
+  ocNumero          String
+  proveedor         String
+  monto             Decimal            @db.Decimal(18, 2)
+  solicitante       String
+  /// Usuario jefe que debe aprobar (copia desde OC).
+  aprobadorId       String?
+  aprobadorNombre   String?
+  /// Paso N de M en cadena jerárquica.
+  pasoOrden         Int                @default(1)
+  pasoTotal         Int                @default(1)
+  /// SIMPLE | AND | OR del paso (runtime multi-aprobador).
+  logica            String             @default("SIMPLE")
+  /// Quién resolvió (aprobar/rechazar).
+  resueltoPorId     String?
+  resueltoPorNombre String?
+  /// Copia del motivo en la fila que rechazó.
+  motivoRechazo     String?
+  estado            EstadoAprobacionOc @default(PENDIENTE)
+  fecha             DateTime
+  empresaId         String
+  empresa           Empresa            @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@index([empresaId])
+  @@index([aprobadorId])
+  @@schema("erp")
+}
+
+model RecepcionOc {
+  id          String            @id @default(cuid())
+  ocId        String
+  ordenCompra OrdenCompra       @relation(fields: [ocId], references: [id], onDelete: Cascade)
+  ocNumero    String
+  fecha       DateTime
+  tcAplicado  Decimal           @db.Decimal(18, 4)
+  moneda      String
+  monto       Decimal           @db.Decimal(18, 2)
+  estado      EstadoRecepcionOc @default(BORRADOR)
+  /// Ítems alineados 1:1 con OC cuando la OC tiene líneas.
+  lineas      Json?
+  empresaId   String
+  empresa     Empresa           @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model RegistroCompra {
+  id                        String                    @id @default(cuid())
+  ocId                      String?
+  ordenCompra               OrdenCompra?              @relation(fields: [ocId], references: [id], onDelete: SetNull)
+  ocNumero                  String
+  factura                   String
+  proveedorOc               String
+  proveedorFactura          String
+  proveedorId               String?
+  proveedorRef              Proveedor?                @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  monto                     Decimal                   @db.Decimal(18, 2)
+  afactoOc                  AfactoOc?
+  afactoFactura             AfactoOc?
+  afactoOk                  Boolean                   @default(true)
+  /// P1-10: matching de 3 vías (OC-recepción-factura). true si el monto de
+  /// la factura calza (±$1) contra lo recepcionado CONFIRMADO de la OC.
+  matchOk                   Boolean                   @default(true)
+  /// Diferencia (monto factura - recepcionado confirmado); null si no hay OC.
+  matchDiff                 Decimal?                  @db.Decimal(18, 2)
+  estado                    EstadoDocumentoErp        @default(BORRADOR)
+  /// Aceptación comercial de la factura recibida (bitácora ERP; no SII live ni auto-PIN de OC).
+  aceptacionEstado          AceptacionCompraEstado    @default(PENDIENTE)
+  aceptadaAt                DateTime?
+  aceptacionOrigen          AceptacionCompraOrigen?
+  /// Usuario que ejecutó la aceptación/rechazo manual o vía GoSocket.
+  aceptadaPorId             String?
+  aceptadaPorNombre         String?
+  asientoId                 String?
+  asientoNumero             String?
+  /// Ítems: [{ descripcion, cantidad, precioUnitario, total }]
+  lineas                    Json?
+  /// --- GoSocket (Fase 2): documento recibido vía Document/GetDocument (ReceiverCode). ---
+  /// Único por documento; múltiples NULL permitidos (registros manuales sin GoSocket).
+  gosocketGlobalDocumentId  String?
+  gosocketCountryDocumentId String?
+  gosocketEstado            GoSocketAceptacionEstado?
+  /// AuthorityStatus SII vía GoSocket: 00 Por enviar, 01 Enviado, 02 Aprobado, 03 Rechazado SII, 04 Anulado.
+  gosocketAuthorityStatus   String?
+  gosocketRechazoOrigen     GoSocketRechazoOrigen?
+  gosocketRechazoMotivo     String?
+  gosocketPdfDisponible     Boolean                   @default(false)
+  gosocketSincronizadoAt    DateTime?
+  /// Folios OC (TpoDocRef 801) extraídos del XML del DTE recibido.
+  gosocketOcReferencias     Json?
+  /// RUT del emisor tal como lo entrega GoSocket (para matching/despliegue).
+  gosocketRutEmisor         String?
+  empresaId                 String
+  empresa                   Empresa                   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt                 DateTime                  @default(now())
+  updatedAt                 DateTime                  @updatedAt
+  fechaDocumento       DateTime?
+  moneda               String                  @default("CLP")
+  origen               String                  @default("COMPRAS")
+  proformasContratista ProformaContratista[]
+
+  @@index([empresaId])
+  @@index([proveedorId])
+  @@index([gosocketGlobalDocumentId])
+  @@schema("erp")
+}
+
+/// Maestro de proveedores (RUT único por empresa).
+model Proveedor {
+  id                 String                    @id @default(cuid())
+  rut                String
+  razonSocial        String
+  giro               String?
+  contacto           String?
+  email              String?
+  telefono           String?
+  activo             Boolean                   @default(true)
+  /// D7: productor de fruta (lookup RUT unificado).
+  esProductor        Boolean                   @default(false)
+  /// Condición del NETO en el maestro (cualquier entero de días). La OC sigue limitada a 30/60/90.
+  condicionPagoDias  Int?
+  /// Días para pagar el IVA. En la ficha se ofrece de 10 en 10, y también un entero manual. Default 10.
+  condicionIvaDia    Int                       @default(10)
+  /// Moneda de pago del proveedor (CLP, USD, CNY…). Distinta de la moneda de cuenta bancaria.
+  monedaPago         String                    @default("CLP")
+  solicitadoPor      String?
+  solicitadoNota     String?
+  empresaId          String
+  empresa            Empresa                   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  ordenesCompra      OrdenCompra[]
+  registros          RegistroCompra[]
+  cuentasBancarias   ProveedorCuentaBancaria[]
+  contactosFicha     ProveedorContacto[]
+  direcciones        ProveedorDireccion[]
+  cambios            ProveedorCambio[]
+  anticiposProductor AnticipoProductor[]
+  pagos              Pago[]
+  movimientosCartola MovimientoCartola[]
+  contratistas       Contratista[]
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+
+  @@unique([empresaId, rut])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model ProveedorCuentaBancaria {
+  id           String    @id @default(cuid())
+  proveedorId  String
+  proveedor    Proveedor @relation(fields: [proveedorId], references: [id], onDelete: Cascade)
+  banco        String
+  tipoCuenta   String
+  numero       String
+  monedaCodigo String    @default("CLP")
+  titular      String?
+  rutTitular   String?
+  principal    Boolean   @default(false)
+  empresaId    String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([empresaId])
+  @@index([proveedorId])
+  @@schema("erp")
+}
+
+model ProveedorContacto {
+  id          String    @id @default(cuid())
+  proveedorId String
+  proveedor   Proveedor @relation(fields: [proveedorId], references: [id], onDelete: Cascade)
+  nombre      String
+  cargo       String?
+  email       String?
+  telefono    String?
+  principal   Boolean   @default(false)
+  empresaId   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([empresaId])
+  @@index([proveedorId])
+  @@schema("erp")
+}
+
+model ProveedorDireccion {
+  id          String    @id @default(cuid())
+  proveedorId String
+  proveedor   Proveedor @relation(fields: [proveedorId], references: [id], onDelete: Cascade)
+  tipo        String    @default("DESPACHO")
+  linea       String
+  comuna      String?
+  ciudad      String?
+  principal   Boolean   @default(false)
+  empresaId   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([empresaId])
+  @@index([proveedorId])
+  @@schema("erp")
+}
+
+model ProveedorCambio {
+  id            String    @id @default(cuid())
+  proveedorId   String
+  proveedor     Proveedor @relation(fields: [proveedorId], references: [id], onDelete: Cascade)
+  usuarioId     String
+  usuarioNombre String
+  resumen       String
+  antes         Json?
+  despues       Json?
+  empresaId     String
+  createdAt     DateTime  @default(now())
+
+  @@index([empresaId])
+  @@index([proveedorId])
+  @@schema("erp")
+}
+
+model Insumo {
+  id               String   @id @default(cuid())
+  codigo           String
+  familia          String
+  subfamilia       String
+  nombre           String
+  /// Detalle opcional del ítem para DTE (SII DscItem, máx. 1000). Vacío = no se envía.
+  detalle          String?  @db.VarChar(1000)
+  unidad           String
+  /// Stock/CPP viven en bodega/movimientos; se mantienen para compatibilidad lectura.
+  stock            Decimal  @default(0) @db.Decimal(18, 4)
+  costoPromedio    Decimal  @default(0) @db.Decimal(18, 4)
+  /// D16: piso de venta editable desde el maestro. 0 = sin cargar, cae a costoPromedio.
+  precioCompra     Decimal  @default(0) @db.Decimal(18, 4)
+  /// Cuenta contable de centralización (D11).
+  cuentaContableId String?
+  /// H6: false = servicio / no mueve bodega en OV.
+  inventariable    Boolean  @default(true)
+  empresaId        String
+  empresa          Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  stocksBodega      StockInsumoBodega[]
+  movimientosBodega MovimientoBodega[]
+  reservasStock     ReservaStock[]
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+model StockInsumoBodega {
+  id        String   @id @default(cuid())
+  empresaId String
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  insumoId  String
+  insumo    Insumo   @relation(fields: [insumoId], references: [id], onDelete: Cascade)
+  bodegaId  String
+  bodega    Bodega   @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+  cantidad  Decimal  @default(0) @db.Decimal(18, 4)
+  updatedAt DateTime @updatedAt
+
+  @@unique([empresaId, insumoId, bodegaId])
+  @@index([empresaId, insumoId])
+  @@schema("erp")
+}
+
+model Bodega {
+  id                 String              @id @default(cuid())
+  codigo             String
+  nombre             String
+  empresaId          String
+  empresa            Empresa             @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  activa             Boolean             @default(true)
+  stocks             StockInsumoBodega[]
+  reservasStock      ReservaStock[]
+  movimientosOrigen  MovimientoBodega[]  @relation("MovBodegaOrigen")
+  movimientosDestino MovimientoBodega[]  @relation("MovBodegaDestino")
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+/// Reserva de stock ligada a una OV. Hoy no se crea en cadena de aprobación
+/// (aprobaciones solo Compras). `consumirReservasOv` es no-op si no hay filas.
+model ReservaStock {
+  id          String             @id @default(cuid())
+  empresaId   String
+  empresa     Empresa            @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  documentoId String
+  documento   DocumentoComercial @relation(fields: [documentoId], references: [id], onDelete: Cascade)
+  insumoId    String
+  insumo      Insumo             @relation(fields: [insumoId], references: [id], onDelete: Cascade)
+  bodegaId    String
+  bodega      Bodega             @relation(fields: [bodegaId], references: [id], onDelete: Cascade)
+  cantidad    Decimal            @db.Decimal(18, 4)
+  estado      EstadoReservaStock @default(ACTIVA)
+  venceAt     DateTime
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@index([empresaId, insumoId, bodegaId, estado])
+  @@index([empresaId, documentoId])
+  @@index([venceAt])
+  @@schema("erp")
+}
+
+model MovimientoBodega {
+  id                        String                 @id @default(cuid())
+  fecha                     DateTime
+  tipo                      TipoMovimientoBodega
+  estado                    EstadoMovimientoBodega @default(CONFIRMADO)
+  /// Denormalizado (código) para listados; cruzar stock con bodegaId.
+  bodega                    String
+  bodegaId                  String?
+  bodegaRef                 Bodega?                @relation("MovBodegaOrigen", fields: [bodegaId], references: [id], onDelete: SetNull)
+  /// Bodega destino (traslado / salida proveedor).
+  bodegaDestino             String?
+  bodegaDestinoId           String?
+  bodegaDestinoRef          Bodega?                @relation("MovBodegaDestino", fields: [bodegaDestinoId], references: [id], onDelete: SetNull)
+  articulo                  String
+  cantidad                  Decimal                @db.Decimal(18, 4)
+  precioUnitario            Decimal                @db.Decimal(18, 4)
+  facturaRef                String?
+  nota                      String                 @default("")
+  insumoId                  String?
+  insumo                    Insumo?                @relation(fields: [insumoId], references: [id], onDelete: SetNull)
+  /// Id del movimiento pareja (salida proveedor ↔ devolución / traslado).
+  parId                     String?
+  /// Asiento de centralización (si ya se centralizó).
+  centralizadoAsientoId     String?
+  centralizadoAsientoNumero String?
+  empresaId                 String
+  empresa                   Empresa                @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt                 DateTime               @default(now())
+  updatedAt                 DateTime               @updatedAt
+
+  @@index([empresaId, fecha])
+  @@index([bodegaId])
+  @@index([insumoId])
+  @@schema("erp")
+}
+
+/// Plan de cuentas jerárquico (UI Deepsea X-X-XX-XX; Excel Agrosoft 9 dígitos / hasta 5 niveles).
+model CuentaContable {
+  id                       String                @id @default(cuid())
+  /// Código UI: `1-0-00-00` … `1-1-01-01` o con 5º segmento Excel `1-1-01-01-001`
+  codigo                   String
+  /// Código origen Agrosoft (9 dígitos), opcional
+  codigoExcel              String?
+  nombre                   String
+  /// Categoría contable (ACTIVO/PASIVO/PATRIMONIO/INGRESO/GASTO)
+  tipo                     TipoCuentaContable
+  /// 1=raíz … 4=cuenta UI; 5=detalle Excel (hoja imputable típica)
+  nivel                    Int                   @default(1)
+  padreId                  String?
+  padre                    CuentaContable?       @relation("CuentaJerarquia", fields: [padreId], references: [id], onDelete: Restrict)
+  hijos                    CuentaContable[]      @relation("CuentaJerarquia")
+  activa                   Boolean               @default(true)
+  requiereCc               Boolean               @default(false)
+  requiereArea             Boolean               @default(false)
+  requiereEspecie          Boolean               @default(false)
+  requiereElemento         Boolean               @default(false)
+  /// true = agrupación (no se imputa en asientos); false = hoja imputable
+  noImputable              Boolean               @default(false)
+  empresaId                String
+  empresa                  Empresa               @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  configsSii               ConfigContableSii[]
+  centrosCosto             CuentaCentroCosto[]
+  elementosCosto           CuentaElementoCosto[]
+  areasNegocio             CuentaAreaNegocio[]
+  movimientosCartolaContra MovimientoCartola[]   @relation("MovimientoCartolaContra")
+  createdAt                DateTime              @default(now())
+  updatedAt                DateTime              @updatedAt
+  tiposContratoDebe           TipoContratoContratista[] @relation("TipoContratoDebe")
+  tiposContratoHaber          TipoContratoContratista[] @relation("TipoContratoHaber")
+  tiposContratoAdministracion TipoContratoContratista[] @relation("TipoContratoAdministracion")
+
+  @@unique([empresaId, codigo])
+  @@index([empresaId, padreId])
+  @@index([empresaId, codigoExcel])
+  @@schema("erp")
+}
+
+model CuentaCentroCosto {
+  id            String         @id @default(cuid())
+  cuentaId      String
+  cuenta        CuentaContable @relation(fields: [cuentaId], references: [id], onDelete: Cascade)
+  centroCostoId String
+  centroCosto   CentroCosto    @relation(fields: [centroCostoId], references: [id], onDelete: Cascade)
+  empresaId     String
+  createdAt     DateTime       @default(now())
+
+  @@unique([cuentaId, centroCostoId])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model CuentaElementoCosto {
+  id              String         @id @default(cuid())
+  cuentaId        String
+  cuenta          CuentaContable @relation(fields: [cuentaId], references: [id], onDelete: Cascade)
+  elementoCostoId String
+  elementoCosto   ElementoCosto  @relation(fields: [elementoCostoId], references: [id], onDelete: Cascade)
+  empresaId       String
+  createdAt       DateTime       @default(now())
+
+  @@unique([cuentaId, elementoCostoId])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model CuentaAreaNegocio {
+  id            String         @id @default(cuid())
+  cuentaId      String
+  cuenta        CuentaContable @relation(fields: [cuentaId], references: [id], onDelete: Cascade)
+  areaNegocioId String
+  areaNegocio   AreaNegocio    @relation(fields: [areaNegocioId], references: [id], onDelete: Cascade)
+  empresaId     String
+  createdAt     DateTime       @default(now())
+
+  @@unique([cuentaId, areaNegocioId])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+/// Periodo contable por empresa (abrir/cerrar; selector UI).
+model PeriodoContable {
+  id         String                  @id @default(cuid())
+  empresaId  String
+  empresa    Empresa                 @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  /// Código aaaa-mm (ej. 2026-07)
+  codigo     String
+  anio       Int
+  mes        Int
+  fechaDesde DateTime
+  fechaHasta DateTime
+  estado     EstadoPeriodoContable   @default(ABIERTO)
+  /// Preferencia “periodo activo” de la empresa (uno por tenant).
+  activo     Boolean                 @default(false)
+  eventos    PeriodoContableEvento[]
+  createdAt  DateTime                @default(now())
+  updatedAt  DateTime                @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@index([empresaId, estado])
+  @@schema("erp")
+}
+
+/// Trazabilidad apertura / cierre / reapertura de periodo (Reu5).
+model PeriodoContableEvento {
+  id            String          @id @default(cuid())
+  periodoId     String
+  periodo       PeriodoContable @relation(fields: [periodoId], references: [id], onDelete: Cascade)
+  empresaId     String
+  /// ABRIR | CERRAR | REABRIR | CREAR
+  accion        String
+  estadoAntes   String?
+  estadoDespues String
+  motivo        String?
+  usuarioId     String?
+  usuarioNombre String?
+  createdAt     DateTime        @default(now())
+
+  @@index([periodoId, createdAt])
+  @@index([empresaId, createdAt])
+  @@schema("erp")
+}
+
+/// Mapeo tipo documento SII / DTE → cuenta contable (Configuración Contable).
+model ConfigContableSii {
+  id               String         @id @default(cuid())
+  empresaId        String
+  empresa          Empresa        @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  /// Código SII o clave interna (33, 34, FACTURA_COMPRA, IVA_DEBITO, …)
+  tipoDocumentoSii String
+  codigoSii        String?
+  nombre           String
+  cuentaContableId String
+  cuentaContable   CuentaContable @relation(fields: [cuentaContableId], references: [id], onDelete: Restrict)
+  /// Dimensiones del mapeo. Si la cuenta las exige, el asiento automático las
+  /// toma de aquí: el plan real de Agrosoft pide CC en casi toda cuenta de
+  /// costo o ingreso y el generador no tiene de dónde deducirlas.
+  centroCostoId    String?
+  areaNegocioId    String?
+  elementoCostoId  String?
+  /// DEBE | HABER (lado típico al centralizar)
+  lado             String         @default("DEBE")
+  activa           Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@unique([empresaId, tipoDocumentoSii])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model ElementoCosto {
+  id             String                @id @default(cuid())
+  codigo         String
+  nombre         String
+  departamento   String
+  vigencia       EstadoElementoCosto   @default(VIGENTE)
+  empresaId      String
+  empresa        Empresa               @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  cuentasVinculo CuentaElementoCosto[]
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  @@unique([empresaId, codigo])
+  @@schema("erp")
+}
+
+model FactorHonorario {
+  id             String    @id @default(cuid())
+  factorAnterior Decimal   @db.Decimal(18, 6)
+  factorNuevo    Decimal   @db.Decimal(18, 6)
+  vigenciaDesde  DateTime
+  /// Opcional: si null, vigente hasta que entre otro factor más nuevo.
+  vigenciaHasta  DateTime?
+  usuario        String
+  empresaId      String
+  empresa        Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model Asiento {
+  id        String        @id @default(cuid())
+  numero    String
+  /// Periodo contable aaaa-mm (o etiqueta temporada/mes)
+  periodo   String?
+  fecha     DateTime
+  /// MANUAL | DIARIO | AJUSTE | APERTURA | CIERRE
+  tipo      String        @default("MANUAL")
+  glosa     String
+  debe      Decimal       @db.Decimal(18, 2)
+  haber     Decimal       @db.Decimal(18, 2)
+  /// BORRADOR = pendiente; CONTABILIZADO; ANULADO
+  estado    EstadoAsiento @default(CONTABILIZADO)
+  origen    String?
+  /// [{ debe, haber, cuentaId?, glosa? }]
+  lineas    Json
+  empresaId String
+  empresa   Empresa       @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@unique([empresaId, numero])
+  @@index([empresaId, fecha])
+  @@index([empresaId, periodo])
+  @@index([empresaId, origen])
+  @@schema("erp")
+}
+
+model MovimientoCaja {
+  id         String   @id @default(cuid())
+  fecha      DateTime
+  concepto   String
+  ingreso    Decimal  @default(0) @db.Decimal(18, 2)
+  egreso     Decimal  @default(0) @db.Decimal(18, 2)
+  saldo      Decimal  @default(0) @db.Decimal(18, 2)
+  banco      String?
+  moneda     String   @default("CLP")
+  /// Saldo de apertura. No se borra; una corrección deja el monto anterior en AperturaCorreccion.
+  esApertura Boolean  @default(false)
+  empresaId  String
+  empresa    Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  correcciones AperturaCorreccion[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([empresaId, fecha])
+  @@index([empresaId, banco, moneda])
+  @@schema("erp")
+}
+
+/// Corrección de un saldo de apertura. El movimiento sigue siendo el inicial; esto guarda el valor anterior.
+model AperturaCorreccion {
+  id                String         @id @default(cuid())
+  movimientoCajaId  String
+  movimientoCaja    MovimientoCaja @relation(fields: [movimientoCajaId], references: [id], onDelete: Cascade)
+  empresaId         String
+  empresa           Empresa        @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  bancoAnterior     String?
+  bancoNuevo        String
+  monedaAnterior    String
+  monedaNueva       String
+  montoAnterior     Decimal        @db.Decimal(18, 2)
+  montoNuevo        Decimal        @db.Decimal(18, 2)
+  fechaAnterior     DateTime
+  fechaNueva        DateTime
+  motivo            String
+  usuarioId         String
+  usuarioEmail      String?
+  createdAt         DateTime       @default(now())
+
+  @@index([movimientoCajaId, createdAt])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model Pago {
+  id                  String            @id @default(cuid())
+  fecha               DateTime
+  beneficiario        String
+  monto               Decimal           @db.Decimal(18, 2)
+  medio               String
+  estado              EstadoGenericoErp @default(ACTIVO)
+  tcManual            Decimal?          @db.Decimal(18, 4)
+  monedaPago          String?
+  monedaFactura       String?
+  diferenciaTc        Decimal?          @db.Decimal(18, 2)
+  documentosCalce     String?
+  /// PAGO_TOTAL | ANTICIPO | ANTICIPO_PRODUCTOR
+  tipo                String            @default("PAGO_TOTAL")
+  /// Calce 1:1 con movimiento de cartola (GAP-05 / EX-29).
+  movimientoCartolaId String?           @unique
+  proveedorId         String?
+  proveedor           Proveedor?        @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  clienteId           String?
+  cliente             Cliente?          @relation(fields: [clienteId], references: [id], onDelete: SetNull)
+  empresaId           String
+  empresa             Empresa           @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  tcEventos           PagoTcEvento[]
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  @@index([empresaId])
+  @@index([proveedorId])
+  @@index([clienteId])
+  @@schema("erp")
+}
+
+/// Auditoría de tipo de cambio del pago (T1 anticipo productor). No es log global del ERP.
+model PagoTcEvento {
+  id            String   @id @default(cuid())
+  pagoId        String
+  pago          Pago     @relation(fields: [pagoId], references: [id], onDelete: Cascade)
+  empresaId     String
+  empresa       Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  tcAnterior    Decimal? @db.Decimal(18, 4)
+  tcNuevo       Decimal  @db.Decimal(18, 4)
+  motivo        String?
+  usuarioId     String
+  usuarioNombre String?
+  usuarioEmail  String?
+  createdAt     DateTime @default(now())
+
+  @@index([pagoId, createdAt])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model CartolaBancaria {
+  id                     String              @id @default(cuid())
+  banco                  String
+  bancoCodigo            String?
+  fechaCarga             DateTime            @default(now())
+  periodo                String
+  mesContable            String?
+  /// CLP | USD | CNY (yuan). Una cartola = una cuenta/moneda.
+  moneda                 String              @default("CLP")
+  archivoNombre          String
+  formato                String              @default("EXCEL")
+  movimientos            Int                 @default(0)
+  montoTotal             Decimal             @default(0) @db.Decimal(18, 2)
+  estado                 EstadoCartola       @default(CARGADA)
+  pendientesContabilizar Int                 @default(0)
+  usuarioCarga           String?
+  empresaId              String
+  empresa                Empresa             @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  movimientosCartola     MovimientoCartola[]
+  conciliaciones         Conciliacion[]
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model MovimientoCartola {
+  id                 String            @id @default(cuid())
+  cartolaId          String
+  cartola            CartolaBancaria   @relation(fields: [cartolaId], references: [id], onDelete: Cascade)
+  fecha              DateTime
+  referencia         String
+  glosa              String
+  monto              Decimal           @db.Decimal(18, 2)
+  tipo               TipoMovimientoFin
+  estadoContable     EstadoContableMov @default(PENDIENTE)
+  asientoId          String?
+  asientoNumero      String?
+  /// Pago que calzó este movimiento (denormalizado; único).
+  pagoId             String?           @unique
+  /// Contracuenta del asiento CARTOLA (banco sale de Config SII).
+  cuentaContraId     String?
+  cuentaContra       CuentaContable?   @relation("MovimientoCartolaContra", fields: [cuentaContraId], references: [id], onDelete: SetNull)
+  /// FACTURA | ANTICIPO | TRASPASO | SUELDO | RENDICION | OTRO
+  destinoTipo        String?
+  codigoFinancieroId String?
+  codigoFinanciero   CodigoFinanciero? @relation(fields: [codigoFinancieroId], references: [id], onDelete: SetNull)
+  tipoDocumento      String?
+  folioDocumento     String?
+  proveedorId        String?
+  proveedor          Proveedor?        @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  clienteId          String?
+  cliente            Cliente?          @relation(fields: [clienteId], references: [id], onDelete: SetNull)
+  centroCostoId      String?
+  areaNegocioId      String?
+  elementoCostoId    String?
+  /// Semana de nómina YYYY-MM-Sn (solo egresos). No asienta.
+  nominaSemana       String?
+  empresaId          String
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@index([cartolaId])
+  @@index([empresaId])
+  @@index([codigoFinancieroId])
+  @@index([empresaId, nominaSemana])
+  @@schema("erp")
+}
+
+model Conciliacion {
+  id            String                   @id @default(cuid())
+  banco         String
+  periodo       String
+  movimientos   Int                      @default(0)
+  conciliados   Int                      @default(0)
+  diferencia    Decimal                  @default(0) @db.Decimal(18, 2)
+  estado        EstadoGenericoErp        @default(PENDIENTE)
+  asientoId     String?
+  asientoNumero String?
+  cartolaId     String?
+  cartola       CartolaBancaria?         @relation(fields: [cartolaId], references: [id], onDelete: SetNull)
+  empresaId     String
+  empresa       Empresa                  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  movs          MovimientoConciliacion[]
+  createdAt     DateTime                 @default(now())
+  updatedAt     DateTime                 @updatedAt
+
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model MovimientoConciliacion {
+  id             String                @id @default(cuid())
+  conciliacionId String
+  conciliacion   Conciliacion          @relation(fields: [conciliacionId], references: [id], onDelete: Cascade)
+  fecha          DateTime
+  referencia     String
+  glosa          String
+  monto          Decimal               @db.Decimal(18, 2)
+  tipo           TipoMovimientoFin
+  origen         OrigenConciliacion    @default(MANUAL)
+  estado         EstadoMovConciliacion @default(CONCILIADO)
+  empresaId      String
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  @@index([conciliacionId])
+  @@schema("erp")
+}
+
+model AnticipoProductor {
+  id               String         @id @default(cuid())
+  fecha            DateTime
+  productor        String
+  rut              String?
+  /// Contraparte existente (no hay maestro Productor). Preferir esProductor.
+  clienteId        String?
+  cliente          Cliente?       @relation(fields: [clienteId], references: [id], onDelete: SetNull)
+  proveedorId      String?
+  proveedor        Proveedor?     @relation(fields: [proveedorId], references: [id], onDelete: SetNull)
+  banco            String?
+  formaPago        String?
+  codigoFinanciero String?
+  tipoDocto        String?        @default("ANT")
+  nroDocto         String?
+  nroComprobante   String?
+  fechaVencimiento DateTime?
+  monto            Decimal        @db.Decimal(18, 2)
+  moneda           String         @default("CLP")
+  montoUsd         Decimal?       @db.Decimal(18, 2)
+  montoCalzado     Decimal        @default(0) @db.Decimal(18, 2)
+  saldo            Decimal        @db.Decimal(18, 2)
+  saldoUsd         Decimal?       @db.Decimal(18, 2)
+  tc               Decimal?       @db.Decimal(18, 4)
+  glosa            String?
+  estado           EstadoAnticipo @default(ABIERTO)
+  documentosCalce  String?
+  empresaId        String
+  empresa          Empresa        @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([empresaId])
+  @@index([clienteId])
+  @@index([proveedorId])
+  @@schema("erp")
+}
+
+model DocumentoAging {
+  id                   String      @id @default(cuid())
+  tipo                 TipoAging
+  documento            String
+  contraparte          String
+  fechaEmision         DateTime
+  fechaVencimiento     DateTime
+  monto                Decimal     @db.Decimal(18, 2)
+  saldo                Decimal     @db.Decimal(18, 2)
+  montoPagado          Decimal     @default(0) @db.Decimal(18, 2)
+  diasAtraso           Int         @default(0)
+  estado               EstadoAging @default(AL_DIA)
+  documentoComercialId String?
+  registroCompraId     String?
+  /// Semana de compromiso interno (nómina): YYYY-MM-Sn. No muta el DTE.
+  semanaCompromiso     String?
+  /// Bitácora ediciones vencimiento: [{ at, userId, userNombre, desde, hasta }]
+  vencimientoHistorial Json?
+  empresaId            String
+  empresa              Empresa     @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+
+  @@index([empresaId])
+  @@index([documentoComercialId])
+  @@index([registroCompraId])
+  @@schema("erp")
+}
+
+model Presupuesto {
+  id                 String            @id @default(cuid())
+  anio               Int
+  centroCosto        String
+  montoPresupuestado Decimal           @db.Decimal(18, 2)
+  montoEjecutado     Decimal           @default(0) @db.Decimal(18, 2)
+  estado             EstadoGenericoErp @default(ACTIVO)
+  empresaId          String
+  empresa            Empresa           @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model Cliente {
+  id                 String                  @id @default(cuid())
+  rut                String
+  razonSocial        String
+  credito            Decimal                 @default(0) @db.Decimal(18, 2)
+  vendedor           String
+  activo             Boolean                 @default(true)
+  /// D7: productor de fruta (lookup RUT unificado).
+  esProductor        Boolean                 @default(false)
+  /// NACIONAL | EXPORTACION (Reu4 / manual COMEX MJ)
+  tipoCliente        String?
+  giro               String?
+  direccion          String?
+  comuna             String?
+  ciudad             String?
+  telefono           String?
+  email              String?
+  creadoPorId        String?
+  creadoPorNombre    String?
+  solicitadoPor      String?
+  solicitadoNota     String?
+  empresaId          String
+  empresa            Empresa                 @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  documentos         DocumentoComercial[]
+  cuentasBancarias   ClienteCuentaBancaria[]
+  contactos          ClienteContacto[]
+  direcciones        ClienteDireccion[]
+  cambios            ClienteCambio[]
+  anticiposProductor AnticipoProductor[]
+  pagos              Pago[]
+  movimientosCartola MovimientoCartola[]
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
+
+  @@unique([empresaId, rut])
+  @@schema("erp")
+}
+
+model ClienteCuentaBancaria {
+  id           String   @id @default(cuid())
+  clienteId    String
+  cliente      Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  banco        String
+  tipoCuenta   String
+  numero       String
+  monedaCodigo String   @default("CLP")
+  titular      String?
+  rutTitular   String?
+  principal    Boolean  @default(false)
+  empresaId    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([empresaId])
+  @@index([clienteId])
+  @@schema("erp")
+}
+
+model ClienteContacto {
+  id        String   @id @default(cuid())
+  clienteId String
+  cliente   Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  nombre    String
+  cargo     String?
+  email     String?
+  telefono  String?
+  principal Boolean  @default(false)
+  empresaId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([empresaId])
+  @@index([clienteId])
+  @@schema("erp")
+}
+
+model ClienteDireccion {
+  id        String   @id @default(cuid())
+  clienteId String
+  cliente   Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  tipo      String   @default("DESPACHO")
+  linea     String
+  comuna    String?
+  ciudad    String?
+  principal Boolean  @default(false)
+  empresaId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([empresaId])
+  @@index([clienteId])
+  @@schema("erp")
+}
+
+model ClienteCambio {
+  id            String   @id @default(cuid())
+  clienteId     String
+  cliente       Cliente  @relation(fields: [clienteId], references: [id], onDelete: Cascade)
+  usuarioId     String
+  usuarioNombre String
+  resumen       String
+  antes         Json?
+  despues       Json?
+  empresaId     String
+  createdAt     DateTime @default(now())
+
+  @@index([empresaId])
+  @@index([clienteId])
+  @@schema("erp")
+}
+
+model Prospecto {
+  id        String          @id @default(cuid())
+  nombre    String
+  contacto  String
+  origen    String
+  estado    EstadoProspecto @default(NUEVO)
+  fecha     DateTime
+  empresaId String
+  empresa   Empresa         @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model DocumentoComercial {
+  id                      String                 @id @default(cuid())
+  folio                   String
+  tipo                    TipoDocumentoComercial
+  cliente                 String
+  clienteId               String?
+  clienteRef              Cliente?               @relation(fields: [clienteId], references: [id], onDelete: SetNull)
+  proveedorId             String?
+  fecha                   DateTime
+  neto                    Decimal                @db.Decimal(18, 2)
+  /// IVA real (P1-7): antes solo se mostraba calculado en el front y nunca
+  /// se contabilizaba ni se declaraba en el libro de ventas.
+  iva                     Decimal?               @db.Decimal(18, 2)
+  /// Detalle de costos: [{ descripcion, cantidad, precioUnitario, descuentoPct?, total }]
+  lineas                  Json?
+  estado                  EstadoDocumentoErp     @default(BORRADOR)
+  fromReversa             Boolean                @default(false)
+  folioOrigen             String?
+  /// NC / anulación vinculada a factura (u otro doc) origen.
+  documentoOrigenId       String?
+  documentoOrigen         DocumentoComercial?    @relation("DocNcOrigen", fields: [documentoOrigenId], references: [id], onDelete: SetNull)
+  notasCredito            DocumentoComercial[]   @relation("DocNcOrigen")
+  asientoOriginal         String?
+  asientoReversador       String?
+  asientoNuevo            String?
+  folioReversador         String?
+  /// Referencia SII / comercial del wizard de emisión (801 OC, 802 NP, HES…).
+  referenciaTipo          String?
+  referenciaFolio         String?
+  observaciones           String?
+  /// Datos del wizard de emisión persistidos en borrador / documento.
+  formaPago               String?
+  fechaVencimiento        DateTime?
+  indicadorVenta          String?
+  descuentoGlobalPct      Decimal?               @db.Decimal(5, 2)
+  cuentaContableId        String?
+  centroCostoId           String?
+  receptorRut             String?
+  receptorGiro            String?
+  receptorDireccion       String?
+  receptorComuna          String?
+  receptorCiudad          String?
+  /// Bloque COMEX / DTE 110–112 (manual MJ). Solo aplica si indicadorVenta=EXPORTACION.
+  monedaCodigo            String?
+  /// Código Aduana de moneda (TpoMoneda). Ej. "13" = USD. Si falta, se deriva de monedaCodigo.
+  tpoMoneda               String?
+  tipoCambio              Decimal?               @db.Decimal(18, 6)
+  /// Código Aduana T7 del receptor (CodPaisRecep). Distinto de país destino.
+  paisRecepCodigo         String?
+  paisDestino             String?
+  puertoEmbarque          String?
+  puertoDesembarque       String?
+  clausulaVenta           String?
+  viaTransporte           String?
+  modalidadVenta          String?
+  indTraslado             String?
+  bultoTipoCodigo         String?
+  bultoCantidad           Int?
+  bultoMarca              String?
+  montoOtraMoneda         Decimal?               @db.Decimal(18, 2)
+  montoExentoOtraMoneda   Decimal?               @db.Decimal(18, 2)
+  /// Fecha del documento referenciado (NC/ND export → factura 110).
+  referenciaFecha         DateTime?
+  /// CodRef SII: 1 anula, 2 corrige texto, 3 corrige montos.
+  referenciaCod           Int?
+  /// Emisión vía billing-gateway (stub / sandbox / live). Folio ERP sigue en `folio`.
+  billingEmissionId       String?
+  billingPartner          String?
+  billingConnectionMode   String?
+  billingStatus           String?
+  /// Folio oficial partner (null en stub). No sustituye `folio` local automáticamente.
+  folioOficial            String?
+  billingGlobalDocumentId String?
+  billingDisclaimer       String?                @db.Text
+  billingStub             Boolean                @default(false)
+  billingEmittedAt        DateTime?
+  /// Autor del borrador / documento (bandeja admin con filtro usuario — Reu5).
+  creadoPorId             String?
+  creadoPorNombre         String?
+  empresaId               String
+  empresa                 Empresa                @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  reservasStock           ReservaStock[]
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+
+  @@unique([empresaId, folio])
+  @@index([empresaId])
+  @@index([documentoOrigenId])
+  @@index([billingEmissionId])
+  @@schema("erp")
+}
+
+/// Kardex de cuentas corrientes (clientes / proveedores / productores).
+model CuentaCorrienteMovimiento {
+  id                   String                 @id @default(cuid())
+  empresaId            String
+  empresa              Empresa                @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  terceroTipo          TerceroCuentaCorriente
+  terceroId            String
+  terceroNombre        String
+  fecha                DateTime
+  documentoRef         String?
+  documentoTipo        String?
+  debe                 Decimal                @default(0) @db.Decimal(18, 2)
+  haber                Decimal                @default(0) @db.Decimal(18, 2)
+  saldo                Decimal                @default(0) @db.Decimal(18, 2)
+  glosa                String?
+  origen               OrigenCuentaCorriente?
+  pagoId               String?
+  documentoComercialId String?
+  registroCompraId     String?
+  movimientoCartolaId  String?
+  createdAt            DateTime               @default(now())
+
+  @@index([empresaId, terceroTipo, terceroId])
+  @@index([empresaId, fecha])
+  @@schema("erp")
+}
+
+/// Guías de despacho (Libro comercial › Despachos).
+model GuiaDespacho {
+  id                   String             @id @default(cuid())
+  folio                String
+  cliente              String
+  fecha                DateTime
+  monto                Decimal            @default(0) @db.Decimal(18, 2)
+  estado               EstadoGuiaDespacho @default(BORRADOR)
+  documentoComercialId String?
+  glosa                String?
+  empresaId            String
+  empresa              Empresa            @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  @@unique([empresaId, folio])
+  @@index([empresaId])
+  @@schema("erp")
+}
+
+model WorkflowConfig {
+  id           String   @id @default(cuid())
+  nombre       String
+  modulo       String
+  montoMin     Decimal  @default(0) @db.Decimal(18, 2)
+  montoMax     Decimal  @db.Decimal(18, 2)
+  /// Legado Reu4 («1 firma al solicitar»). Reu6 usa cadena secuencial; no limita pasos.
+  aprobadores  Int      @default(1)
+  /// IDs de usuarios autorizados a aprobar (config solo Admin).
+  aprobadorIds String[] @default([])
+  activo       Boolean  @default(true)
+  empresaId    String
+  empresa      Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([empresaId])
+  @@index([modulo])
+  @@schema("erp")
+}
+
+/// Suplencia temporal: el suplente aprueba en lugar del titular (vacaciones, licencia).
+model DelegacionAprobacion {
+  id            String    @id @default(cuid())
+  empresaId     String
+  empresa       Empresa   @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  titularId     String
+  titular       Usuario   @relation("DelegacionTitular", fields: [titularId], references: [id], onDelete: Cascade)
+  suplenteId    String
+  suplente      Usuario   @relation("DelegacionSuplente", fields: [suplenteId], references: [id], onDelete: Cascade)
+  /// null = todos los módulos con aprobación
+  modulo        String?
+  vigenciaDesde DateTime
+  vigenciaHasta DateTime?
+  motivo        String?
+  activo        Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([empresaId, titularId])
+  @@index([empresaId, vigenciaDesde, vigenciaHasta])
+  @@schema("erp")
+}
+
+/// Equipo / área configurable para routing de aprobaciones (fase 2).
+model GrupoAprobacion {
+  id                 String                   @id @default(cuid())
+  empresaId          String
+  empresa            Empresa                  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  modulo             String
+  nombre             String
+  aprobadorInicialId String
+  aprobadorInicial   Usuario                  @relation("GrupoAprobacionEntrada", fields: [aprobadorInicialId], references: [id])
+  activo             Boolean                  @default(true)
+  miembros           UsuarioGrupoAprobacion[]
+  nodosEscala        NodoEscalaAprobacion[]
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+
+  @@index([empresaId, modulo])
+  @@schema("erp")
+}
+
+/// M:N usuario ↔ grupo de aprobación.
+model UsuarioGrupoAprobacion {
+  usuarioId String
+  grupoId   String
+  usuario   Usuario         @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  grupo     GrupoAprobacion @relation(fields: [grupoId], references: [id], onDelete: Cascade)
+
+  @@id([usuarioId, grupoId])
+  @@index([grupoId])
+  @@schema("erp")
+}
+
+/// Tope + escalamiento por aprobador dentro de un grupo (la escala siempre pertenece a un grupo).
+model NodoEscalaAprobacion {
+  id               String                 @id @default(cuid())
+  empresaId        String
+  empresa          Empresa                @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  grupoId          String
+  grupo            GrupoAprobacion        @relation(fields: [grupoId], references: [id], onDelete: Cascade)
+  modulo           String
+  usuarioId        String
+  usuario          Usuario                @relation("NodoEscalaUsuario", fields: [usuarioId], references: [id])
+  montoMax         Decimal?               @db.Decimal(18, 2)
+  escalaAUsuarioId String?
+  escalaA          Usuario?               @relation("NodoEscalaSiguiente", fields: [escalaAUsuarioId], references: [id], onDelete: SetNull)
+  /// Nueva lógica multi-aprobador: SIMPLE | AND | OR
+  logica           String                 @default("SIMPLE")
+  /// FK al siguiente NodoEscalaAprobacion (nuevo estilo; usa escalaAUsuarioId como fallback)
+  escalaAId        String?
+  escalaASig       NodoEscalaAprobacion?  @relation("EscalaSig", fields: [escalaAId], references: [id], onDelete: SetNull)
+  escalaSigDe      NodoEscalaAprobacion[] @relation("EscalaSig")
+  aprobadores      NodoAprobador[]
+  activo           Boolean                @default(true)
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+
+  @@unique([empresaId, modulo, grupoId, usuarioId])
+  @@index([grupoId])
+  @@schema("erp")
+}
+
+/// Aprobadores adicionales de un nodo de escala (soporte AND / OR multi-firma).
+model NodoAprobador {
+  id        String               @id @default(cuid())
+  nodoId    String
+  nodo      NodoEscalaAprobacion @relation(fields: [nodoId], references: [id], onDelete: Cascade)
+  usuarioId String
+  usuario   Usuario              @relation("NodoAprobadorUsuario", fields: [usuarioId], references: [id])
+  orden     Int                  @default(0)
+  createdAt DateTime             @default(now())
+
+  @@unique([nodoId, usuarioId])
+  @@index([nodoId])
+  @@schema("erp")
+}
+
+/// Administradores delegados por módulo (pueden gestionar config de aprobaciones sin ser SUPERADMIN).
+model AdminConcepto {
+  id        String   @id @default(cuid())
+  empresaId String
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  usuarioId String
+  usuario   Usuario  @relation("AdminConceptoUsuario", fields: [usuarioId], references: [id], onDelete: Cascade)
+  modulo    String
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([empresaId, usuarioId, modulo])
+  @@index([empresaId, modulo])
+  @@schema("erp")
+}
+
+/// Registro individual de aprobación dentro de un nodo AND/OR (para saber quién aprobó de la lista).
+model PasoAprobacionDetalle {
+  id           String    @id @default(cuid())
+  /// ID del documento al que pertenece (OC id o ProformaContratista id).
+  documentoId  String
+  /// Tipo de documento: "OC" | "PROFORMA"
+  tipoDoc      String
+  /// Nodo de la escala al que corresponde este paso.
+  nodoId       String
+  /// Usuario que debe aprobar (o aprobó/rechazó).
+  usuarioId    String
+  /// PENDIENTE | APROBADO | RECHAZADO
+  estado       String    @default("PENDIENTE")
+  comentario   String?
+  respondidoAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([documentoId, tipoDoc, nodoId, usuarioId])
+  @@index([documentoId, tipoDoc, nodoId])
+  @@schema("erp")
+}
+
+/// Inbox de notificaciones por usuario (pendientes, resoluciones, etc.).
+model Notificacion {
+  id        String   @id @default(cuid())
+  userId    String
+  usuario   Usuario  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  empresaId String?
+  /// OC_PENDIENTE | PROFORMA_PENDIENTE | OC_RESULTADO | PROFORMA_RESULTADO | INFO
+  tipo      String
+  titulo    String
+  detalle   String?
+  href      String
+  /// Clave estable para upsert (ej. oc-pend:AP-id, prf-pend:id)
+  refKey    String
+  monto     Decimal? @db.Decimal(18, 2)
+  leida     Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, refKey])
+  @@index([userId, leida, createdAt])
+  @@index([empresaId])
+  @@schema("erp")
+}

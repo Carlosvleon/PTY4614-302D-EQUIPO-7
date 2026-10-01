@@ -1,0 +1,1042 @@
+[
+  {
+    "codigo": "1001",
+    "nombre": "SERVICIOS DE REPARACIÓN ACTIVOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1002",
+    "nombre": "REPARACIÓN VEHICULOS/MAQUINARIA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1003",
+    "nombre": "ARTICULOS DE FERRETERIA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1004",
+    "nombre": "REPUESTOS VEHÍCULOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1005",
+    "nombre": "MANTENCION VEHICULO/MAQUINARIA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1006",
+    "nombre": "REPUESTOS MAQUINARIAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1007",
+    "nombre": "ANALISIS DE AGUA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1008",
+    "nombre": "ANALISIS DE SUELO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1009",
+    "nombre": "ANALISIS DE YEMA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1010",
+    "nombre": "ANALISIS FOLIAR",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1011",
+    "nombre": "SENSORES DE TEMPERATURA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1012",
+    "nombre": "SENSORES DE HUMEDAD",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1013",
+    "nombre": "POLINIZACION",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1014",
+    "nombre": "LIMPIEZA DESAGUE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1015",
+    "nombre": "ARRANQUE DE PLANTACION",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1016",
+    "nombre": "CALICATA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1017",
+    "nombre": "CAMELLONES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1018",
+    "nombre": "RASTRAJE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1019",
+    "nombre": "ROTOFRESA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1020",
+    "nombre": "SIEMBRA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1021",
+    "nombre": "SUBSOLAR",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1101",
+    "nombre": "SERVICIOS ANÁLISIS MULTIRESIDUOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1102",
+    "nombre": "ANALISIS RESIDUAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1103",
+    "nombre": "ANALISIS DE MINERALES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1104",
+    "nombre": "PROSPECCION",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1201",
+    "nombre": "FLETES INSUMOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1202",
+    "nombre": "FLETES MATERIA PRIMA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1203",
+    "nombre": "FLETE MAQUINARIA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1204",
+    "nombre": "FLETE TRASLADO DE GUANO / GUANO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1205",
+    "nombre": "FLETE PRODUCTO TERMINADO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1206",
+    "nombre": "FLETES ENVASES PRODUCTOR",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1207",
+    "nombre": "FLETE ENVASES INTERPLANTA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1208",
+    "nombre": "FLETE INTERPLANTA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1209",
+    "nombre": "FLETE SITIO SAG",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1301",
+    "nombre": "SERVICIOS DE SOFTWARE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1302",
+    "nombre": "EQUIPOS COMPUTACIONALES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1401",
+    "nombre": "SERVICIOS DE INSPECCIÓN Y DESPACHO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1501",
+    "nombre": "SERVICIO PACKING",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1502",
+    "nombre": "SERVICIO ARMADO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1503",
+    "nombre": "ARRIENDO ENVASES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1504",
+    "nombre": "CONFECCION DE BINS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1505",
+    "nombre": "TRANSPORTE DE ENVASES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1601",
+    "nombre": "SERVICIO FRIO (PACKING)",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1602",
+    "nombre": "PRODUCTOS QUIMICOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1701",
+    "nombre": "SERVICIOS SISTEMA DE FACTURACIÓN",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1801",
+    "nombre": "GASTOS LEGALES Y NOTARIALES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "1901",
+    "nombre": "COLACIONES PERSONAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2001",
+    "nombre": "CELULARES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2002",
+    "nombre": "INTERNET",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2101",
+    "nombre": "GASTOS DISEÑO Y MARKETING",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2201",
+    "nombre": "LUZ",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2202",
+    "nombre": "ENCOMIENDAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2203",
+    "nombre": "CALEFACCIÓN OFICINA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2204",
+    "nombre": "AGUA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2205",
+    "nombre": "ACT. EXTRAPROGRAMATICAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2301",
+    "nombre": "ASESORIAS PROFESIONALES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2302",
+    "nombre": "ASESORIAS INFORMÁTICAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2303",
+    "nombre": "ASESORIAS CONTABLES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2304",
+    "nombre": "ASESORIAS GESTIÓN COMPRA INSUMOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2305",
+    "nombre": "CERTIFICACIONES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2306",
+    "nombre": "ASESORIAS CONTROL DE CALIDAD",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2307",
+    "nombre": "ASESORIAS AGRONOMO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2401",
+    "nombre": "GASTOS ADUANA Y EMBARQUE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2402",
+    "nombre": "FLETES PLANTA PUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2403",
+    "nombre": "FLETES AÉREOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2404",
+    "nombre": "SEGURO MARÍTIMO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2405",
+    "nombre": "FLETES PLANTA AEROPUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2406",
+    "nombre": "GASTOS COMEX",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2407",
+    "nombre": "SERVICIOS LOGISTICOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2408",
+    "nombre": "AGENCIAMIENTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2409",
+    "nombre": "DUS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2410",
+    "nombre": "GATE OUT",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2411",
+    "nombre": "CERTIFICADO ORIGEN",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2412",
+    "nombre": "CERTIFICADO FITOSANITARIO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2413",
+    "nombre": "SECURITY FEE PUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2414",
+    "nombre": "FLETE MARITIMO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2415",
+    "nombre": "SOBRE ESTADIA EN PLANTA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2416",
+    "nombre": "PORTEO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2417",
+    "nombre": "HANDLING",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2418",
+    "nombre": "CORRECCIÓN BL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2419",
+    "nombre": "CORRECCIÒN MATRIZ",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2420",
+    "nombre": "LATE ARRIVAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2421",
+    "nombre": "SAG PUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2422",
+    "nombre": "HONORARIOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2423",
+    "nombre": "REEMISIÓN Y GESTIÒN CO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2424",
+    "nombre": "REEMISIÒN Y GESTIÒN FITO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2425",
+    "nombre": "ACLARACION DE MANIFIESTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2426",
+    "nombre": "SOBRE ESTADIA EN PUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2427",
+    "nombre": "MATRIZ FUERA DE PLAZO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2428",
+    "nombre": "GATE IN",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2429",
+    "nombre": "EARLY ARRIVAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2430",
+    "nombre": "CONEXIÒN EN PUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2431",
+    "nombre": "DETENTION",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2432",
+    "nombre": "LIBERACIÒN EN DESTINO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2433",
+    "nombre": "DEMURRAGE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2434",
+    "nombre": "SELLO NAVIERO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2435",
+    "nombre": "DESCARGA AEROPUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2436",
+    "nombre": "ALMACENAJE CONTENEDOR VACIO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2437",
+    "nombre": "ALMACENAJE CONTENEDOR FULL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2438",
+    "nombre": "INTERPLANTA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2439",
+    "nombre": "COMPLETA CARGA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2440",
+    "nombre": "FALSO FLETE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2441",
+    "nombre": "FALSO RETIRO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2442",
+    "nombre": "C.O.D (Cambio destino)",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2443",
+    "nombre": "PAGO TARDIO BL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2444",
+    "nombre": "EMISION DE BL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2445",
+    "nombre": "TRATAMIENTO DE FRIO (COLD TREATMENT)",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2446",
+    "nombre": "ARR GEN SET",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2447",
+    "nombre": "ARR GEN SET ADICIONAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2448",
+    "nombre": "ARR GEN SET FALSO FLETE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2449",
+    "nombre": "SOBRE ESTADIA ARR GEN SET",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2450",
+    "nombre": "TRANSPORTE DEVUELTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2451",
+    "nombre": "HABILITACION VACIO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2452",
+    "nombre": "AFORO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2453",
+    "nombre": "CONTROL SELLO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2454",
+    "nombre": "LAVADO CONTENEDOR",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2455",
+    "nombre": "OPERACIÓN PUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2456",
+    "nombre": "USO PUERTO CARGA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2457",
+    "nombre": "PERMANENCIA EN PUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2458",
+    "nombre": "RAYOS X",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2459",
+    "nombre": "ALMACENAJE AEROPUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2460",
+    "nombre": "HONORARIOS A",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2461",
+    "nombre": "MANTENCION AEROPUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2462",
+    "nombre": "HABILITACION BODEGA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2463",
+    "nombre": "CAMBIO CLIENTE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2464",
+    "nombre": "CAMBIO FLETE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2465",
+    "nombre": "CORR CAJAS KILO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2466",
+    "nombre": "PAGO TARDIO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2467",
+    "nombre": "COURRIER",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2468",
+    "nombre": "LIBERACION EN DESTINO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2469",
+    "nombre": "REEMISION CO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2470",
+    "nombre": "GESTION CO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2471",
+    "nombre": "REEMISION FITO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2472",
+    "nombre": "GESTION FITO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2473",
+    "nombre": "SAG AEROPUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2474",
+    "nombre": "CERTIFICADO FITOSANITARIO AEROPUERTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2475",
+    "nombre": "GESTION CORRECTORES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2476",
+    "nombre": "POR COBRAR",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2477",
+    "nombre": "RESERVA CANCELADA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2501",
+    "nombre": "GASTOS BANCARIOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2502",
+    "nombre": "COMISIONES BANCARIAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2503",
+    "nombre": "SEGURO BANCARIO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2504",
+    "nombre": "GASTOS PLAN PYME",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2505",
+    "nombre": "COMISIONES BANCARIAS EXPORTACIÓN",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2506",
+    "nombre": "INTERESES BANCARIOS Y GASTOS ADMINISTRATIVOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2507",
+    "nombre": "INFORME FINANCIERO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2601",
+    "nombre": "GASTOS REPRESENTACIÓN",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2602",
+    "nombre": "ALMUERZO CON CLIENTES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2603",
+    "nombre": "VIAJES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2604",
+    "nombre": "ALOJAMIENTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2605",
+    "nombre": "EVENTOS DE ALMAHUE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2606",
+    "nombre": "EVENTOS DE LA INDUSTRIA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2701",
+    "nombre": "SERVICIOS DE CONTABILIDAD",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2801",
+    "nombre": "ARTICULOS DE OFICINA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2802",
+    "nombre": "ARTICULOS DE CALIDAD",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2803",
+    "nombre": "AGUA OFICINA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2804",
+    "nombre": "MANTENCIONES ARTICULOS DE CALIDAD",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2805",
+    "nombre": "MOVILIZACIÓN PERSONAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2806",
+    "nombre": "CUMPLEAÑOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2807",
+    "nombre": "UNIFORMES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2808",
+    "nombre": "ARTICULOS DE ASEO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2901",
+    "nombre": "COMBUSTIBLE VEHICULOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2902",
+    "nombre": "COMBUSTIBLE MAQUINARIA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "2903",
+    "nombre": "USO VEHICULO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3001",
+    "nombre": "COSTO MATERIA PRIMA FRUTA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3002",
+    "nombre": "COSTO VENTA PRODUCTO TERMINADO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3101",
+    "nombre": "FLETES ADM Y VENTAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3201",
+    "nombre": "SERVICIOS ADMINISTRATIVOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3202",
+    "nombre": "CAPACITACIONES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3203",
+    "nombre": "OTROS GASTOS CASA PATRONAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3204",
+    "nombre": "INSUMOS CAMPO LONCOCHE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3205",
+    "nombre": "INSUMOS INSTALACIONES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3206",
+    "nombre": "INSUMOS ANIMALES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3207",
+    "nombre": "INSUMOS VIVERO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3208",
+    "nombre": "SEGURO PERSONAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3209",
+    "nombre": "PLANTAS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3210",
+    "nombre": "INSUMOS CALIDAD Y POSTCOSECHA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3211",
+    "nombre": "ESPONJAS DE COSECHA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3212",
+    "nombre": "ETIQUETA DE COSECHA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3213",
+    "nombre": "SELLOS CAMION COSECHA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3301",
+    "nombre": "ARRIENDO VEHICULO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3302",
+    "nombre": "ARRIENDO MAQUINARIA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3401",
+    "nombre": "PEAJES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3402",
+    "nombre": "SEGUROS VEHICULOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3403",
+    "nombre": "VEHICULOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3501",
+    "nombre": "TRABAJOS DE TIERRA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3502",
+    "nombre": "RIEGO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3503",
+    "nombre": "SERVICIO DE FUMIGACIÓN",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3601",
+    "nombre": "CUOTAS CÓMITE",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3602",
+    "nombre": "SEGURO FINANCIERO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3701",
+    "nombre": "ARRIENDO SERVICIOS SANITARIOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3702",
+    "nombre": "DERECHOS DE AGUA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3708",
+    "nombre": "ARRIENDO MAQUINARIA PVG",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3709",
+    "nombre": "MULTAS E INTERESES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3710",
+    "nombre": "SERVICIOS CONTRATISTA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3711",
+    "nombre": "COSTOS FUERA DE LA EXPLOTACION",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3712",
+    "nombre": "ARRIENDO BINS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3713",
+    "nombre": "ARRIENDO PROPIEDAD",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3714",
+    "nombre": "ROYALTY",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3715",
+    "nombre": "ARRIENDO BODEGA",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3716",
+    "nombre": "BIENESTAR PERSONAL",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3717",
+    "nombre": "CONTRIBUCIONES",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "3718",
+    "nombre": "SERVICIO CONTRATISTA CALIDAD",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "4001",
+    "nombre": "MANO OBRA DIRECTO",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "4002",
+    "nombre": "SERVICIOS DIRECTOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "4003",
+    "nombre": "MATERIALES DE EMBALAJE PT",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "4004",
+    "nombre": "GASTOS INDIRECTOS",
+    "departamento": "GENERAL"
+  },
+  {
+    "codigo": "4005",
+    "nombre": "DONACIONES",
+    "departamento": "GENERAL"
+  }
+]

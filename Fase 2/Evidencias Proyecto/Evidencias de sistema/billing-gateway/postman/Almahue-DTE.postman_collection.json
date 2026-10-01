@@ -1,0 +1,494 @@
+{
+  "info": {
+    "name": "Almahue DTE — emisiones entre sociedades (sandbox)",
+    "description": "Factura 33 ALM SERVICES SPA ↔ ALMAHUE EXPORT SPA.\n\n1) Importa esta colección y el environment.\n2) Copia Almahue-DTE.postman_environment.example.json → Almahue-DTE.local.postman_environment.json y pega claves.\n3) Selecciona el environment local.\n\nCarpeta GoSocket: llama directo a developers-sbx (ApiUser de la sociedad emisora).\nCarpeta billing-gateway: POST /v1/emissions (canónico). El adapter usa source.apiUser/apiPassword de ese body; no pisa el .env de Export.\n\nBillerId y CAE/Acteco van en el payload (equivalente a Admin › Empresas). Las ApiKeys NO van en el ERP.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "const stamp = String(Date.now());",
+          "const clipGiroRecep = (xml) => String(xml).replace(/<(GiroRecep)>([^<]*)<\\/\\1>/g, (_, tag, val) => '<' + tag + '>' + String(val).slice(0, 40) + '</' + tag + '>');",
+          "const almTpl = clipGiroRecep(pm.collectionVariables.get('guf_alm_to_export') || '');",
+          "const expTpl = clipGiroRecep(pm.collectionVariables.get('guf_export_to_alm') || '');",
+          "pm.collectionVariables.set('guf_alm_to_export_ready', almTpl.replaceAll('NUMERO_INTERNO', 'PM-' + stamp));",
+          "pm.collectionVariables.set('guf_export_to_alm_ready', expTpl.replaceAll('NUMERO_INTERNO', 'PM-' + stamp));"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "guf_alm_to_export",
+      "value": "<?xml version='1.0' encoding='ISO-8859-1'?><DTE version='1.0'><Documento ID='DTE-NUMERO_INTERNO'><Encabezado><IdDoc><Tipo>33</Tipo><NumeroInterno>NUMERO_INTERNO</NumeroInterno><FechaEmis>2026-09-17</FechaEmis></IdDoc><Emisor><IDEmisor>77032639-7</IDEmisor><RUTEmisor>77032639-7</RUTEmisor><NmbEmisor>ALM SERVICES SPA</NmbEmisor><RznSoc>ALM SERVICES SPA</RznSoc><NombreEmisor><PrimerNombre>Servicios logisticos, transporte y soporte operacional</PrimerNombre></NombreEmisor><GiroEmis>Servicios logisticos, transporte y soporte operacional</GiroEmis><Acteco>016100</Acteco><ExtraInfoEmisor name='Acteco'>016100</ExtraInfoEmisor><DomFiscal><Calle>Av. Logistica 845, Modulo B</Calle><Municipio>Renca</Municipio><Ciudad>Santiago</Ciudad></DomFiscal></Emisor><Receptor><IDReceptor>77032638-9</IDReceptor><RUTRecep>77032638-9</RUTRecep><DocRecep><NroDocRecep>77032638-9</NroDocRecep></DocRecep><NmbRecep>ALMAHUE EXPORT SPA</NmbRecep><RznSocRecep>ALMAHUE EXPORT SPA</RznSocRecep><NombreRecep><PrimerNombre>Exportacion de fruta fresca y servicios </PrimerNombre></NombreRecep><GiroRecep>Exportacion de fruta fresca y servicios </GiroRecep><DomFiscalRcp><Calle>Camino Fundo El Maiten 1200</Calle><Ciudad>San Fernando</Ciudad><Municipio>San Fernando</Municipio></DomFiscalRcp><LugarRecep><Calle>Camino Fundo El Maiten 1200</Calle><Ciudad>San Fernando</Ciudad><Municipio>San Fernando</Municipio></LugarRecep><DirRecep>Camino Fundo El Maiten 1200</DirRecep><CmnaRecep>San Fernando</CmnaRecep><CiudadRecep>San Fernando</CiudadRecep></Receptor><Totales><SubTotal>10000</SubTotal><MntNeto>10000</MntNeto><MntBase>10000</MntBase><TasaImp>19</TasaImp><TasaIVA>19</TasaIVA><MntImp>1900</MntImp><MontoImp>1900</MontoImp><IVA>1900</IVA><MntTotal>11900</MntTotal><VlrPagar>11900</VlrPagar><ExtraInfoTotal name='MntNeto'>10000</ExtraInfoTotal><ExtraInfoTotal name='MntTotal'>11900</ExtraInfoTotal><ExtraInfoTotal name='TasaIVA'>19</ExtraInfoTotal><ExtraInfoTotal name='IVA'>1900</ExtraInfoTotal><ExtraInfoTotal name='IVAProp'>1900</ExtraInfoTotal></Totales></Encabezado><Detalle><NroLinDet>1</NroLinDet><NmbItem>QA intercompany pallet</NmbItem><DscItem>QA intercompany pallet</DscItem><DscComercial>QA intercompany pallet</DscComercial><QtyItem>1</QtyItem><UnmdItem>UN</UnmdItem><PrcItem>10000</PrcItem><PrcBrutoItem>10000</PrcBrutoItem><MontoItem>10000</MontoItem><MontoNetoItem>10000</MontoNetoItem><MontoTotalItem>10000</MontoTotalItem></Detalle><CAE><NroResolucion>0</NroResolucion><FechaResolucion>2020-02-14</FechaResolucion></CAE></Documento></DTE>"
+    },
+    {
+      "key": "guf_export_to_alm",
+      "value": "<?xml version='1.0' encoding='ISO-8859-1'?><DTE version='1.0'><Documento ID='DTE-NUMERO_INTERNO'><Encabezado><IdDoc><Tipo>33</Tipo><NumeroInterno>NUMERO_INTERNO</NumeroInterno><FechaEmis>2026-09-17</FechaEmis></IdDoc><Emisor><IDEmisor>77032638-9</IDEmisor><RUTEmisor>77032638-9</RUTEmisor><NmbEmisor>ALMAHUE EXPORT SPA</NmbEmisor><RznSoc>ALMAHUE EXPORT SPA</RznSoc><NombreEmisor><PrimerNombre>Exportacion de fruta fresca y servicios de packing</PrimerNombre></NombreEmisor><GiroEmis>Exportacion de fruta fresca y servicios de packing</GiroEmis><Acteco>461001</Acteco><ExtraInfoEmisor name='Acteco'>461001</ExtraInfoEmisor><DomFiscal><Calle>Camino Fundo El Maiten 1200</Calle><Municipio>San Fernando</Municipio><Ciudad>San Fernando</Ciudad></DomFiscal></Emisor><Receptor><IDReceptor>77032639-7</IDReceptor><RUTRecep>77032639-7</RUTRecep><DocRecep><NroDocRecep>77032639-7</NroDocRecep></DocRecep><NmbRecep>ALM SERVICES SPA</NmbRecep><RznSocRecep>ALM SERVICES SPA</RznSocRecep><NombreRecep><PrimerNombre>Servicios logisticos, transporte y sopor</PrimerNombre></NombreRecep><GiroRecep>Servicios logisticos, transporte y sopor</GiroRecep><DomFiscalRcp><Calle>Av. Logistica 845, Modulo B</Calle><Ciudad>Santiago</Ciudad><Municipio>Renca</Municipio></DomFiscalRcp><LugarRecep><Calle>Av. Logistica 845, Modulo B</Calle><Ciudad>Santiago</Ciudad><Municipio>Renca</Municipio></LugarRecep><DirRecep>Av. Logistica 845, Modulo B</DirRecep><CmnaRecep>Renca</CmnaRecep><CiudadRecep>Santiago</CiudadRecep></Receptor><Totales><SubTotal>10000</SubTotal><MntNeto>10000</MntNeto><MntBase>10000</MntBase><TasaImp>19</TasaImp><TasaIVA>19</TasaIVA><MntImp>1900</MntImp><MontoImp>1900</MontoImp><IVA>1900</IVA><MntTotal>11900</MntTotal><VlrPagar>11900</VlrPagar><ExtraInfoTotal name='MntNeto'>10000</ExtraInfoTotal><ExtraInfoTotal name='MntTotal'>11900</ExtraInfoTotal><ExtraInfoTotal name='TasaIVA'>19</ExtraInfoTotal><ExtraInfoTotal name='IVA'>1900</ExtraInfoTotal><ExtraInfoTotal name='IVAProp'>1900</ExtraInfoTotal></Totales></Encabezado><Detalle><NroLinDet>1</NroLinDet><NmbItem>QA intercompany pallet</NmbItem><DscItem>QA intercompany pallet</DscItem><DscComercial>QA intercompany pallet</DscComercial><QtyItem>1</QtyItem><UnmdItem>UN</UnmdItem><PrcItem>10000</PrcItem><PrcBrutoItem>10000</PrcBrutoItem><MontoItem>10000</MontoItem><MontoNetoItem>10000</MontoNetoItem><MontoTotalItem>10000</MontoTotalItem></Detalle><CAE><NroResolucion>0</NroResolucion><FechaResolucion>2024-10-11</FechaResolucion></CAE></Documento></DTE>"
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Health",
+      "item": [
+        {
+          "name": "billing-gateway health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{gateway_base}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. GoSocket sandbox (ApiKey de la emisora)",
+      "item": [
+        {
+          "name": "ALM SERVICES → ALMAHUE EXPORT",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const user = pm.environment.get('alm_api_user');",
+                  "const pass = pm.environment.get('alm_api_password');",
+                  "pm.variables.set('gosocket_basic', btoa(user + ':' + pass));",
+                  "let xml = pm.collectionVariables.get('guf_alm_to_export_ready') || '';",
+                  "xml = xml.replace(/<(GiroRecep)>([^<]*)<\\/\\1>/g, function (_, tag, val) {",
+                  "  return '<' + tag + '>' + String(val).slice(0, 40) + '</' + tag + '>';",
+                  "});",
+                  "const payload = {",
+                  "  FileContent: xml,",
+                  "  Async: true,",
+                  "  Mapping: '11111111-1111-1111-1111-111111111111',",
+                  "  Sign: true,",
+                  "  DefaultCertificate: false,",
+                  "  IgnoreDownWorkload: false,",
+                  "  BillerId: pm.environment.get('alm_biller_id'),",
+                  "  ValidateNumber: false",
+                  "};",
+                  "pm.variables.set('gosocket_payload', JSON.stringify(payload));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "try {",
+                  "  const json = pm.response.json();",
+                  "  const gid = json.GlobalDocumentId || json.globalDocumentId || (json.Documents && json.Documents[0] && json.Documents[0].GlobalDocumentId);",
+                  "  if (gid) {",
+                  "    pm.environment.set('global_document_id', String(gid));",
+                  "    pm.environment.set('sender_code', '77032639-7');",
+                  "  }",
+                  "} catch (e) {}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{gosocket_basic}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{gosocket_payload}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{gosocket_base}}/Document/SendDocumentToAuthority",
+            "description": "Emisor ALM (77.032.639-7). Basic = ApiKey ALM. BillerId ALM."
+          }
+        },
+        {
+          "name": "ALMAHUE EXPORT → ALM SERVICES",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const user = pm.environment.get('export_api_user');",
+                  "const pass = pm.environment.get('export_api_password');",
+                  "pm.variables.set('gosocket_basic', btoa(user + ':' + pass));",
+                  "let xml = pm.collectionVariables.get('guf_export_to_alm_ready') || '';",
+                  "xml = xml.replace(/<(GiroRecep)>([^<]*)<\\/\\1>/g, function (_, tag, val) {",
+                  "  return '<' + tag + '>' + String(val).slice(0, 40) + '</' + tag + '>';",
+                  "});",
+                  "const payload = {",
+                  "  FileContent: xml,",
+                  "  Async: true,",
+                  "  Mapping: '11111111-1111-1111-1111-111111111111',",
+                  "  Sign: true,",
+                  "  DefaultCertificate: false,",
+                  "  IgnoreDownWorkload: false,",
+                  "  BillerId: pm.environment.get('export_biller_id'),",
+                  "  ValidateNumber: false",
+                  "};",
+                  "pm.variables.set('gosocket_payload', JSON.stringify(payload));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "try {",
+                  "  const json = pm.response.json();",
+                  "  const gid = json.GlobalDocumentId || json.globalDocumentId || (json.Documents && json.Documents[0] && json.Documents[0].GlobalDocumentId);",
+                  "  if (gid) {",
+                  "    pm.environment.set('global_document_id', String(gid));",
+                  "    pm.environment.set('sender_code', '77032638-9');",
+                  "  }",
+                  "} catch (e) {}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{gosocket_basic}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{gosocket_payload}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{gosocket_base}}/Document/SendDocumentToAuthority",
+            "description": "Emisor Export (77.032.638-9). Basic = ApiKey Export. BillerId Export."
+          }
+        },
+        {
+          "name": "GetDocument (tras emitir)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const sender = String(pm.environment.get('sender_code') || '').replace(/[.\\s]/g, '');",
+                  "const useAlm = sender === '77032639-7';",
+                  "const user = pm.environment.get(useAlm ? 'alm_api_user' : 'export_api_user');",
+                  "const pass = pm.environment.get(useAlm ? 'alm_api_password' : 'export_api_password');",
+                  "pm.variables.set('gosocket_basic', btoa(String(user) + ':' + String(pass)));",
+                  "if (!pm.environment.get('global_document_id')) {",
+                  "  console.warn('global_document_id vacío: primero SendDocument (el test script lo guarda).');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{gosocket_basic}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Country\": \"cl\",\n  \"SenderCode\": \"{{sender_code}}\",\n  \"GlobalDocumentId\": \"{{global_document_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{gosocket_base}}/Document/GetDocument",
+            "description": "Corré primero SendDocument: el test script guarda global_document_id y sender_code. GetDocument usa la ApiKey de esa emisora (ALM 77032639-7 / Export 77032638-9)."
+          }
+        },
+        {
+          "name": "GetDocument listado Export → ALM (77.032.638-9)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const user = pm.environment.get('export_api_user');",
+                  "const pass = pm.environment.get('export_api_password');",
+                  "pm.variables.set('gosocket_basic', btoa(String(user) + ':' + String(pass)));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{gosocket_basic}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Country\": \"cl\",\n  \"SenderCode\": \"77032638-9\",\n  \"ReceiverCode\": \"77032639-7\",\n  \"DateFrom\": \"{{date_from}}\",\n  \"DateTo\": \"{{date_to}}\",\n  \"ResultMaxItemCount\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{gosocket_base}}/Document/GetDocument",
+            "description": "POST GetDocument. Emisor Export, receptor ALM. Rango máximo un mes (date_from / date_to). No hace falta GID. Basic = ApiKey Export."
+          }
+        },
+        {
+          "name": "GetDocument listado ALM → Export (77.032.639-7)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const user = pm.environment.get('alm_api_user');",
+                  "const pass = pm.environment.get('alm_api_password');",
+                  "pm.variables.set('gosocket_basic', btoa(String(user) + ':' + String(pass)));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{gosocket_basic}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Country\": \"cl\",\n  \"SenderCode\": \"77032639-7\",\n  \"ReceiverCode\": \"77032638-9\",\n  \"DateFrom\": \"{{date_from}}\",\n  \"DateTo\": \"{{date_to}}\",\n  \"ResultMaxItemCount\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{gosocket_base}}/Document/GetDocument",
+            "description": "POST GetDocument. Emisor ALM, receptor Export. Rango máximo un mes (date_from / date_to). No hace falta GID. Basic = ApiKey ALM."
+          }
+        },
+        {
+          "name": "GetReceivedDocument ALM (77.032.639-7)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const user = pm.environment.get('alm_api_user');",
+                  "const pass = pm.environment.get('alm_api_password');",
+                  "pm.variables.set('gosocket_basic', btoa(String(user) + ':' + String(pass)));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{gosocket_basic}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{gosocket_base}}/Document/GetReceivedDocument?AccountCode=77032639-7",
+            "description": "GET bandeja XML pendientes de ALM. No pide RUT de emisor. Vacío = No contiene XMLs hasta que Gosocket distribuya. Tras leer: ConfirmReceivedDocument."
+          }
+        },
+        {
+          "name": "GetReceivedDocument Export (77.032.638-9)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const user = pm.environment.get('export_api_user');",
+                  "const pass = pm.environment.get('export_api_password');",
+                  "pm.variables.set('gosocket_basic', btoa(String(user) + ':' + String(pass)));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{gosocket_basic}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": "{{gosocket_base}}/Document/GetReceivedDocument?AccountCode=77032638-9",
+            "description": "GET bandeja XML pendientes de Export. No pide RUT de emisor. Vacío = No contiene XMLs hasta que Gosocket distribuya. Tras leer: ConfirmReceivedDocument."
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. billing-gateway (canónico ERP)",
+      "item": [
+        {
+          "name": "ALM SERVICES → ALMAHUE EXPORT",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Billing-Api-Key",
+                "value": "{{billing_api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schemaVersion\": \"1.0\",\n  \"idempotencyKey\": \"postman:{{$guid}}\",\n  \"source\": {\n    \"erpId\": \"almahue\",\n    \"empresaId\": \"EMP-SERVICES\",\n    \"documentoId\": \"postman-{{$timestamp}}\",\n    \"billerId\": \"eda79c0c-8771-4a84-8c95-ef700ecc67c9\",\n    \"apiUser\": \"{{alm_api_user}}\",\n    \"apiPassword\": \"{{alm_api_password}}\"\n  },\n  \"emisor\": {\n    \"rut\": \"77.032.639-7\",\n    \"razonSocial\": \"ALM SERVICES SPA\",\n    \"giro\": \"Servicios logisticos, transporte y soporte operacional\",\n    \"direccion\": \"Av. Logistica 845, Modulo B\",\n    \"comuna\": \"Renca\",\n    \"ciudad\": \"Santiago\",\n    \"nroResolucion\": \"0\",\n    \"fechaResolucion\": \"2020-02-14\",\n    \"acteco\": \"016100\"\n  },\n  \"receptor\": {\n    \"rut\": \"77.032.638-9\",\n    \"razonSocial\": \"ALMAHUE EXPORT SPA\",\n    \"giro\": \"Exportacion de fruta fresca y servicios de packing\",\n    \"direccion\": \"Camino Fundo El Maiten 1200\",\n    \"comuna\": \"San Fernando\",\n    \"ciudad\": \"San Fernando\"\n  },\n  \"documento\": {\n    \"tipoDte\": 33,\n    \"fechaEmision\": \"2026-09-17\",\n    \"formaPago\": \"CREDITO\",\n    \"moneda\": \"CLP\",\n    \"numeroInterno\": \"PM-{{$timestamp}}\"\n  },\n  \"totales\": {\n    \"neto\": 10000,\n    \"exento\": 0,\n    \"iva\": 1900,\n    \"tasaIva\": 19,\n    \"total\": 11900\n  },\n  \"lineas\": [\n    {\n      \"nro\": 1,\n      \"descripcion\": \"QA intercompany pallet\",\n      \"cantidad\": 1,\n      \"unidad\": \"UN\",\n      \"precio\": 10000,\n      \"descuentoPct\": 0,\n      \"montoNeto\": 10000\n    }\n  ],\n  \"glosas\": [],\n  \"indicadores\": {\n    \"exportacion\": false,\n    \"exento\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{gateway_base}}/v1/emissions"
+          },
+          "response": []
+        },
+        {
+          "name": "ALMAHUE EXPORT → ALM SERVICES",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Billing-Api-Key",
+                "value": "{{billing_api_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"schemaVersion\": \"1.0\",\n  \"idempotencyKey\": \"postman:{{$guid}}\",\n  \"source\": {\n    \"erpId\": \"almahue\",\n    \"empresaId\": \"EMP-EXPORT\",\n    \"documentoId\": \"postman-{{$timestamp}}\",\n    \"billerId\": \"d159916d-4977-499f-a52e-70550fc379ee\",\n    \"apiUser\": \"{{export_api_user}}\",\n    \"apiPassword\": \"{{export_api_password}}\"\n  },\n  \"emisor\": {\n    \"rut\": \"77.032.638-9\",\n    \"razonSocial\": \"ALMAHUE EXPORT SPA\",\n    \"giro\": \"Exportacion de fruta fresca y servicios de packing\",\n    \"direccion\": \"Camino Fundo El Maiten 1200\",\n    \"comuna\": \"San Fernando\",\n    \"ciudad\": \"San Fernando\",\n    \"nroResolucion\": \"0\",\n    \"fechaResolucion\": \"2024-10-11\",\n    \"acteco\": \"461001\"\n  },\n  \"receptor\": {\n    \"rut\": \"77.032.639-7\",\n    \"razonSocial\": \"ALM SERVICES SPA\",\n    \"giro\": \"Servicios logisticos, transporte y soporte operacional\",\n    \"direccion\": \"Av. Logistica 845, Modulo B\",\n    \"comuna\": \"Renca\",\n    \"ciudad\": \"Santiago\"\n  },\n  \"documento\": {\n    \"tipoDte\": 33,\n    \"fechaEmision\": \"2026-09-17\",\n    \"formaPago\": \"CREDITO\",\n    \"moneda\": \"CLP\",\n    \"numeroInterno\": \"PM-{{$timestamp}}\"\n  },\n  \"totales\": {\n    \"neto\": 10000,\n    \"exento\": 0,\n    \"iva\": 1900,\n    \"tasaIva\": 19,\n    \"total\": 11900\n  },\n  \"lineas\": [\n    {\n      \"nro\": 1,\n      \"descripcion\": \"QA intercompany pallet\",\n      \"cantidad\": 1,\n      \"unidad\": \"UN\",\n      \"precio\": 10000,\n      \"descuentoPct\": 0,\n      \"montoNeto\": 10000\n    }\n  ],\n  \"glosas\": [],\n  \"indicadores\": {\n    \"exportacion\": false,\n    \"exento\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{gateway_base}}/v1/emissions"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

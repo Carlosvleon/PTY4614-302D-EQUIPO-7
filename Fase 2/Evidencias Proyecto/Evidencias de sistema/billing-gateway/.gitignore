@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+.env
+src/registry/tenants.local.json
+*.log
+.DS_Store
+/data/
+logs/
+postman/*.local.postman_environment.json

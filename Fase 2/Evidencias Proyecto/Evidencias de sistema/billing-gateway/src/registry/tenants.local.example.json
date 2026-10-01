@@ -1,0 +1,20 @@
+[
+  {
+    "erpId": "almahue",
+    "rutEmisor": "*",
+    "partner": "gosocket",
+    "connectionMode": "sandbox",
+    "activo": true,
+    "_comment": "Copiar a tenants.local.json. Overlay del ERP entero (todas las empresas). BillerId / RUT / CAE / Acteco salen del canónico (Admin › Empresas). ApiUser/password: GOSOCKET_API_USER_{ERP}_{EMPRESA} en .env, no aquí. No versionar el archivo local."
+  },
+  {
+    "erpId": "almahue",
+    "empresaId": "EMP-SERVICES",
+    "rutEmisor": "77032639-7",
+    "partner": "gosocket",
+    "connectionMode": "sandbox",
+    "billerId": "d23bdecb-0776-433b-aaf2-ab4e11e76501",
+    "activo": true,
+    "_comment": "Opcional: inbox compras QA sandbox (receptor 77032639-7)."
+  }
+]

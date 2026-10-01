@@ -1,0 +1,2 @@
+ALTER TABLE "erp"."Proveedor" ADD COLUMN IF NOT EXISTS "condicionIvaDia" INTEGER DEFAULT 10;
+ALTER TABLE "erp"."Proveedor" ADD COLUMN IF NOT EXISTS "monedaPago" TEXT DEFAULT 'CLP';

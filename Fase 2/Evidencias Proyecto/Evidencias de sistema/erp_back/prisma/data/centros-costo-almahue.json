@@ -1,0 +1,1866 @@
+[
+  {
+    "codigo": "10100",
+    "nombre": "DAGGEN ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "DAGGEN",
+    "variedad": ""
+  },
+  {
+    "codigo": "10200",
+    "nombre": "NECTARIN ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": ""
+  },
+  {
+    "codigo": "10300",
+    "nombre": "CEREZA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "TODAS"
+  },
+  {
+    "codigo": "10400",
+    "nombre": "CIRUELA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CIRUELA",
+    "variedad": ""
+  },
+  {
+    "codigo": "10700",
+    "nombre": "KIWI ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "KIWI",
+    "variedad": ""
+  },
+  {
+    "codigo": "10701",
+    "nombre": "NARANJA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NARANJA",
+    "variedad": ""
+  },
+  {
+    "codigo": "10702",
+    "nombre": "MANDARINA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANDARINA",
+    "variedad": ""
+  },
+  {
+    "codigo": "10800",
+    "nombre": "DURAZNO ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "DURAZNO",
+    "variedad": ""
+  },
+  {
+    "codigo": "10900",
+    "nombre": "MANZANA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": ""
+  },
+  {
+    "codigo": "15000",
+    "nombre": "COMEX ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "15100",
+    "nombre": "ADMINISTRACION Y FINANZAS ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15101",
+    "nombre": "CONTABILIDAD ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15102",
+    "nombre": "CONTROL Y GESTION ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15103",
+    "nombre": "RECURSOS HUMANOS ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15104",
+    "nombre": "TI ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15200",
+    "nombre": "COMERCIAL ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15201",
+    "nombre": "LOGISTICA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15203",
+    "nombre": "MATERIALES Y ABASTECIMIENTO ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15205",
+    "nombre": "DESARROLLO DE SUBPRODUCTOS Y NUEVOS NEGOCIOS",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "15300",
+    "nombre": "PRODUCCION AGRICOLA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15301",
+    "nombre": "DESARROLLO DE PROYECTOS Y NUEVOS NEGOCIOS",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "15400",
+    "nombre": "PRODUCCION INDUSTRIAL ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "15500",
+    "nombre": "CALIDAD Y POSTCOSECHA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "15600",
+    "nombre": "AGRICOLA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15700",
+    "nombre": "GERENCIA GENERAL ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "16000",
+    "nombre": "FRESH LINK ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "17100",
+    "nombre": "BODEGA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "20100",
+    "nombre": "DAGGEN ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "DAGGEN",
+    "variedad": ""
+  },
+  {
+    "codigo": "20200",
+    "nombre": "NECTARIN ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": ""
+  },
+  {
+    "codigo": "20300",
+    "nombre": "CEREZA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": ""
+  },
+  {
+    "codigo": "20400",
+    "nombre": "CIRUELA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CIRUELA",
+    "variedad": ""
+  },
+  {
+    "codigo": "20700",
+    "nombre": "KIWI ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "KIWI",
+    "variedad": ""
+  },
+  {
+    "codigo": "20701",
+    "nombre": "NARANJA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NARANJA",
+    "variedad": ""
+  },
+  {
+    "codigo": "20702",
+    "nombre": "MANDARINA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANDARINA",
+    "variedad": ""
+  },
+  {
+    "codigo": "20800",
+    "nombre": "DURAZNO ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "DURAZNO",
+    "variedad": ""
+  },
+  {
+    "codigo": "20900",
+    "nombre": "MANZANA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": ""
+  },
+  {
+    "codigo": "25000",
+    "nombre": "COMEX ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "25100",
+    "nombre": "ADMINISTRACION Y FINANZAS ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "25102",
+    "nombre": "CONTROL Y GESTION ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25200",
+    "nombre": "COMERCIAL ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "25205",
+    "nombre": "DESARROLLO DE SUBPRODUCTOS Y NUEVOS NEGOCIOS ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "25300",
+    "nombre": "PRODUCCION AGRICOLA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "25400",
+    "nombre": "PRODUCCION INDUSTRIAL ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25600",
+    "nombre": "AGRICOLA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25700",
+    "nombre": "GERENCIA GENERAL ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "35400",
+    "nombre": "ADMINISTRACION CAMPO SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "35600",
+    "nombre": "CAMPO LONCOCHE",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "LONCOCHE",
+    "variedad": "LONCOCHE"
+  },
+  {
+    "codigo": "36000",
+    "nombre": "CONTROL DE HELADAS SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36100",
+    "nombre": "RIEGO SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36400",
+    "nombre": "MAQUINARIA SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36700",
+    "nombre": "CASA PATRONAL SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36800",
+    "nombre": "CASA PATRICIA GOYCOOLEA SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36900",
+    "nombre": "CABALLOS SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "37000",
+    "nombre": "GERENCIA SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "37100",
+    "nombre": "BODEGA SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "37200",
+    "nombre": "VIVERO SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "STA.PILAR"
+  },
+  {
+    "codigo": "37400",
+    "nombre": "PROYECTO 1  C12 Y C13 SP",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "37500",
+    "nombre": "PROYECTO 2 C3 SP",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "37600",
+    "nombre": "PROYECTO 3 C14 SP",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "INVERSIONES",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "37700",
+    "nombre": "PROYECTO 4 C8 SP",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "INVERSIONES",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "45400",
+    "nombre": "ADMINISTRACION CAMPO LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "46100",
+    "nombre": "RIEGO LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "46400",
+    "nombre": "MAQUINARIA LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "46700",
+    "nombre": "CASA PATRONAL LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "46701",
+    "nombre": "CASA COTI",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "46800",
+    "nombre": "CASA PATRICIA GOYCOOLEA LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "46900",
+    "nombre": "CABALLOS LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "47000",
+    "nombre": "GERENCIA LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "47100",
+    "nombre": "BODEGA LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "47300",
+    "nombre": "VIVERO LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "47500",
+    "nombre": "CASA AGUSTIN LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "47600",
+    "nombre": "CASA ROGELIO LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "47700",
+    "nombre": "CASA NICO",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "55400",
+    "nombre": "ADMINISTRACION CAMPO LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "56100",
+    "nombre": "RIEGO LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "56300",
+    "nombre": "DRENAJE LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "56400",
+    "nombre": "MAQUINARIA LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "57000",
+    "nombre": "GERENCIA LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "57100",
+    "nombre": "BODEGA LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "57200",
+    "nombre": "VIVERO LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "65400",
+    "nombre": "ADMINISTRACION CAMPO VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "66100",
+    "nombre": "RIEGO VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "66400",
+    "nombre": "MAQUINARIA VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "67000",
+    "nombre": "GERENCIA VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "67100",
+    "nombre": "BODEGA VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "67400",
+    "nombre": "PROYECTO 1 C1-C2-C3-C4-C5 VV",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "67500",
+    "nombre": "TECHOS VV PROYECTO 2",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "75100",
+    "nombre": "ADMINISTRACION Y VENTAS SANTA PETRA",
+    "codEmpresaExcel": 7,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "75200",
+    "nombre": "GERENCIA SANTA PETRA",
+    "codEmpresaExcel": 7,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "SERV.AGRIC.STA.PETRA"
+  },
+  {
+    "codigo": "76400",
+    "nombre": "MAQUINARIA SANTA PETRA",
+    "codEmpresaExcel": 7,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "76500",
+    "nombre": "BODEGA SANTA PETRA",
+    "codEmpresaExcel": 7,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "87000",
+    "nombre": "ADMINISTRACION",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "87100",
+    "nombre": "MAQUINARIA",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "87200",
+    "nombre": "BODEGA LOMA NORTE",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "87300",
+    "nombre": "RIEGO LOMA NORTE",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "87400",
+    "nombre": "TRANQUE AG LOMA NORTE",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "INVERSIONES",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "3030518",
+    "nombre": "SP C2 SIN PLANTAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3030519",
+    "nombre": "SP C2 CEREZA LAPINS 2017",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3030620",
+    "nombre": "SP C9 CEREZA SANTINA 2020",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030621",
+    "nombre": "SP C12 CEREZA SANTINA 2021",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "GLEN RED"
+  },
+  {
+    "codigo": "3030622",
+    "nombre": "SP C13 CEREZA SANTINA M 2021",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030623",
+    "nombre": "SP C8 CEREZA SANTINA 2023",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030624",
+    "nombre": "SP C13 CEREZA ROYAL DAWN 2021",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "ROYAL DAWN"
+  },
+  {
+    "codigo": "3030627",
+    "nombre": "SP C5 CEREZA LAPINS 2024",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3030628",
+    "nombre": "SP C7 CEREZA LAPINS 2024",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3030629",
+    "nombre": "SP C10 CEREZA SANTINA 2023",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3031020",
+    "nombre": "SP C1 SIN PLANTAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "REGINA"
+  },
+  {
+    "codigo": "3031022",
+    "nombre": "SP C14 CEREZA SANTINA 2025",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": ""
+  },
+  {
+    "codigo": "3031023",
+    "nombre": "SP C6 CEREZA SIN PLANTAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": ""
+  },
+  {
+    "codigo": "3031024",
+    "nombre": "SP C11 CEREZA SANTINA 2025",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": ""
+  },
+  {
+    "codigo": "3031025",
+    "nombre": "SP C3 CEREZA SANTINA 2023",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3031026",
+    "nombre": "SP C4 CEREZA SANTINA 2024",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "4011105",
+    "nombre": "LP C1 MANZANA GRANNY 2005",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": "GRANNY SMITH"
+  },
+  {
+    "codigo": "4011305",
+    "nombre": "LP C1 MANZANA PINK LADY 2005",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": "PINK LADY"
+  },
+  {
+    "codigo": "4020000",
+    "nombre": "LP C8 NECTARINES WA 2021",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "BLANCO"
+  },
+  {
+    "codigo": "4021000",
+    "nombre": "LP C10 NECTARINES T 2023",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "AMARILLO"
+  },
+  {
+    "codigo": "4022000",
+    "nombre": "LP C7 NECTARINES N4 2021",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "ANDESNECCINCO"
+  },
+  {
+    "codigo": "4023000",
+    "nombre": "LP C9 NECTARINES MP 2021",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "MAGIQUE"
+  },
+  {
+    "codigo": "4024000",
+    "nombre": "LP C11 NECTARINES G 2023",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "GIANT PEARL"
+  },
+  {
+    "codigo": "4025000",
+    "nombre": "LP C3 CEREZAS LAPINS 2024",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "4030515",
+    "nombre": "LP C5 CEREZA LAPINS 2015",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "4030518",
+    "nombre": "LP C4 CEREZA LAPINS 2018",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "4030621",
+    "nombre": "LP C6 CEREZA SANTINA 2021",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": ""
+  },
+  {
+    "codigo": "5030619",
+    "nombre": "LC C1 CEREZA SANTINA 2018",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "5030620",
+    "nombre": "LC C2 CEREZA SANTINA 2018",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "5030621",
+    "nombre": "LC C3 CEREZA SANTINA 2018",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "5030622",
+    "nombre": "LC C4 CEREZA SANTINA 2018",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "5030623",
+    "nombre": "LC C5 CEREZA SANTINA 2018",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "5030624",
+    "nombre": "LC C3 CEREZA SANTINA 2026",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030621",
+    "nombre": "VV C6 CEREZA SANTINA 2024",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030622",
+    "nombre": "VV C1 CEREZA SANTINA 2020",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030623",
+    "nombre": "VV C2 CEREZA SANTINA 2020",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030624",
+    "nombre": "VV C3 CEREZA SANTINA 2020",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030625",
+    "nombre": "VV C4 CEREZA SANTINA 2020",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030626",
+    "nombre": "VV C5 CEREZA SANTINA 2020",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030627",
+    "nombre": "VV C7 CEREZA SANTINA 2024",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "8080001",
+    "nombre": "LN C1 CEREZA SANTINA 2025",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "8080002",
+    "nombre": "LN C2 CEREZA SANTINA 2025",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "8080003",
+    "nombre": "LN C3 CEREZA SANTINA 2025",
+    "codEmpresaExcel": 8,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "30306201",
+    "nombre": "SP C1 CEREZA SANTINA (R) 2020",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "10500",
+    "nombre": "CAROZOS ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "DURAZNO",
+    "variedad": ""
+  },
+  {
+    "codigo": "10600",
+    "nombre": "UVA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "UVA",
+    "variedad": ""
+  },
+  {
+    "codigo": "15202",
+    "nombre": "CALIDAD Y POST COSECHA ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "15204",
+    "nombre": "COMERCIAL ALM",
+    "codEmpresaExcel": 1,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "20500",
+    "nombre": "CAROZOS ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "DURAZNO",
+    "variedad": ""
+  },
+  {
+    "codigo": "20600",
+    "nombre": "UVA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "UVA",
+    "variedad": ""
+  },
+  {
+    "codigo": "25101",
+    "nombre": "CONTABILIDAD ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25103",
+    "nombre": "RECURSOS HUMANOS ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25104",
+    "nombre": "TI ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25201",
+    "nombre": "LOGISTICA Y COMEX ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25202",
+    "nombre": "CALIDAD Y POST COSECHA ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25203",
+    "nombre": "MATERIALES Y ABASTECIMIENTO ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "25204",
+    "nombre": "COMERCIAL ALMAHUE",
+    "codEmpresaExcel": 2,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "35500",
+    "nombre": "SEGURIDAD SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "35700",
+    "nombre": "INSTALACIONES SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "35800",
+    "nombre": "CAMINOS SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "35900",
+    "nombre": "CANALES SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36200",
+    "nombre": "VEHICULOS SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36500",
+    "nombre": "IMPLEMENTOS AGRICOLAS SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "36600",
+    "nombre": "CERTIFICACIONES SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "37300",
+    "nombre": "PVG",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": ""
+  },
+  {
+    "codigo": "45500",
+    "nombre": "SEGURIDAD LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "45700",
+    "nombre": "INSTALACIONES LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "GERENCIA",
+    "variedad": "AGRIC.LOS PALOS"
+  },
+  {
+    "codigo": "45800",
+    "nombre": "CAMINOS LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "45900",
+    "nombre": "CANALES LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "46200",
+    "nombre": "VEHICULOS LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "46500",
+    "nombre": "IMPLEMENTOS AGRICOLAS LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "46600",
+    "nombre": "CERTIFICACIONES LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": "ADMINISTRACIÓN"
+  },
+  {
+    "codigo": "47200",
+    "nombre": "PVG",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "ADMINISTRACIÓN",
+    "variedad": ""
+  },
+  {
+    "codigo": "55500",
+    "nombre": "SEGURIDAD LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "55700",
+    "nombre": "INSTALACIONES LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "55800",
+    "nombre": "CAMINOS LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "55900",
+    "nombre": "CANALES LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "56200",
+    "nombre": "VEHICULOS LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "56500",
+    "nombre": "IMPLEMENTOS AGRICOLAS LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "56600",
+    "nombre": "CERTIFICACIONES LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "65500",
+    "nombre": "SEGURIDAD VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "65700",
+    "nombre": "INSTALACIONES VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "65800",
+    "nombre": "CAMINOS VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "65900",
+    "nombre": "CANALES VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "66200",
+    "nombre": "VEHICULOS VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "66500",
+    "nombre": "IMPLEMENTOS AGRICOLAS VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "66600",
+    "nombre": "CERTIFICACIONES VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "ADMINISTRACION",
+    "especie": "",
+    "variedad": ""
+  },
+  {
+    "codigo": "3030515",
+    "nombre": "CEREZA LAPINS 2015 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3030516",
+    "nombre": "CEREZA LAPINS 2016 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3030517",
+    "nombre": "SP C2 CEREZA LAPINS 2017",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3030612",
+    "nombre": "CEREZA SANTINA 2012 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030615",
+    "nombre": "CEREZA SANTINA 2015 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030616",
+    "nombre": "CEREZA SANTINA 2016 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030617",
+    "nombre": "CEREZA SANTINA 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030625",
+    "nombre": "SP C3 CEREZA SANTINA 2023",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030626",
+    "nombre": "SP C4 CEREZA SANTINA 2024",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3030707",
+    "nombre": "CEREZA SWEET HEART 2007 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SWETT HEART"
+  },
+  {
+    "codigo": "3030807",
+    "nombre": "CEREZA GLEN RED 2007 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "GLEN RED"
+  },
+  {
+    "codigo": "3030917",
+    "nombre": "CEREZA BING 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "BING"
+  },
+  {
+    "codigo": "3031017",
+    "nombre": "CEREZA REGINA 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "REGINA"
+  },
+  {
+    "codigo": "3730515",
+    "nombre": "COSECHA CEREZA LAPINS 2015 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3730516",
+    "nombre": "COSECHA CEREZA LAPINS 2016 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3730517",
+    "nombre": "COSECHA CEREZA LAPINS 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "3730612",
+    "nombre": "COSECHA CEREZA SANTINA 2012 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730615",
+    "nombre": "COSECHA CEREZA SANTINA 2015 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730616",
+    "nombre": "COSECHA CEREZA SANTINA 2016 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730617",
+    "nombre": "COSECHA CEREZA SANTINA 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730620",
+    "nombre": "COSECHA CEREZA SANTINA 2020 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730621",
+    "nombre": "COSECHA CEREZA SANTINA 2021 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730622",
+    "nombre": "COSECHA CEREZA SANTINA M 2021 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730623",
+    "nombre": "COSECHA CEREZA SANTINA 2023 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730624",
+    "nombre": "COSECHA CEREZA ROYAL DAWN 2021 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "ROYAL DAWN"
+  },
+  {
+    "codigo": "3730625",
+    "nombre": "COSECHA CEREZA SANTINA 2023 (16) SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "3730707",
+    "nombre": "COSECHA CEREZA SWEET HEART 2007 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SWETT HEART"
+  },
+  {
+    "codigo": "3730807",
+    "nombre": "COSECHA CEREZA GLEN RED 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "GLEN RED"
+  },
+  {
+    "codigo": "3730917",
+    "nombre": "COSECHA CEREZA BING 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "BING"
+  },
+  {
+    "codigo": "3731017",
+    "nombre": "COSECHA CEREZA REGINA 2017 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "REGINA"
+  },
+  {
+    "codigo": "3731020",
+    "nombre": "COSECHA CEREZA REGINA 2020 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "REGINA"
+  },
+  {
+    "codigo": "4011210",
+    "nombre": "MANZANA BROOKFIELD 2010 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": "BROOKFIELD"
+  },
+  {
+    "codigo": "4720000",
+    "nombre": "COSECHA NECTARINES WA 2021 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "BLANCO"
+  },
+  {
+    "codigo": "4721000",
+    "nombre": "COSECHA NECTARINES T 2023 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "AMARILLO"
+  },
+  {
+    "codigo": "4722000",
+    "nombre": "COSECHA NECTARINES N4 2021 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "ANDESNECCINCO"
+  },
+  {
+    "codigo": "4723000",
+    "nombre": "COSECHA NECTARINES MP 2021 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "MAGIQUE"
+  },
+  {
+    "codigo": "4724000",
+    "nombre": "COSECHA NECTARINES G 2023 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "NECTARIN",
+    "variedad": "GIANT PEARL"
+  },
+  {
+    "codigo": "4730515",
+    "nombre": "COSECHA CEREZA LAPINS 2015 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "4730518",
+    "nombre": "COSECHA CEREZA LAPINS 2018 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "4730621",
+    "nombre": "COSECHA CEREZA SANTINA 2021 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "4741105",
+    "nombre": "COSECHA MANZANA GRANNY 2005 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": "GRANNY SMITH"
+  },
+  {
+    "codigo": "4741210",
+    "nombre": "COSECHA MANZANA BROOKFIELD 2010 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": "BROOKFIELD"
+  },
+  {
+    "codigo": "4741305",
+    "nombre": "COSECHA MANZANA PINK LADY 2005 LOS PALOS",
+    "codEmpresaExcel": 4,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "MANZANA",
+    "variedad": "PINK LADY"
+  },
+  {
+    "codigo": "5030618",
+    "nombre": "CEREZA SANTINA 2018 LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "5730618",
+    "nombre": "COSECHA CEREZA SANTINA 2018 LA CAÑADA",
+    "codEmpresaExcel": 5,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6030620",
+    "nombre": "CEREZA SANTINA 2020 VIÑA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6730620",
+    "nombre": "COSECHA CEREZA SANTINA VINA VIEJA",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "6730621",
+    "nombre": "VV C6 CEREZA SANTINA 2024",
+    "codEmpresaExcel": 6,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "LAPINS"
+  },
+  {
+    "codigo": "30306231",
+    "nombre": "CEREZA SANTINA TECHO 2023 AGRICOLA SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  },
+  {
+    "codigo": "37306201",
+    "nombre": "COSECHA CEREZA SANTINA (R) 2020 SANTA PILAR",
+    "codEmpresaExcel": 3,
+    "tipoCentro": "PRODUCTIVO",
+    "especie": "CEREZA",
+    "variedad": "SANTINA"
+  }
+]

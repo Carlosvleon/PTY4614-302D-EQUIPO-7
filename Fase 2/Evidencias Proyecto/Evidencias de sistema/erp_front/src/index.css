@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg: #f5f7f5;
+  --color-surface: #ffffff;
+  --color-surface-2: #f1f4ec;
+  --color-border: #e3e7dd;
+  --color-muted: #6b7280;
+  --color-text: #1f2937;
+  --color-accent: #1a5c2e;
+  --color-accent-2: #0f3d1e;
+  --color-accent-soft: #e6f3ea;
+  --color-brand: #b0192b;
+  --color-brand-2: #7a0e1e;
+  --color-brand-soft: #fde8eb;
+  --color-danger: #c0392b;
+  --color-warning: #d97706;
+  --color-info: #2563eb;
+  --color-success: #16a34a;
+  --color-mock-bg: #fffbeb;
+  --color-mock-text: #b45309;
+  --color-kpi-amber-bg: #fffbeb;
+  --color-kpi-amber-text: #d97706;
+  --color-kpi-blue-bg: #f0f9ff;
+  --color-kpi-blue-text: #0284c7;
+  --color-badge-success-bg: #ecfdf5;
+  --color-badge-success-text: #047857;
+  --color-badge-success-border: #a7f3d0;
+  --color-badge-warning-bg: #fffbeb;
+  --color-badge-warning-text: #b45309;
+  --color-badge-warning-border: #fde68a;
+  --color-badge-danger-bg: #fef2f2;
+  --color-badge-danger-text: #b91c1c;
+  --color-badge-danger-border: #fecaca;
+  --color-badge-info-bg: #f0f9ff;
+  --color-badge-info-text: #0369a1;
+  --color-badge-info-border: #bae6fd;
+  --color-chart-grid: #e3e7dd;
+  --color-chart-ventas: #1a5c2e;
+  --color-chart-gastos: #b0192b;
+  --color-scrollbar: #d4d9cf;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark {
+  --color-bg: #0c100d;
+  --color-surface: #151b17;
+  --color-surface-2: #1e2620;
+  --color-border: #2a332c;
+  --color-muted: #94a399;
+  --color-text: #e8ede9;
+  --color-accent: #4caf6a;
+  --color-accent-2: #6dd088;
+  --color-accent-soft: #1a3324;
+  --color-brand: #e0455c;
+  --color-brand-2: #f06b7e;
+  --color-brand-soft: #331820;
+  --color-danger: #f07167;
+  --color-warning: #fbbf24;
+  --color-info: #60a5fa;
+  --color-success: #4ade80;
+  --color-mock-bg: #3d2e12;
+  --color-mock-text: #fbbf24;
+  --color-kpi-amber-bg: #3d2e12;
+  --color-kpi-amber-text: #fbbf24;
+  --color-kpi-blue-bg: #0c2847;
+  --color-kpi-blue-text: #7dd3fc;
+  --color-badge-success-bg: #052e1a;
+  --color-badge-success-text: #6ee7b7;
+  --color-badge-success-border: #065f3a;
+  --color-badge-warning-bg: #3d2e12;
+  --color-badge-warning-text: #fcd34d;
+  --color-badge-warning-border: #92400e;
+  --color-badge-danger-bg: #3d1515;
+  --color-badge-danger-text: #fca5a5;
+  --color-badge-danger-border: #991b1b;
+  --color-badge-info-bg: #0c2847;
+  --color-badge-info-text: #7dd3fc;
+  --color-badge-info-border: #1e40af;
+  --color-chart-grid: #2a332c;
+  --color-chart-ventas: #6dd088;
+  --color-chart-gastos: #e0455c;
+  --color-scrollbar: #3a4540;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.almahue-leaf-bg {
+  background-image:
+    radial-gradient(circle at 80% 20%, rgba(91, 183, 73, 0.06) 0, transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(168, 51, 63, 0.04) 0, transparent 40%);
+}
+
+.dark .almahue-leaf-bg {
+  background-image:
+    radial-gradient(circle at 80% 20%, rgba(91, 183, 73, 0.08) 0, transparent 40%),
+    radial-gradient(circle at 10% 90%, rgba(224, 69, 92, 0.06) 0, transparent 40%);
+}
+
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: var(--color-scrollbar); border-radius: 6px; }
+
+/* Campos nativos date/month alineados al tema (calendario del SO). */
+.erp-date-input {
+  color-scheme: light;
+  padding-right: 0.75rem;
+}
+.dark .erp-date-input {
+  color-scheme: dark;
+}
+.erp-date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.72;
+  margin-left: 0.25rem;
+}
+.erp-date-input:hover::-webkit-calendar-picker-indicator {
+  opacity: 1;
+}
+.erp-month-input {
+  letter-spacing: 0.02em;
+}

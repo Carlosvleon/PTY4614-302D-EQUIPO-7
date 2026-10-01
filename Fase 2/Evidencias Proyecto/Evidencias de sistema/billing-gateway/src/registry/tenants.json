@@ -1,0 +1,10 @@
+[
+  {
+    "erpId": "almahue",
+    "rutEmisor": "*",
+    "partner": "stub",
+    "connectionMode": "stub",
+    "activo": true,
+    "_comment": "Un registro por ERP, no por sociedad. BillerId / RUT / CAE / Acteco van en Admin › Empresas. Cambiar a gosocket en tenants.local.json para QA sandbox."
+  }
+]
