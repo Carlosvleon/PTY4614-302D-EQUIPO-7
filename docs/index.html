@@ -200,6 +200,39 @@
     font-size: 13px;
     color: #4a3b28;
   }
+  .timer-box {
+    position: fixed;
+    right: 22px;
+    bottom: 42px;
+    z-index: 6;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 250, 243, 0.94);
+    border: 1px solid #dcd0ba;
+    border-radius: 18px;
+    padding: 4px 11px;
+    box-shadow: 0 4px 14px rgba(74, 50, 32, 0.08);
+    font-size: 14px;
+    font-weight: 700;
+    color: #24532c;
+    letter-spacing: 0.03em;
+    user-select: none;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  .timer-box:hover {
+    background: #fff;
+    border-color: #8fbf78;
+  }
+  .timer-box.warning { color: #b45309; border-color: #f59e0b; }
+  .timer-box.danger { color: #b91c1c; border-color: #ef4444; }
+  .timer-icon {
+    font-size: 13px;
+    line-height: 1;
+    opacity: 0.85;
+  }
   .dots {
     position: fixed;
     left: 22px;
@@ -252,6 +285,10 @@
 </div>
 <div class="brand">ERP Almahue<span>Presentación final</span></div>
 <div class="hint" id="hint">Scroll o flecha. El brote abre la lámina.</div>
+<div class="timer-box" id="timerBox" title="Cronómetro de presentación (Clic: Pausar/Reanudar | Doble clic: Reiniciar)">
+  <span class="timer-icon">⏱</span>
+  <span id="timerDisplay">00:00</span>
+</div>
 <div class="count" id="count"></div>
 <div class="dots" id="dots"></div>
 
@@ -723,6 +760,10 @@ function frame() {
   count.textContent = inCrown ? "copa" : (shown === 0 ? "semilla" : (shown + " / " + N));
   hint.style.opacity = prog > 0.02 ? "0" : "1";
 
+  if (shown >= 1 && !timerStarted) {
+    startTimer();
+  }
+
   leafMarks.forEach(function (mark) {
     const on = draw >= mark.len;
     if (mark.el) mark.el.classList.toggle("on", on);
@@ -805,10 +846,12 @@ function scrollToSlow(top) {
 }
 function goTo(i) {
   i = Math.max(0, Math.min(N - 1, i));
+  if (i >= 0 && !timerStarted) startTimer();
   keyed = i;
   scrollToSlow(stations[i].t * maxScroll());
 }
 function step(dir) {
+  if (dir > 0 && !timerStarted) startTimer();
   const prog = progress();
   let idx = -1;
   stations.forEach(function (s) { if (prog >= s.t - 0.008) idx = s.i; });
@@ -846,6 +889,67 @@ window.addEventListener("wheel", function () {
   cancelAnimationFrame(scrollAnim);
 }, { passive: true });
 window.addEventListener("resize", function () { layout(); frame(); });
+
+let timerRunning = false;
+let timerStarted = false;
+let timerSeconds = 0;
+let timerInterval = null;
+
+const timerBox = document.getElementById("timerBox");
+const timerDisplay = document.getElementById("timerDisplay");
+
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+}
+
+function updateTimer() {
+  timerSeconds++;
+  timerDisplay.textContent = formatTime(timerSeconds);
+  if (timerSeconds >= 420) {
+    timerBox.classList.add("danger");
+    timerBox.classList.remove("warning");
+  } else if (timerSeconds >= 300) {
+    timerBox.classList.add("warning");
+  }
+}
+
+function startTimer() {
+  if (timerRunning) return;
+  timerRunning = true;
+  timerStarted = true;
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function pauseTimer() {
+  if (!timerRunning) return;
+  timerRunning = false;
+  clearInterval(timerInterval);
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    pauseTimer();
+  } else if (timerStarted) {
+    timerRunning = true;
+    timerInterval = setInterval(updateTimer, 1000);
+  } else {
+    startTimer();
+  }
+}
+
+if (timerBox) {
+  timerBox.addEventListener("click", toggleTimer);
+  timerBox.addEventListener("dblclick", function (e) {
+    e.stopPropagation();
+    pauseTimer();
+    timerStarted = false;
+    timerSeconds = 0;
+    timerDisplay.textContent = "00:00";
+    timerBox.classList.remove("warning", "danger");
+  });
+}
 
 layout();
 frame();
