@@ -221,6 +221,35 @@
     cursor: pointer;
   }
   .dot.on { background: #3f7d45; transform: scale(1.25); }
+  .slide-nav { display: none; }
+  @media (max-width: 900px) {
+    .hint { display: none; }
+    .dots { bottom: 78px; left: 12px; }
+    .count { bottom: 78px; right: 12px; }
+    .timer-box { bottom: 108px; right: 12px; }
+    .slide-nav {
+      display: flex;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 20;
+      gap: 10px;
+      pointer-events: auto;
+    }
+    .slide-nav button {
+      flex: 1;
+      min-height: 52px;
+      border: 1px solid #dcd0ba;
+      border-radius: 16px;
+      background: rgba(255, 250, 243, 0.96);
+      color: #24532c;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      box-shadow: 0 8px 22px rgba(74, 50, 32, 0.16);
+    }
+  }
 </style>
 </head>
 <body>
@@ -254,6 +283,10 @@
 <div class="hint" id="hint">Scroll o flecha. El brote abre la lámina.</div>
 <div class="count" id="count"></div>
 <div class="dots" id="dots"></div>
+<nav class="slide-nav" aria-label="Cambiar lámina">
+  <button type="button" id="slidePrev">Anterior</button>
+  <button type="button" id="slideNext">Siguiente</button>
+</nav>
 
 <script>
 const NS = "http://www.w3.org/2000/svg";
@@ -343,7 +376,7 @@ const slides = [
     title: "Obstáculos presentados durante el desarrollo",
     kicker: "Proyecto ERP Almahue",
     who: "Presenta Felipe Cuevas",
-    html: "<ul><li>El facturador no respondió a tiempo. El cliente dejó abierta la opción de postergar el cambio a la temporada siguiente. No esperamos: armamos billing-gateway entre el ERP y el partner.</li><li>La carta Gantt ponía la construcción después de los bocetos. El código y las demos partieron en julio. Dejamos la carta como mapa y las evidencias cuentan lo que pasó.</li><li>Presupuestos de seguimiento y reportes ejecutivos no se cerraron. El cliente pidió dejarlos para más adelante. Siguen en el backlog, no los marcamos listos.</li><li>La aprobación quedó solo en compras. En la orden de venta no hay bandeja.</li></ul>"
+    html: "<ul><li>El facturador no respondió a tiempo. El cliente dejó abierta la opción de postergar el cambio a la temporada siguiente. No esperamos: armamos billing-gateway entre el ERP y el partner.</li><li>La carta Gantt ponía la construcción después de los bocetos. El código y las demos partieron en julio. Dejamos la carta como mapa y las evidencias cuentan lo que pasó.</li></ul>"
   },
   {
     title: "Preguntas de la comisión",
@@ -827,6 +860,9 @@ function step(dir) {
   }
   goTo(keyed);
 }
+
+document.getElementById("slidePrev").addEventListener("click", function () { step(-1); });
+document.getElementById("slideNext").addEventListener("click", function () { step(1); });
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
